@@ -5,7 +5,7 @@ void Board::begin(void)
   pressureSensor.setAveraging(PMC_AVG_4);
   pressureSensor.setBridgeSensorAdaption(GAIN_14);
   pressureSensor.setBridgeMode(BSP_NEGATIVE);
-	pressureSensor.setOutputIOConfiguration(ACOS1_MEASURAND, COS1_VOLTAGE, PMIO2_DISABLE, PMIO1_PWM1, ACOS2_MEASURAND);
+	pressureSensor.setOutputConfiguration(ACOS1_MEASURAND, COS1_VOLTAGE, PMIO2_DISABLE, PMIO1_PWM1, ACOS2_MEASURAND);
 	pressureSensor.start();
 }
 

@@ -43,11 +43,39 @@ class ZSC31050
     */
     uint8_t setAveraging(CFGCYC_PMC avg);
 
-		uint8_t setBridgeSensorAdaption(CFGAFE_GAIN gain = GAIN_420, CFGAFE_ADRAPR rangeShift = ADRAPR_3_4, CFGAFE_RADC resolution = RADC_13BIT, CFGAFE_OADC order = OADC_2ND_ORDER);
+    /*!
+    * @brief set ZSC31050 bridge sensor adaption
+    * @param Span: GAIN_420 (2mV/V), GAIN_280 (3mV/V), GAIN_210 (4mV/V), GAIN_140 (6mV/V), GAIN_105 (8mV/V), GAIN_70 (12mV/V), GAIN_52G5 (16mV/V), GAIN_35 (24mV/V), GAIN_26G25 (32mV/V), GAIN_14 (50mV/V), GAIN_9G3 (80mV/V), GAIN_7 (100mV/V), GAIN_2G8 (280mV/V)
+    * @param ADC Range Shift P: ADRAPR_15_16 (15/16), ADRAPR_7_8 (7/8), ADRAPR_3_4 (3/4), ADRAPR_1_2 (1/2)
+    * @param ADC Bit resolution: RADC_9BIT, RADC_10BIT, RADC_11BIT, RADC_12BIT, RADC_13BIT, RADC_14BIT, RADC_15BIT
+    * @param ADC Order: OADC_1ST_ORDER, OADC_2ND_ORDER
+    * @return 0 - success
+    * @return > 0 - error
+    */
+    uint8_t setBridgeSensorAdaption(CFGAFE_GAIN gain = GAIN_420, CFGAFE_ADRAPR rangeShift = ADRAPR_3_4, CFGAFE_RADC resolution = RADC_13BIT, CFGAFE_OADC order = OADC_2ND_ORDER);
 
-		uint8_t setBridgeMode(CFGAPP_BSP polarity = BSP_POSITIVE, CFGAPP_CSBE excitationMode = CSBE_VOLTAGE, CFGAPP_ADREF refVoltage = ADREF_VBR);
+    /*!
+    * @brief set ZSC31050 bridge mode
+    * @param bridge signal polarity: BSP_POSITIVE, BSP_NEGATIVE
+    * @param bridge excitation mode: CSBE_VOLTAGE, CSBE_CURRENT
+    * @param A/D converter reference voltage: ADREF_VBR, ADREF_VDDA
+    * @return (from Wire.endTransmission)
+    * @return 0 - success
+    * @return > 0 - error
+    */
+    uint8_t setBridgeMode(CFGAPP_BSP polarity = BSP_POSITIVE, CFGAPP_CSBE excitationMode = CSBE_VOLTAGE, CFGAPP_ADREF refVoltage = ADREF_VBR);
 
-		uint8_t setOutputIOConfiguration(CFGCYC_ACOS1 out = ACOS1_MEASURAND, CFGOUT_COS1 outMode = COS1_VOLTAGE, CFGOUT_PMIO2 IO2Mode = PMIO2_DISABLE, CFGOUT_PMIO1 IO1Mode = PMIO1_DISABLE, CFGCYC_ACOS2 IO1 = ACOS2_TEMPERATURE1);
+    /*!
+    * @brief set ZSC31050 output configuration
+    * @param Selection of output via OUT pin: ACOS1_MEASURAND, ACOS1_TEMPERATURE1, ACOS1_TEMPERATURE2
+    * @param output mode port OUT: COS1_VOLTAGE, COS1_PWM2, COS1_CURRENT,	COS1_DISABLE = 0b11
+    * @param output mode port IO2: PMIO2_DISABLE, PMIO2_ALARM2
+    * @param output mode port IO1: PMIO1_DISABLE, PMIO1_PWM1, PMIO1_ALARM1
+    * @param Selection of output via IO1 pin (PWM), PWM at IO1 must be activated: ACOS2_MEASURAND, ACOS2_TEMPERATURE1, ACOS2_TEMPERATURE2
+    * @return 0 - success
+    * @return > 0 - error
+    */
+    uint8_t setOutputConfiguration(CFGCYC_ACOS1 out = ACOS1_MEASURAND, CFGOUT_COS1 outMode = COS1_VOLTAGE, CFGOUT_PMIO2 IO2Mode = PMIO2_DISABLE, CFGOUT_PMIO1 IO1Mode = PMIO1_DISABLE, CFGCYC_ACOS2 IO1 = ACOS2_TEMPERATURE1);
 
     /*!
     * @brief read ZSC31050 output register and store values to _P, _T1, _T2
