@@ -183,8 +183,8 @@ enum CFGAPP_BSP {
 enum CFGAPP_ADRAIN3 {
   ADRAIN3_15_16 = 0b00 << 12,
   ADRAIN3_7_8 = 0b01 << 12,
-	ADRAIN3_3_4 = 0b10 << 12,
-	ADRAIN3_1_2 = 0b00 << 12
+  ADRAIN3_3_4 = 0b10 << 12,
+  ADRAIN3_1_2 = 0b00 << 12
 };
 
 /*!
@@ -268,13 +268,13 @@ enum CFGAPP_VDCE {
 * @brief ZSC31050 resolution of A/D conversion
 */
 enum CFGAFE_RADC {
-	RADC_9BIT = 0b000 << 13,
-	RADC_10BIT = 0b001 << 13,
-	RADC_11BIT = 0b010 << 13,
-	RADC_12BIT = 0b011 << 13,
-	RADC_13BIT = 0b100 << 13,
-	RADC_14BIT = 0b101 << 13,
-	RADC_15BIT = 0b110 << 13
+  RADC_9BIT = 0b000 << 13,
+  RADC_10BIT = 0b001 << 13,
+  RADC_11BIT = 0b010 << 13,
+  RADC_12BIT = 0b011 << 13,
+  RADC_13BIT = 0b100 << 13,
+  RADC_14BIT = 0b101 << 13,
+  RADC_15BIT = 0b110 << 13
 };
 
 /*!

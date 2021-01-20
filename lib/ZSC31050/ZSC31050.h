@@ -130,7 +130,7 @@ class ZSC31050
     uint8_t cmd(uint8_t cmd, uint16_t delay);
     uint8_t cmd(uint8_t cmd, uint16_t delay, uint16_t arg);
 
-		template <typename cfgType> uint8_t cfg(uint8_t addr, uint16_t mask, cfgType val);
+    template <typename cfgType> uint8_t cfg(uint8_t addr, uint16_t mask, cfgType val);
 
     uint8_t read8(void);
     uint16_t read16(void);

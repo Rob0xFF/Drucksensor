@@ -15,7 +15,7 @@
 #define ROM_VERSION 0xCF, 50
 #define COPY_RAM2EEP 0xC3, 0 // delay must be handled by function here, otherwise delayMicroseconds will overflow
 
-// ZSC31050 RAM Registers 
+// ZSC31050 RAM Registers
 
 #define C0_OFFSET 0x00
 #define C1_GAIN 0x01

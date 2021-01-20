@@ -62,7 +62,7 @@ uint8_t ZSC31050::setMode(Mode mode)
 uint8_t ZSC31050::saveConfig(void)
 {
   uint8_t retVal = cmd(COPY_RAM2EEP);
-	delay(500);
+  delay(500);
   return ;
 }
 
@@ -90,7 +90,7 @@ uint8_t ZSC31050::cmd(uint8_t cmd, uint16_t delay, uint16_t arg)
 
 template <typename cfgType> uint8_t ZSC31050::cfg(uint8_t addr, uint16_t mask, cfgType val)
 {
-	cmd(addr + READ_RAM_OFFS, READ_RAM_DELAY);
+  cmd(addr + READ_RAM_OFFS, READ_RAM_DELAY);
   return cmd(addr + WRITE_RAM_OFFS, WRITE_RAM_DELAY, (read16() & ~mask) | val);
 }
 
