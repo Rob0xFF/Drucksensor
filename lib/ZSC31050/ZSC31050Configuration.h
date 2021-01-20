@@ -280,7 +280,7 @@ enum CFGAFE_RADC {
 /*!
 * @brief ZSC31050 order of A/D conversion
 */
-enum CFGAPP_OADC {
+enum CFGAFE_OADC {
   OADC_1ST_ORDER = 0b00 << 12,
   OADC_2ND_ORDER = 0b01 << 12
 };
@@ -288,7 +288,7 @@ enum CFGAPP_OADC {
 /*!
 * @brief ZSC31050 ADC range shift regarding measurand signal
 */
-enum CFGAPP_ADRAPR {
+enum CFGAFE_ADRAPR {
   ADRAPR_15_16 = 0b00 << 10,
   ADRAPR_7_8 = 0b01 << 10,
   ADRAPR_3_4 = 0b10 << 10,
@@ -300,7 +300,7 @@ enum CFGAPP_ADRAPR {
 /*!
 * @brief ZSC31050 gain analog front end measurand measurement
 */
-enum CFGAPP_GAIN {
+enum CFGAFE_GAIN {
   GAIN_420 = 0b0000,
   GAIN_280 = 0b0001,
   GAIN_210 = 0b0010,
@@ -318,6 +318,85 @@ enum CFGAPP_GAIN {
 
 // CFGTMP
 
+/*!
+* @brief ZSC31050 PWM output resolution
+*/
+enum CFGOUT_PWMRES {
+  PWMRES_9BIT = 0b00 << 14,
+  PWMRES_10BIT = 0b01 << 14,
+  PWMRES_11BIT = 0b10 << 14,
+  PWMRES_12BIT = 0b11 << 14
+};
 
+/*!
+* @brief ZSC31050 PWM CLK divider
+*/
+enum CFGOUT_PWMD {
+  PWMD_1 = 0b00 << 12,
+  PWMD_2 = 0b01 << 12,
+  PWMD_4 = 0b10 << 12,
+  PWMD_8 = 0b11 << 12
+};
+
+/*!
+* @brief ZSC31050 PWM polarity
+*/
+enum CFGOUT_PWMPO {
+  PWMPO_HIGH = 0b00 << 10,
+  PWMPO_LOW = 0b01 << 10
+};
+
+/*!
+* @brief ZSC31050 clock divider for A/D converter
+*/
+enum CFGOUT_VFCCLKD {
+  VFCCLKD_1 = 0b00 << 8,
+  VFCCLKD_2 = 0b01 << 8
+};
+
+/*!
+* @brief ZSC31050 alarm window mode
+*/
+enum CFGOUT_AWME {
+  AWME_DISABLED = 0b00 << 7,
+  AWME_ENABLED = 0b01 << 7
+};
+
+/*!
+* @brief ZSC31050 alarm polarity
+*/
+enum CFGOUT_APO {
+  APO_LOW_ACTIVE = 0b00 << 5,
+  APO_HIGH_ACTIVE = 0b11 << 5
+};
+
+/*!
+* @brief ZSC31050 output mode port IO2
+*/
+enum CFGOUT_PMIO2 {
+  PMIO2_DISABLE = 0b00 << 4,
+  PMIO2_ALARM2 = 0b01 << 4
+};
+
+/*!
+* @brief ZSC31050 output mode port IO1
+*/
+enum CFGOUT_PMIO1 {
+  PMIO1_DISABLE = 0b00 << 2,
+  PMIO1_PWM1 = 0b10 << 2,
+  PMIO1_ALARM1 = 0b11 << 2
+};
+
+/*!
+* @brief ZSC31050 output mode port OUT
+*/
+enum CFGOUT_COS1 {
+  COS1_VOLTAGE = 0b00,
+  COS1_PWM2 = 0b10,
+  COS1_CURRENT = 0b01,
+	COS1_DISABLE = 0b11
+};
+
+//ADJREF
 
 #endif

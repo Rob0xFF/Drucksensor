@@ -10,6 +10,36 @@ uint8_t ZSC31050::setAveraging(CFGCYC_PMC avg)
   return cfg<CFGCYC_PMC>(CFGCYC, CFGCYC_PMC_MASK, avg);
 }
 
+uint8_t ZSC31050::setBridgeSensorAdaption(CFGAFE_GAIN gain, CFGAFE_ADRAPR rangeShift, CFGAFE_RADC resolution, CFGAFE_OADC order)
+{
+	uint8_t retVal = 0;
+	retVal += cfg<CFGAFE_GAIN>(CFGAFE, CFGAFE_GAIN_MASK, gain);
+	retVal += cfg<CFGAFE_ADRAPR>(CFGAFE, CFGAFE_ADRAPR_MASK, rangeShift);
+	retVal += cfg<CFGAFE_RADC>(CFGAFE, CFGAFE_RADC_MASK, resolution);
+	retVal += cfg<CFGAFE_OADC>(CFGAFE, CFGAFE_OADC_MASK, order);
+	return retVal;
+}
+
+uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode, CFGAPP_ADREF refVoltage)
+{
+	uint8_t retVal = 0;
+	retVal += cfg<CFGAPP_BSP>(CFGAPP, CFGAPP_BSP_MASK, polarity);
+	retVal += cfg<CFGAPP_CSBE>(CFGAPP, CFGAPP_CSBE_MASK, excitationMode);
+	retVal += cfg<CFGAPP_ADREF>(CFGAPP, CFGAPP_ADREF_MASK, refVoltage);
+	return retVal;
+}
+
+uint8_t ZSC31050::setOutputIOConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGOUT_PMIO2 IO2Mode, CFGOUT_PMIO1 IO1Mode, CFGCYC_ACOS2 IO1)
+{
+	uint8_t retVal = 0;
+	retVal += cfg<CFGCYC_ACOS1>(CFGCYC, CFGCYC_ACOS1_MASK, out);
+	retVal += cfg<CFGOUT_COS1>(CFGOUT, CFGOUT_COS1_MASK, outMode);
+	retVal += cfg<CFGOUT_PMIO2>(CFGOUT, CFGOUT_PMIO2_MASK, IO2Mode);
+	retVal += cfg<CFGOUT_PMIO1>(CFGOUT, CFGOUT_PMIO1_MASK, IO1Mode);
+	retVal += cfg<CFGCYC_ACOS2>(CFGCYC, CFGCYC_ACOS2_MASK, IO1);
+	return retVal;
+}
+
 void ZSC31050::readOutput(void)
 {
   uint64_t readout = read48();

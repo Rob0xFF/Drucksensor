@@ -43,6 +43,12 @@ class ZSC31050
     */
     uint8_t setAveraging(CFGCYC_PMC avg);
 
+		uint8_t setBridgeSensorAdaption(CFGAFE_GAIN gain = GAIN_420, CFGAFE_ADRAPR rangeShift = ADRAPR_3_4, CFGAFE_RADC resolution = RADC_13BIT, CFGAFE_OADC order = OADC_2ND_ORDER);
+
+		uint8_t setBridgeMode(CFGAPP_BSP polarity = BSP_POSITIVE, CFGAPP_CSBE excitationMode = CSBE_VOLTAGE, CFGAPP_ADREF refVoltage = ADREF_VBR);
+
+		uint8_t setOutputIOConfiguration(CFGCYC_ACOS1 out = ACOS1_MEASURAND, CFGOUT_COS1 outMode = COS1_VOLTAGE, CFGOUT_PMIO2 IO2Mode = PMIO2_DISABLE, CFGOUT_PMIO1 IO1Mode = PMIO1_DISABLE, CFGCYC_ACOS2 IO1 = ACOS2_TEMPERATURE1);
+
     /*!
     * @brief read ZSC31050 output register and store values to _P, _T1, _T2
     */
@@ -119,9 +125,9 @@ class ZSC31050
 
     uint16_t _T2;
 
-    float _pressSlope = 1;
+    float _pressSlope = 1.2129015F;
 
-    float _pressOffset = 0;
+    float _pressOffset = -1.552121F;
 
     float _tempSlope = 1;
 
