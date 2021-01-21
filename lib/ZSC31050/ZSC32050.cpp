@@ -20,6 +20,15 @@ uint8_t ZSC31050::setBridgeSensorAdaption(CFGAFE_GAIN gain, CFGAFE_ADRAPR rangeS
   return retVal;
 }
 
+uint8_t ZSC31050::setAdvancedBridgeSensorAdaption(CFGAFE_XZC_POLARITY polarity, CFGAFE_XZC value, CFGAPP_ADRAIN3 rangeShift)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGAFE_XZC_POLARITY>(CFGAFE, CFGAFE_XZC_POLARITY_MASK, polarity);
+  retVal += cfg<CFGAFE_XZC>(CFGAFE, CFGAFE_XZC_MASK, value);
+  retVal += cfg<CFGAPP_ADRAIN3>(CFGAPP, CFGAPP_ADRAIN3_MASK, rangeShift);
+  return retVal;
+}
+
 uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode, CFGAPP_ADREF refVoltage)
 {
   uint8_t retVal = 0;
@@ -29,14 +38,14 @@ uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode,
   return retVal;
 }
 
-uint8_t ZSC31050::setOutputConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGOUT_PMIO2 IO2Mode, CFGOUT_PMIO1 IO1Mode, CFGCYC_ACOS2 IO1)
+uint8_t ZSC31050::setOutputConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGCYC_ACOS2 IO1, CFGOUT_PMIO1 IO1Mode, CFGOUT_PMIO2 IO2Mode)
 {
   uint8_t retVal = 0;
   retVal += cfg<CFGCYC_ACOS1>(CFGCYC, CFGCYC_ACOS1_MASK, out);
   retVal += cfg<CFGOUT_COS1>(CFGOUT, CFGOUT_COS1_MASK, outMode);
-  retVal += cfg<CFGOUT_PMIO2>(CFGOUT, CFGOUT_PMIO2_MASK, IO2Mode);
-  retVal += cfg<CFGOUT_PMIO1>(CFGOUT, CFGOUT_PMIO1_MASK, IO1Mode);
   retVal += cfg<CFGCYC_ACOS2>(CFGCYC, CFGCYC_ACOS2_MASK, IO1);
+  retVal += cfg<CFGOUT_PMIO1>(CFGOUT, CFGOUT_PMIO1_MASK, IO1Mode);
+  retVal += cfg<CFGOUT_PMIO2>(CFGOUT, CFGOUT_PMIO2_MASK, IO2Mode);
   return retVal;
 }
 

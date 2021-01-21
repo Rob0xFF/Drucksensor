@@ -36,7 +36,8 @@
 #define CFGAFE_RADC_MASK 0xE000
 #define CFGAFE_OADC_MASK 0x0100
 #define CFGAFE_ADRAPR_MASK 0x0C00
-#define CFGAFE_XZC_MASK 0x03F0
+#define CFGAFE_XZC_POLARITY_MASK 0x0200
+#define CFGAFE_XZC_MASK 0x01F0
 #define CFGAFE_GAIN_MASK 0x000F
 
 #define CFGTMP_GAINT2_MASK 0xC000
@@ -295,7 +296,48 @@ enum CFGAFE_ADRAPR {
   ADRAPR_1_2 = 0b11 << 10
 };
 
-// XZC
+/*!
+* @brief ZSC31050 eXtendedZeroCompensation value (offset compensation by analog front end XZCIN)
+*/
+enum CFGAFE_XZC_POLARITY {
+  XZC_POLARITY_POSITIVE = 0b1 << 9,
+  XZC_POLARITY_NEGATIVE = 0b0 << 9,
+};
+
+enum CFGAFE_XZC {
+	XZC_0 = 0b00000 << 4,
+	XZC_1 = 0b00001 << 4,
+	XZC_2 = 0b00010 << 4,
+	XZC_3 = 0b00011 << 4,
+	XZC_4 = 0b00100 << 4,
+	XZC_5 = 0b00101 << 4,
+	XZC_6 = 0b00110 << 4,
+	XZC_7 = 0b00111 << 4,
+	XZC_8 = 0b01000 << 4,
+	XZC_9 = 0b01001 << 4,
+	XZC_10 = 0b01010 << 4,
+	XZC_11 = 0b01011 << 4,
+	XZC_12 = 0b01100 << 4,
+	XZC_13 = 0b01101 << 4,
+	XZC_14 = 0b01110 << 4,
+	XZC_15 = 0b01111 << 4,
+	XZC_16 = 0b10000 << 4,
+	XZC_17 = 0b10001 << 4,
+	XZC_18 = 0b10010 << 4,
+	XZC_19 = 0b10011 << 4,
+	XZC_20 = 0b10100 << 4,
+	XZC_21 = 0b10101 << 4,
+	XZC_22 = 0b10110 << 4,
+	XZC_23 = 0b10111 << 4,	
+	XZC_24 = 0b11000 << 4,
+	XZC_25 = 0b11001 << 4,
+	XZC_26 = 0b11010 << 4,
+	XZC_27 = 0b11011 << 4,
+	XZC_28 = 0b11100 << 4,
+	XZC_29 = 0b11101 << 4,
+	XZC_30 = 0b11110 << 4,
+	XZC_31 = 0b11111 << 4
+};
 
 /*!
 * @brief ZSC31050 gain analog front end measurand measurement

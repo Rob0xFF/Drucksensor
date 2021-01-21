@@ -55,6 +55,16 @@ class ZSC31050
     uint8_t setBridgeSensorAdaption(CFGAFE_GAIN gain = GAIN_420, CFGAFE_ADRAPR rangeShift = ADRAPR_3_4, CFGAFE_RADC resolution = RADC_13BIT, CFGAFE_OADC order = OADC_2ND_ORDER);
 
     /*!
+    * @brief set ZSC31050 advanced bridge sensor adaption
+    * @param eXtendedZeroCompensation value / polarity: XZC_POLARITY_POSITIVE, XZC_POLARITY_NEGATIVE
+    * @param eXtendedZeroCompensation value / value: [XZC_0 ... XZC_31]
+    * @param ADC range shift regarding signal from IN3 (TEMP2): ADRAIN3_15_16, ADRAIN3_7_8, ADRAIN3_3_4, ADRAIN3_1_2
+    * @return 0 - success
+    * @return > 0 - error
+    */
+    uint8_t setAdvancedBridgeSensorAdaption(CFGAFE_XZC_POLARITY polarity = XZC_POLARITY_POSITIVE, CFGAFE_XZC value = XZC_0, CFGAPP_ADRAIN3 rangeShift = ADRAIN3_1_2);
+
+    /*!
     * @brief set ZSC31050 bridge mode
     * @param bridge signal polarity: BSP_POSITIVE, BSP_NEGATIVE
     * @param bridge excitation mode: CSBE_VOLTAGE, CSBE_CURRENT
@@ -68,14 +78,14 @@ class ZSC31050
     /*!
     * @brief set ZSC31050 output configuration
     * @param Selection of output via OUT pin: ACOS1_MEASURAND, ACOS1_TEMPERATURE1, ACOS1_TEMPERATURE2
-    * @param output mode port OUT: COS1_VOLTAGE, COS1_PWM2, COS1_CURRENT,	COS1_DISABLE = 0b11
-    * @param output mode port IO2: PMIO2_DISABLE, PMIO2_ALARM2
-    * @param output mode port IO1: PMIO1_DISABLE, PMIO1_PWM1, PMIO1_ALARM1
+    * @param output mode port OUT: COS1_VOLTAGE, COS1_PWM2, COS1_CURRENT,	COS1_DISABLE
     * @param Selection of output via IO1 pin (PWM), PWM at IO1 must be activated: ACOS2_MEASURAND, ACOS2_TEMPERATURE1, ACOS2_TEMPERATURE2
+    * @param output mode port IO1: PMIO1_DISABLE, PMIO1_PWM1, PMIO1_ALARM1
+    * @param output mode port IO2: PMIO2_DISABLE, PMIO2_ALARM2
     * @return 0 - success
     * @return > 0 - error
     */
-    uint8_t setOutputConfiguration(CFGCYC_ACOS1 out = ACOS1_MEASURAND, CFGOUT_COS1 outMode = COS1_VOLTAGE, CFGOUT_PMIO2 IO2Mode = PMIO2_DISABLE, CFGOUT_PMIO1 IO1Mode = PMIO1_DISABLE, CFGCYC_ACOS2 IO1 = ACOS2_TEMPERATURE1);
+    uint8_t setOutputConfiguration(CFGCYC_ACOS1 out = ACOS1_MEASURAND, CFGOUT_COS1 outMode = COS1_VOLTAGE, CFGCYC_ACOS2 IO1 = ACOS2_TEMPERATURE1, CFGOUT_PMIO1 IO1Mode = PMIO1_DISABLE, CFGOUT_PMIO2 IO2Mode = PMIO2_DISABLE);
 
     /*!
     * @brief read ZSC31050 output register and store values to _P, _T1, _T2
