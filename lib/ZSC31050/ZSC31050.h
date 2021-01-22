@@ -45,7 +45,7 @@ class ZSC31050
 
     /*!
     * @brief set ZSC31050 advanced bridge sensor adaption
-		* @brief enable extended zero compensation: XZCE_DISABLED, XZCE_ENABLED
+    * @brief enable extended zero compensation: XZCE_DISABLED, XZCE_ENABLED
     * @param eXtendedZeroCompensation value / polarity: XZC_POLARITY_POSITIVE, XZC_POLARITY_NEGATIVE
     * @param eXtendedZeroCompensation value / value: [XZC_0 ... XZC_31]
     * @param ADC range shift regarding signal from IN3 (TEMP2): ADRAIN3_15_16, ADRAIN3_7_8, ADRAIN3_3_4, ADRAIN3_1_2
@@ -59,7 +59,7 @@ class ZSC31050
     * @param bridge signal polarity: BSP_POSITIVE, BSP_NEGATIVE
     * @param bridge excitation mode: CSBE_VOLTAGE, CSBE_CURRENT
     * @param A/D converter reference voltage: ADREF_VBR, ADREF_VDDA
-		* @param Adjust sensor bridge current factor (F): CSB_0F5,  CSB_0F625,  CSB_0F75,  CSB_0F875,  CSB_1F0,  CSB_1F125,  CSB_1F25,  CSB_1F375
+    * @param Adjust sensor bridge current factor (F): CSB_0F5,  CSB_0F625,  CSB_0F75,  CSB_0F875,  CSB_1F0,  CSB_1F125,  CSB_1F25,  CSB_1F375
     * @return 0 - success
     * @return > 0 - error
     */
@@ -127,10 +127,10 @@ class ZSC31050
     * @param analog voltage control (internal controller /w external transistor): VDCE_DISABLED, VDCE_ENABLED
     * @param VDDA controlled voltage: VDC_3V0, VDC_4V0, VDC_5V0, VDC_5V5
     * @param Fine adjustment of controlled analog supply voltage (percent - P): VDCA_M1P0, VDCA_M0P75, VDCA_M0P5, VDCA_M0P25, VDCA_0P0, VDCA_0P25, VDCA_0P5, VDCA_0P75
-		* @param Count of bridge measurements per cycle (averaging): PMC_AVG_1, PMC_AVG_2, PMC_AVG_4, PMC_AVG_8, PMC_AVG_16, PMC_AVG_32, PMC_AVG_64, PMC_AVG_128
-		* @param Start-upROM check: ROMCHE_ENABLED, ROMCHE_DISABLED
-		* @param Common mode voltage measurement and check: CMVE_ENABLED, CMVE_DISABLED
-		* @param sensor connection and RAM parity check: SCCD_ENABLED, SCCD_DISABLED
+    * @param Count of bridge measurements per cycle (averaging): PMC_AVG_1, PMC_AVG_2, PMC_AVG_4, PMC_AVG_8, PMC_AVG_16, PMC_AVG_32, PMC_AVG_64, PMC_AVG_128
+    * @param Start-upROM check: ROMCHE_ENABLED, ROMCHE_DISABLED
+    * @param Common mode voltage measurement and check: CMVE_ENABLED, CMVE_DISABLED
+    * @param sensor connection and RAM parity check: SCCD_ENABLED, SCCD_DISABLED
     * @return 0 - success
     * @return > 0 - error
     */
@@ -149,8 +149,8 @@ class ZSC31050
     * @param TC adjustment of internal bandgap voltage: [VREF_0 .. VREF_15]
     * @param Adjust bias current: [BCUR_0 ..BCUR_7]
     * @param Coarse oscillator frequency adjust: OSCF_1MHZ, OSCF_2MHZ, OSCF_4MHZ
-		* @param Adjust oscillator frequency (F): OSCA_0F8, OSCA_0F85, OSCA_0F9, OSCA_0F95, OSCA_1F0, OSCA_1F05, OSCA_1F1, OSCA_1F15
-		* @param clock divider for A/D converter: VFCCLKD_1, VFCCLKD_2
+    * @param Adjust oscillator frequency (F): OSCA_0F8, OSCA_0F85, OSCA_0F9, OSCA_0F95, OSCA_1F0, OSCA_1F05, OSCA_1F1, OSCA_1F15
+    * @param clock divider for A/D converter: VFCCLKD_1, VFCCLKD_2
     * @return 0 - success
     * @return > 0 - error
     */
@@ -162,7 +162,7 @@ class ZSC31050
     * @param enable alternative I2C address: SIFID2E_ENABLED, SIFID2E_DISABLED
     * @return 0 - success
     * @return > 0 - error
-		* @return 255 requested address not allowed
+    * @return 255 requested address not allowed
     */
     uint8_t setSecondI2CAddr(uint8_t addr = 0x79, CFGSIF_SIFID2E enable = SIFID2E_DISABLED);
 

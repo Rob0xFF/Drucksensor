@@ -120,11 +120,11 @@ uint8_t ZSC31050::setChipAdjust(ADJREF_VREF val, ADJREF_BCUR biasCurrent, CFGAPP
 
 uint8_t ZSC31050::setSecondI2CAddr(uint8_t addr = 0x79, CFGSIF_SIFID2E enable = SIFID2E_DISABLED)
 {
-	if(addr < 0x07 || addr > 0x7F) {
-		return 255;
-	}
-	addr <<= 9;
-	uint8_t retVal = 0;
+  if (addr < 0x07 || addr > 0x7F) {
+    return 255;
+  }
+  addr <<= 9;
+  uint8_t retVal = 0;
   retVal += cfg<uint8_t>(CFGSIF, CFGSIF_SIFID2_MASK, addr);
   retVal += cfg<CFGSIF_SIFID2E>(CFGSIF, CFGSIF_SIFID2E_MASK, enable);
   return retVal;
