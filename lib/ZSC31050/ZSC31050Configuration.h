@@ -51,10 +51,12 @@
 
 #define CFGOUT_PWMRES_MASK 0xC000
 #define CFGOUT_PWMD_MASK 0x3000
-#define CFGOUT_PWMPO_MASK 0x0C00
+#define CFGOUT_PWMPO2_MASK 0x0800
+#define CFGOUT_PWMPO1_MASK 0x0400
 #define CFGOUT_VFCCLKD_MASK 0x0100
 #define CFGOUT_AWME_MASK 0x0080
-#define CFGOUT_APO_MASK 0x0060
+#define CFGOUT_APO2_MASK 0x0040
+#define CFGOUT_APO1_MASK 0x0020
 #define CFGOUT_PMIO2_MASK 0x0010
 #define CFGOUT_PMIO1_MASK 0x000C
 #define CFGOUT_COS1_MASK 0x0003
@@ -358,7 +360,88 @@ enum CFGAFE_GAIN {
   GAIN_2G8 = 0b1100,
 };
 
-// CFGTMP
+/*!
+* @brief ZSC31050 Gain analog front end temperature 2 meas.
+*/
+enum CFGTMP_GAINT2 {
+  GAINT2_4 = 0b00 << 14,
+  GAINT2_3 = 0b01 << 14,
+  GAINT2_2 = 0b10 << 14,
+  GAINT2_1 = 0b11 << 14
+};
+
+/*!
+* @brief ZSC31050 Gain analog front end temperature 1 meas.
+*/
+enum CFGTMP_GAINT1 {
+  GAINT1_4 = 0b00 << 12,
+  GAINT1_3 = 0b01 << 12,
+  GAINT1_2 = 0b10 << 12,
+  GAINT1_1 = 0b11 << 12
+};
+
+/*!
+* @brief ZSC31050 Polarity of external temperature sensor for temperature 2 measurement
+*/
+enum CFGTMP_PETS2 {
+  PETS2_VSS = 0b0 << 11,
+  PETS2_VDDA = 0b1 << 11
+};
+
+/*!
+* @brief ZSC31050 Polarity of external temperature sensor for temperature 1 measurement
+*/
+enum CFGTMP_PETS1 {
+  PETS1_VSS = 0b0 << 10,
+  PETS1_VDDA = 0b1 << 10
+};
+
+/*!
+* @brief ZSC31050 Temperature 2 (T2) zero-point adjust
+*/
+enum CFGTMP_ZCT2 {
+  ZCT2_0 = 0b000 << 7,
+  ZCT2_1 = 0b001 << 7,
+  ZCT2_2 = 0b010 << 7,
+  ZCT2_3 = 0b011 << 7,
+  ZCT2_4 = 0b100 << 7,
+  ZCT2_5 = 0b101 << 7,
+  ZCT2_6 = 0b110 << 7,
+  ZCT2_7 = 0b111 << 7
+};
+
+/*!
+* @brief ZSC31050 Temperature 1 (T1) zero-point adjust
+*/
+enum CFGTMP_ZCT1 {
+  ZCT1_0 = 0b000 << 4,
+  ZCT1_1 = 0b001 << 4,
+  ZCT1_2 = 0b010 << 4,
+  ZCT1_3 = 0b011 << 4,
+  ZCT1_4 = 0b100 << 4,
+  ZCT1_5 = 0b101 << 4,
+  ZCT1_6 = 0b110 << 4,
+  ZCT1_7 = 0b111 << 4
+};
+
+/*!
+* @brief ZSC31050 Temperature 2 (T2) acquisition mode
+*/
+enum CFGTMP_TAM2 {
+  TAM2_INT_DIODE = 0b00 << 2,
+  TAM2_EXT_DIODE = 0b01 << 2,
+  TAM2_EXT_RES = 0b10 << 2,
+  TAM2_EXT_VOLT = 0b11 << 2
+};
+
+/*!
+* @brief ZSC31050 Temperature 1 (T1) acquisition mode
+*/
+enum CFGTMP_TAM1 {
+  TAM1_INT_DIODE = 0b00,
+  TAM1_EXT_DIODE = 0b01,
+  TAM1_EXT_RES = 0b10
+};
 
 /*!
 * @brief ZSC31050 PWM output resolution
@@ -381,11 +464,19 @@ enum CFGOUT_PWMD {
 };
 
 /*!
-* @brief ZSC31050 PWM polarity
+* @brief ZSC31050 PWM2 polarity
 */
-enum CFGOUT_PWMPO {
-  PWMPO_HIGH = 0b00 << 10,
-  PWMPO_LOW = 0b01 << 10
+enum CFGOUT_PWMPO2 {
+  PWMPO2_HIGH = 0b0 << 11,
+  PWMPO2_LOW = 0b1 << 11
+};
+
+/*!
+* @brief ZSC31050 PWM1 polarity
+*/
+enum CFGOUT_PWMPO1 {
+  PWMPO1_HIGH = 0b0 << 10,
+  PWMPO1_LOW = 0b1 << 10
 };
 
 /*!
@@ -405,19 +496,27 @@ enum CFGOUT_AWME {
 };
 
 /*!
-* @brief ZSC31050 alarm polarity
+* @brief ZSC31050 alarm2 polarity
 */
-enum CFGOUT_APO {
-  APO_LOW_ACTIVE = 0b00 << 5,
-  APO_HIGH_ACTIVE = 0b11 << 5
+enum CFGOUT_APO2 {
+  APO2_LOW_ACTIVE = 0b0 << 6,
+  APO2_HIGH_ACTIVE = 0b1 << 6
+};
+
+/*!
+* @brief ZSC31050 alarm1 polarity
+*/
+enum CFGOUT_APO1 {
+  APO1_LOW_ACTIVE = 0b0 << 5,
+  APO1_HIGH_ACTIVE = 0b1 << 5
 };
 
 /*!
 * @brief ZSC31050 output mode port IO2
 */
 enum CFGOUT_PMIO2 {
-  PMIO2_DISABLE = 0b00 << 4,
-  PMIO2_ALARM2 = 0b01 << 4
+  PMIO2_DISABLE = 0b0 << 4,
+  PMIO2_ALARM2 = 0b1 << 4
 };
 
 /*!
@@ -439,6 +538,80 @@ enum CFGOUT_COS1 {
   COS1_DISABLE = 0b11
 };
 
-//ADJREF
+/*!
+* @brief ZSC31050 Adjust sensor bridge current factor (F)
+*/
+enum ADJREF_CSB {
+  CSB_0F5 = 0b000 << 13,
+  CSB_0F625 = 0b001 << 13,
+  CSB_0F75 = 0b010 << 13,
+  CSB_0F875 = 0b011 << 13,
+  CSB_1F0 = 0b100 << 13,
+  CSB_1F125 = 0b101 << 13,
+  CSB_1F25 = 0b110 << 13,
+  CSB_1F375 = 0b111 << 13
+};
+
+/*!
+* @brief ZSC31050 Fine adjustment of controlled analog supply voltage (percent - P)
+*/
+enum ADJREF_VDCA {
+  VDCA_M1P0 = 0b000 << 10,
+  VDCA_M0P75 = 0b001 << 10,
+  VDCA_M0P5 = 0b010 << 10,
+  VDCA_M0P25 = 0b011 << 10,
+  VDCA_0P0 = 0b100 << 10,
+  VDCA_0P25 = 0b101 << 10,
+  VDCA_0P5 = 0b110 << 10,
+  VDCA_0P75 = 0b111 << 10
+};
+
+/*!
+* @brief ZSC31050 Adjust oscillator frequency (F)
+*/
+enum ADJREF_OSCA {
+  OSCA_0F8 = 0b000 << 7,
+  OSCA_0F85 = 0b001 << 7,
+  OSCA_0F9 = 0b010 << 7,
+  OSCA_0F95 = 0b011 << 7,
+  OSCA_1F0 = 0b100 << 7,
+  OSCA_1F05 = 0b101 << 7,
+  OSCA_1F1 = 0b110 << 7,
+  OSCA_1F15 = 0b111 << 7
+};
+
+/*!
+* @brief ZSC31050 Adjust bias current
+*/
+enum ADJREF_BCUR {
+  BCUR_0 = 0b000 << 4,
+  BCUR_1 = 0b001 << 4,
+  BCUR_2 = 0b010 << 4,
+  BCUR_3 = 0b011 << 4,
+  BCUR_4 = 0b100 << 4,
+  BCUR_5 = 0b101 << 4,
+  BCUR_6 = 0b110 << 4,
+  BCUR_7 = 0b111 << 4
+};
+
+/*!
+* @brief ZSC31050 TC adjustment of internal bandgap voltage
+*/
+enum ADJREF_VREF {
+  VREF_0 = 0b0000,
+  VREF_1 = 0b0001,
+  VREF_2 = 0b0010,
+  VREF_3 = 0b0011,
+  VREF_4 = 0b0100,
+  VREF_5 = 0b0101,
+  VREF_6 = 0b0110,
+  VREF_7 = 0b0111,
+  VREF_8 = 0b1000,
+  VREF_9 = 0b1001,
+  VREF_10 = 0b1010,
+  VREF_11 = 0b1011,
+  VREF_12 = 0b1100,
+};
+
 
 #endif

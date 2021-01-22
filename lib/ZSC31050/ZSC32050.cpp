@@ -38,6 +38,47 @@ uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode,
   return retVal;
 }
 
+uint8_t ZSC31050::setTempSensorAdaptionT1(CFGTMP_TAM1 senType, CFGTMP_GAINT1 gain, CFGTMP_ZCT1 zeroPointAdj, CFGTMP_PETS1 polarity)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGTMP_TAM1>(CFGTMP, CFGTMP_TAM1_MASK, senType);
+  retVal += cfg<CFGTMP_GAINT1>(CFGTMP, CFGTMP_GAINT1_MASK, gain);
+  retVal += cfg<CFGTMP_ZCT1>(CFGTMP, CFGTMP_ZCT1_MASK, zeroPointAdj);
+  retVal += cfg<CFGTMP_PETS1>(CFGTMP, CFGTMP_PETS1_MASK, polarity);
+  return retVal;
+}
+
+uint8_t ZSC31050::setTempSensorAdaptionT2(CFGCYC_T2E state, CFGTMP_TAM2 senType, CFGTMP_GAINT2 gain, CFGTMP_ZCT2 zeroPointAdj, CFGTMP_PETS2 polarity , CFGAPP_IN3M mode)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGCYC_T2E>(CFGCYC, CFGCYC_T2E_MASK, state);
+  retVal += cfg<CFGTMP_TAM2>(CFGTMP, CFGTMP_TAM2_MASK, senType);
+  retVal += cfg<CFGTMP_GAINT2>(CFGTMP, CFGTMP_GAINT2_MASK, gain);
+  retVal += cfg<CFGTMP_ZCT2>(CFGTMP, CFGTMP_ZCT2_MASK, zeroPointAdj);
+  retVal += cfg<CFGTMP_PETS2>(CFGTMP, CFGTMP_PETS2_MASK, polarity);
+  retVal += cfg<CFGAPP_IN3M>(CFGAPP, CFGAPP_IN3M_MASK, mode);
+  return retVal;
+}
+
+uint8_t ZSC31050::setPWM(CFGOUT_PWMRES resolution, CFGOUT_PWMD divider, CFGOUT_PWMPO1 polarity1, CFGOUT_PWMPO2 polarity2)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGOUT_PWMRES>(CFGOUT, CFGOUT_PWMRES_MASK, resolution);
+  retVal += cfg<CFGOUT_PWMD>(CFGOUT, CFGOUT_PWMD_MASK, divider);
+  retVal += cfg<CFGOUT_PWMPO1>(CFGOUT, CFGOUT_PWMPO1_MASK, polarity1);
+  retVal += cfg<CFGOUT_PWMPO2>(CFGOUT, CFGOUT_PWMPO2_MASK, polarity2);
+  return retVal;
+}
+
+uint8_t ZSC31050::setAlarm(CFGOUT_AWME windowMode, CFGOUT_APO1 polarity1, CFGOUT_APO2 polarity2)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGOUT_AWME>(CFGOUT, CFGOUT_AWME_MASK, windowMode);
+  retVal += cfg<CFGOUT_APO1>(CFGOUT, CFGOUT_APO1_MASK, polarity1);
+  retVal += cfg<CFGOUT_APO2>(CFGOUT, CFGOUT_APO2_MASK, polarity2);
+  return retVal;
+}
+
 uint8_t ZSC31050::setOutputConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGCYC_ACOS2 IO1, CFGOUT_PMIO1 IO1Mode, CFGOUT_PMIO2 IO2Mode)
 {
   uint8_t retVal = 0;

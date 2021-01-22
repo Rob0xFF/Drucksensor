@@ -14,7 +14,7 @@ BOARD_SUB   = atmega328
 
 #ARDUINO_LIB_PATH = $(HOME)/Documents/Arduino/libraries
 
-ARDUINO_LIBS = 3rdParty/TimerOne EEPROM Wire ZSC31050 ZSC31050Serial Board
+ARDUINO_LIBS = 3rdParty/TimerOne 3rdParty/GFX 3rdParty/SSD1306 3rdParty/BUSIO EEPROM Wire ZSC31050 ZSC31050Serial Board SPI
 
 OPTIMIZATION_LEVEL = s
 
