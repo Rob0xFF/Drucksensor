@@ -2,11 +2,12 @@
 
 void Board::begin(void)
 {
-  pressureSensor.setAveraging(PMC_AVG_4);
   pressureSensor.setBridgeSensorAdaption(GAIN_14);
   pressureSensor.setBridgeMode(BSP_NEGATIVE);
 	pressureSensor.setOutputConfiguration(ACOS1_MEASURAND, COS1_VOLTAGE, ACOS2_MEASURAND, PMIO1_PWM1);
-	pressureSensor.setPWM(PWMRES_11BIT, PWMD_1, PWMPO1_LOW);
+	pressureSensor.setPWM(PWMRES_11BIT, PWMD_1, PWMPO1_HIGH);
+	pressureSensor.setApplication(VDCE_DISABLED);
+	pressureSensor.setChipAdjust(VREF_8, BCUR_0, OSCF_4MHZ);
 	pressureSensor.start();
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 	display.clearDisplay();

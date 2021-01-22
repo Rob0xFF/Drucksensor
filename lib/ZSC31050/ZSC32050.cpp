@@ -5,11 +5,6 @@ uint8_t ZSC31050::start(void)
   return cmd(START_CYC_RAM);
 }
 
-uint8_t ZSC31050::setAveraging(CFGCYC_PMC avg)
-{
-  return cfg<CFGCYC_PMC>(CFGCYC, CFGCYC_PMC_MASK, avg);
-}
-
 uint8_t ZSC31050::setBridgeSensorAdaption(CFGAFE_GAIN gain, CFGAFE_ADRAPR rangeShift, CFGAFE_RADC resolution, CFGAFE_OADC order)
 {
   uint8_t retVal = 0;
@@ -20,21 +15,23 @@ uint8_t ZSC31050::setBridgeSensorAdaption(CFGAFE_GAIN gain, CFGAFE_ADRAPR rangeS
   return retVal;
 }
 
-uint8_t ZSC31050::setAdvancedBridgeSensorAdaption(CFGAFE_XZC_POLARITY polarity, CFGAFE_XZC value, CFGAPP_ADRAIN3 rangeShift)
+uint8_t ZSC31050::setAdvancedBridgeSensorAdaption(CFGAPP_XZCE state, CFGAFE_XZC_POLARITY polarity, CFGAFE_XZC value, CFGAPP_ADRAIN3 rangeShift)
 {
   uint8_t retVal = 0;
+  retVal += cfg<CFGAPP_XZCE>(CFGAPP, CFGAPP_XZCE_MASK, state);
   retVal += cfg<CFGAFE_XZC_POLARITY>(CFGAFE, CFGAFE_XZC_POLARITY_MASK, polarity);
   retVal += cfg<CFGAFE_XZC>(CFGAFE, CFGAFE_XZC_MASK, value);
   retVal += cfg<CFGAPP_ADRAIN3>(CFGAPP, CFGAPP_ADRAIN3_MASK, rangeShift);
   return retVal;
 }
 
-uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode, CFGAPP_ADREF refVoltage)
+uint8_t ZSC31050::setBridgeMode(CFGAPP_BSP polarity, CFGAPP_CSBE excitationMode, CFGAPP_ADREF refVoltage, ADJREF_CSB current)
 {
   uint8_t retVal = 0;
   retVal += cfg<CFGAPP_BSP>(CFGAPP, CFGAPP_BSP_MASK, polarity);
   retVal += cfg<CFGAPP_CSBE>(CFGAPP, CFGAPP_CSBE_MASK, excitationMode);
   retVal += cfg<CFGAPP_ADREF>(CFGAPP, CFGAPP_ADREF_MASK, refVoltage);
+  retVal += cfg<ADJREF_CSB>(ADJREF, ADJREF_CSB_MASK, current);
   return retVal;
 }
 
@@ -48,7 +45,7 @@ uint8_t ZSC31050::setTempSensorAdaptionT1(CFGTMP_TAM1 senType, CFGTMP_GAINT1 gai
   return retVal;
 }
 
-uint8_t ZSC31050::setTempSensorAdaptionT2(CFGCYC_T2E state, CFGTMP_TAM2 senType, CFGTMP_GAINT2 gain, CFGTMP_ZCT2 zeroPointAdj, CFGTMP_PETS2 polarity , CFGAPP_IN3M mode)
+uint8_t ZSC31050::setTempSensorAdaptionT2(CFGCYC_T2E state, CFGTMP_TAM2 senType, CFGTMP_GAINT2 gain, CFGTMP_ZCT2 zeroPointAdj, CFGTMP_PETS2 polarity, CFGAPP_IN3M mode)
 {
   uint8_t retVal = 0;
   retVal += cfg<CFGCYC_T2E>(CFGCYC, CFGCYC_T2E_MASK, state);
@@ -57,6 +54,17 @@ uint8_t ZSC31050::setTempSensorAdaptionT2(CFGCYC_T2E state, CFGTMP_TAM2 senType,
   retVal += cfg<CFGTMP_ZCT2>(CFGTMP, CFGTMP_ZCT2_MASK, zeroPointAdj);
   retVal += cfg<CFGTMP_PETS2>(CFGTMP, CFGTMP_PETS2_MASK, polarity);
   retVal += cfg<CFGAPP_IN3M>(CFGAPP, CFGAPP_IN3M_MASK, mode);
+  return retVal;
+}
+
+uint8_t ZSC31050::setOutputConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGCYC_ACOS2 IO1, CFGOUT_PMIO1 IO1Mode, CFGOUT_PMIO2 IO2Mode)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGCYC_ACOS1>(CFGCYC, CFGCYC_ACOS1_MASK, out);
+  retVal += cfg<CFGOUT_COS1>(CFGOUT, CFGOUT_COS1_MASK, outMode);
+  retVal += cfg<CFGCYC_ACOS2>(CFGCYC, CFGCYC_ACOS2_MASK, IO1);
+  retVal += cfg<CFGOUT_PMIO1>(CFGOUT, CFGOUT_PMIO1_MASK, IO1Mode);
+  retVal += cfg<CFGOUT_PMIO2>(CFGOUT, CFGOUT_PMIO2_MASK, IO2Mode);
   return retVal;
 }
 
@@ -79,15 +87,63 @@ uint8_t ZSC31050::setAlarm(CFGOUT_AWME windowMode, CFGOUT_APO1 polarity1, CFGOUT
   return retVal;
 }
 
-uint8_t ZSC31050::setOutputConfiguration(CFGCYC_ACOS1 out, CFGOUT_COS1 outMode, CFGCYC_ACOS2 IO1, CFGOUT_PMIO1 IO1Mode, CFGOUT_PMIO2 IO2Mode)
+uint8_t ZSC31050::setApplication(CFGAPP_VDCE analogVoltageCtrl, CFGAPP_VDC analogVoltageCoarse, ADJREF_VDCA analogVoltageFine, CFGCYC_PMC averaging, CFGCYC_ROMCHE romCheck, CFGCYC_CMVE cmve, CFGAPP_SCCD connectionCheck)
 {
   uint8_t retVal = 0;
-  retVal += cfg<CFGCYC_ACOS1>(CFGCYC, CFGCYC_ACOS1_MASK, out);
-  retVal += cfg<CFGOUT_COS1>(CFGOUT, CFGOUT_COS1_MASK, outMode);
-  retVal += cfg<CFGCYC_ACOS2>(CFGCYC, CFGCYC_ACOS2_MASK, IO1);
-  retVal += cfg<CFGOUT_PMIO1>(CFGOUT, CFGOUT_PMIO1_MASK, IO1Mode);
-  retVal += cfg<CFGOUT_PMIO2>(CFGOUT, CFGOUT_PMIO2_MASK, IO2Mode);
+  retVal += cfg<CFGAPP_VDCE>(CFGAPP, CFGAPP_VDCE_MASK, analogVoltageCtrl);
+  retVal += cfg<CFGAPP_VDC>(CFGAPP, CFGAPP_VDC_MASK, analogVoltageCoarse);
+  retVal += cfg<ADJREF_VDCA>(ADJREF, ADJREF_VDCA_MASK, analogVoltageFine);
+  retVal += cfg<CFGCYC_PMC>(CFGCYC, CFGCYC_PMC_MASK, averaging);
+  retVal += cfg<CFGCYC_ROMCHE>(CFGCYC, CFGCYC_ROMCHE_MASK, romCheck);
+  retVal += cfg<CFGCYC_CMVE>(CFGCYC, CFGCYC_CMVE_MASK, cmve);
+  retVal += cfg<CFGAPP_SCCD>(CFGAPP, CFGAPP_SCCD_MASK, connectionCheck);
   return retVal;
+}
+
+uint8_t ZSC31050::setClock(CFGAPP_ECLKE clkEnable)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGAPP_ECLKE>(CFGAPP, CFGAPP_ECLKE_MASK, clkEnable);
+  return retVal;
+}
+
+uint8_t ZSC31050::setChipAdjust(ADJREF_VREF val, ADJREF_BCUR biasCurrent, CFGAPP_OSCF oscFreqCoarse, ADJREF_OSCA oscFreqFine, CFGOUT_VFCCLKD clkDiv)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<ADJREF_VREF>(ADJREF, ADJREF_VREF_MASK, val);
+  retVal += cfg<ADJREF_BCUR>(ADJREF, ADJREF_BCUR_MASK, biasCurrent);
+  retVal += cfg<CFGAPP_OSCF>(CFGAPP, CFGAPP_OSCF_MASK, oscFreqCoarse);
+  retVal += cfg<ADJREF_OSCA>(ADJREF, ADJREF_OSCA_MASK, oscFreqFine);
+  retVal += cfg<CFGOUT_VFCCLKD>(CFGOUT, CFGOUT_VFCCLKD_MASK, clkDiv);
+  return retVal;
+}
+
+uint8_t ZSC31050::setSecondI2CAddr(uint8_t addr = 0x79, CFGSIF_SIFID2E enable = SIFID2E_DISABLED)
+{
+	if(addr < 0x07 || addr > 0x7F) {
+		return 255;
+	}
+	addr <<= 9;
+	uint8_t retVal = 0;
+  retVal += cfg<uint8_t>(CFGSIF, CFGSIF_SIFID2_MASK, addr);
+  retVal += cfg<CFGSIF_SIFID2E>(CFGSIF, CFGSIF_SIFID2E_MASK, enable);
+  return retVal;
+}
+
+uint8_t ZSC31050::setSIFOut(CFGSIF_SIFOUTP outP, CFGSIF_SIFOUTT1 outT1, CFGSIF_SIFOUTT2 outT2)
+{
+  uint8_t retVal = 0;
+  retVal += cfg<CFGSIF_SIFOUTP>(CFGSIF, CFGSIF_SIFOUTP_MASK, outP);
+  retVal += cfg<CFGSIF_SIFOUTT1>(CFGSIF, CFGSIF_SIFOUTT1_MASK, outT1);
+  retVal += cfg<CFGSIF_SIFOUTT2>(CFGSIF, CFGSIF_SIFOUTT2_MASK, outT2);
+  return retVal;
+}
+
+uint8_t ZSC31050::saveConfig(void)
+{
+  uint8_t retVal = cmd(COPY_RAM2EEP);
+  delay(500);
+  return ;
 }
 
 void ZSC31050::readOutput(void)
@@ -137,13 +193,6 @@ uint8_t ZSC31050::setMode(Mode mode)
     default:
       return 4;
   }
-}
-
-uint8_t ZSC31050::saveConfig(void)
-{
-  uint8_t retVal = cmd(COPY_RAM2EEP);
-  delay(500);
-  return ;
 }
 
 // ****** END of user functions ******* //

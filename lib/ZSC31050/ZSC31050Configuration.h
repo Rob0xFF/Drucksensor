@@ -28,7 +28,7 @@
 #define CFGAPP_CSBE_MASK 0x0100
 #define CFGAPP_XZCE_MASK 0x0080
 #define CFGAPP_OSCF_MASK 0x0060
-#define CFGAPP_ECLCE_MASK 0x0010
+#define CFGAPP_ECLKE_MASK 0x0010
 #define CFGAPP_ADREF_MASK 0x0008
 #define CFGAPP_VDC_MASK 0x0006
 #define CFGAPP_VDCE_MASK 0x0001
@@ -176,8 +176,8 @@ enum CFGSIF_SIFID2E {
 * @brief ZSC31050 Bridge signal polarity
 */
 enum CFGAPP_BSP {
-  BSP_POSITIVE = 0x00 << 15,
-  BSP_NEGATIVE = 0x01 << 15
+  BSP_POSITIVE = 0x0 << 15,
+  BSP_NEGATIVE = 0x1 << 15
 };
 
 /*!
@@ -187,7 +187,7 @@ enum CFGAPP_ADRAIN3 {
   ADRAIN3_15_16 = 0b00 << 12,
   ADRAIN3_7_8 = 0b01 << 12,
   ADRAIN3_3_4 = 0b10 << 12,
-  ADRAIN3_1_2 = 0b00 << 12
+  ADRAIN3_1_2 = 0b11 << 12
 };
 
 /*!
@@ -237,8 +237,8 @@ enum CFGAPP_OSCF {
 * @brief ZSC31050 enable external clock
 */
 enum CFGAPP_ECLKE {
-  ECLKE_DISABLED = 0b00 << 4,
-  ECLKE_ENABLED = 0b01 << 4
+  ECLKE_DISABLED = 0b0 << 4,
+  ECLKE_ENABLED = 0b1 << 4
 };
 
 /*!
@@ -263,8 +263,8 @@ enum CFGAPP_VDC {
 * @brief ZSC31050 analog voltage control (internal controller /w external transistor)
 */
 enum CFGAPP_VDCE {
-  VDCE_DISABLED = 0b00,
-  VDCE_ENABLED = 0b01
+  VDCE_DISABLED = 0b0,
+  VDCE_ENABLED = 0b1
 };
 
 /*!
@@ -307,38 +307,38 @@ enum CFGAFE_XZC_POLARITY {
 };
 
 enum CFGAFE_XZC {
-	XZC_0 = 0b00000 << 4,
-	XZC_1 = 0b00001 << 4,
-	XZC_2 = 0b00010 << 4,
-	XZC_3 = 0b00011 << 4,
-	XZC_4 = 0b00100 << 4,
-	XZC_5 = 0b00101 << 4,
-	XZC_6 = 0b00110 << 4,
-	XZC_7 = 0b00111 << 4,
-	XZC_8 = 0b01000 << 4,
-	XZC_9 = 0b01001 << 4,
-	XZC_10 = 0b01010 << 4,
-	XZC_11 = 0b01011 << 4,
-	XZC_12 = 0b01100 << 4,
-	XZC_13 = 0b01101 << 4,
-	XZC_14 = 0b01110 << 4,
-	XZC_15 = 0b01111 << 4,
-	XZC_16 = 0b10000 << 4,
-	XZC_17 = 0b10001 << 4,
-	XZC_18 = 0b10010 << 4,
-	XZC_19 = 0b10011 << 4,
-	XZC_20 = 0b10100 << 4,
-	XZC_21 = 0b10101 << 4,
-	XZC_22 = 0b10110 << 4,
-	XZC_23 = 0b10111 << 4,	
-	XZC_24 = 0b11000 << 4,
-	XZC_25 = 0b11001 << 4,
-	XZC_26 = 0b11010 << 4,
-	XZC_27 = 0b11011 << 4,
-	XZC_28 = 0b11100 << 4,
-	XZC_29 = 0b11101 << 4,
-	XZC_30 = 0b11110 << 4,
-	XZC_31 = 0b11111 << 4
+  XZC_0 = 0b00000 << 4,
+  XZC_1 = 0b00001 << 4,
+  XZC_2 = 0b00010 << 4,
+  XZC_3 = 0b00011 << 4,
+  XZC_4 = 0b00100 << 4,
+  XZC_5 = 0b00101 << 4,
+  XZC_6 = 0b00110 << 4,
+  XZC_7 = 0b00111 << 4,
+  XZC_8 = 0b01000 << 4,
+  XZC_9 = 0b01001 << 4,
+  XZC_10 = 0b01010 << 4,
+  XZC_11 = 0b01011 << 4,
+  XZC_12 = 0b01100 << 4,
+  XZC_13 = 0b01101 << 4,
+  XZC_14 = 0b01110 << 4,
+  XZC_15 = 0b01111 << 4,
+  XZC_16 = 0b10000 << 4,
+  XZC_17 = 0b10001 << 4,
+  XZC_18 = 0b10010 << 4,
+  XZC_19 = 0b10011 << 4,
+  XZC_20 = 0b10100 << 4,
+  XZC_21 = 0b10101 << 4,
+  XZC_22 = 0b10110 << 4,
+  XZC_23 = 0b10111 << 4,
+  XZC_24 = 0b11000 << 4,
+  XZC_25 = 0b11001 << 4,
+  XZC_26 = 0b11010 << 4,
+  XZC_27 = 0b11011 << 4,
+  XZC_28 = 0b11100 << 4,
+  XZC_29 = 0b11101 << 4,
+  XZC_30 = 0b11110 << 4,
+  XZC_31 = 0b11111 << 4
 };
 
 /*!
@@ -483,8 +483,8 @@ enum CFGOUT_PWMPO1 {
 * @brief ZSC31050 clock divider for A/D converter
 */
 enum CFGOUT_VFCCLKD {
-  VFCCLKD_1 = 0b00 << 8,
-  VFCCLKD_2 = 0b01 << 8
+  VFCCLKD_1 = 0b0 << 8,
+  VFCCLKD_2 = 0b1 << 8
 };
 
 /*!
