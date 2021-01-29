@@ -18,7 +18,7 @@ class ZSC31050
     ZSC31050(uint8_t i2cAddr) : _i2cAddr(i2cAddr)
     {
       setMode(COMMAND_MODE);
-      cmd(CFG_SIF_TO_I2C);
+      setInterface(I2C);
     };
 
     /*!
@@ -205,6 +205,32 @@ class ZSC31050
     float getTemperature(void);
 
     /*!
+    * @brief set working mode of the ZSC31050
+    * @param one of the three working modes defined in Mode
+    * @return (from Wire.endTransmission)
+    * @return 0 - success
+    * @return 1 - data too long to fit in transmit buffer
+    * @return 2 - received NACK on transmit of address
+    * @return 3 - received NACK on transmit of data
+    * @return 4 - other error
+    * @return 5 - tried to switch from normal mode to command or open mode (the device is stuck into normal mode once started)
+    */
+    uint8_t setMode(Mode mode);
+
+    /*!
+    * @brief set serial interface of the ZSC31050
+    * @param Interface: OWI, SPI1, SPI2, SPI3, SPI4, I2C
+    * @return (from Wire.endTransmission)
+    * @return 0 - success
+    * @return 1 - data too long to fit in transmit buffer
+    * @return 2 - received NACK on transmit of address
+    * @return 3 - received NACK on transmit of data
+    * @return 4 - other error
+    * @return 5 - tried to switch from normal mode to command or open mode (the device is stuck into normal mode once started)
+    */
+    uint8_t setInterface(Interface interface);
+
+    /*!
     * @brief set DAC Output to desired value
     * @param DAC value [0, 0x7FF]
     * @return (from Wire.endTransmission)
@@ -217,17 +243,16 @@ class ZSC31050
     uint8_t forceDACOutput(uint16_t val);
 
     /*!
-    * @brief set working mode of the ZSC31050
-    * @param one of the three working modes defined in Mode
+    * @brief set calibration output
+    * @param Calibration Output: START_AD_P, START_AD_T1, START_AD_T2, START_AD_PAZ, START_AD_TAZ1, START_AD_TAZ2, START_AD_P_AZC, START_AD_T1_AZC,  TART_AD_T2_AZC, START_AD_CMV_AZC
     * @return (from Wire.endTransmission)
     * @return 0 - success
     * @return 1 - data too long to fit in transmit buffer
     * @return 2 - received NACK on transmit of address
     * @return 3 - received NACK on transmit of data
     * @return 4 - other error
-    * @return 5 - tried to switch from normal mode to command or open mode (the device is stuck into normal mode once started)
     */
-    uint8_t setMode(Mode mode);
+    uint8_t startCalibrationOutput(Calibration output);
 
   private:
 
@@ -254,12 +279,9 @@ class ZSC31050
 
     template <typename cfgType> uint8_t cfg(uint8_t addr, uint16_t mask, cfgType val);
 
-    uint8_t read8(void);
     uint16_t read16(void);
-    uint32_t read32(void);
     uint64_t read48(void);
 
-    uint16_t FSB16(uint16_t val);
 
 };
 #endif

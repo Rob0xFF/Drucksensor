@@ -67,14 +67,6 @@
 #define ADJREF_BCUR_MASK 0x0070
 #define ADJREF_VREF_MASK 0x000F
 
-/*!
-* @brief ZSC31050 working mode selector
-*/
-enum Mode {
-  OPEN_MODE,
-  NORMAL_MODE,
-  COMMAND_MODE
-};
 
 /*!
 * @brief ZSC31050 Count of bridge measurements per cycle (averaging)
@@ -611,6 +603,43 @@ enum ADJREF_VREF {
   VREF_10 = 0b1010,
   VREF_11 = 0b1011,
   VREF_12 = 0b1100,
+};
+
+/*!
+* @brief ZSC31050 working mode selector
+*/
+enum Mode {
+  OPEN_MODE,
+  NORMAL_MODE,
+  COMMAND_MODE
+};
+
+/*!
+* @brief ZSC31050 Interface
+*/
+enum Interface {
+  OWI = 0x50,
+	SPI1 = 0x51,
+	SPI2 = 0x55,
+	SPI3 = 0x59,
+	SPI4 = 0x5D,
+	I2C = 0x52
+};
+
+/*!
+* @brief ZSC31050 Calibration Output
+*/
+enum Calibration {
+  START_AD_P = 0xD0,
+  START_AD_T1 = 0xD1,
+  START_AD_T2 = 0xD2,
+  START_AD_PAZ = 0xD4,
+  START_AD_TAZ1 = 0xD5,
+  START_AD_TAZ2 = 0xD6,
+  START_AD_P_AZC = 0xD8,
+  START_AD_T1_AZC = 0xD9,
+  START_AD_T2_AZC = 0xDA,
+  START_AD_CMV_AZC = 0xDB
 };
 
 

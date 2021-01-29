@@ -143,7 +143,7 @@ uint8_t ZSC31050::saveConfig(void)
 {
   uint8_t retVal = cmd(COPY_RAM2EEP);
   delay(500);
-  return ;
+  return retVal;
 }
 
 void ZSC31050::readOutput(void)
@@ -195,6 +195,16 @@ uint8_t ZSC31050::setMode(Mode mode)
   }
 }
 
+uint8_t ZSC31050::setInterface(Interface interface)
+{
+  return cmd(interface, 50);
+}
+
+uint8_t ZSC31050::startCalibrationOutput(Calibration output)
+{
+  return cmd(output, 50);
+}
+
 // ****** END of user functions ******* //
 
 uint8_t ZSC31050::cmd(uint8_t cmd, uint16_t delay)
@@ -223,15 +233,6 @@ template <typename cfgType> uint8_t ZSC31050::cfg(uint8_t addr, uint16_t mask, c
   return cmd(addr + WRITE_RAM_OFFS, WRITE_RAM_DELAY, (read16() & ~mask) | val);
 }
 
-uint8_t ZSC31050::read8(void)
-{
-  uint8_t retVal = 0;
-  Wire.beginTransmission(_i2cAddr);
-  Wire.requestFrom(_i2cAddr, (uint8_t) 1);
-  retVal = Wire.read();
-  return retVal;
-}
-
 uint16_t ZSC31050::read16(void)
 {
   uint16_t retVal = 0;
@@ -239,21 +240,6 @@ uint16_t ZSC31050::read16(void)
   Wire.requestFrom(_i2cAddr, (uint8_t) 2);
   retVal = Wire.read();
   retVal <<= 8;
-  retVal |= Wire.read();
-  return retVal;
-}
-
-uint32_t ZSC31050::read32(void)
-{
-  uint32_t retVal = 0;
-  Wire.beginTransmission(_i2cAddr);
-  Wire.requestFrom(_i2cAddr, (uint8_t) 4);
-  retVal = Wire.read();
-  retVal <<= 8L;
-  retVal |= Wire.read();
-  retVal <<= 8L;
-  retVal |= Wire.read();
-  retVal <<= 8L;
   retVal |= Wire.read();
   return retVal;
 }

@@ -33,7 +33,7 @@ int main(void)
   Timer1.attachInterrupt(tickTock);
   for (;;) {
     if (tick) {
-      board -> update();
+      //board -> update();
       tick = TOCK;
     }
     if (Serial.available()) {
