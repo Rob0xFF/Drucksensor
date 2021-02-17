@@ -5,12 +5,17 @@
 #include "Wire.h"
 #include "ZSC31050.h"
 #include "ZSC31050Serial.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_SSD1306.h"
 
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET -1
+#include <stdint.h>
+#include <util/delay.h>
+#include <avr/io.h>
+#include <display.h>
+#include <new.h>
+#include <Adafruit_FT6206.h>
+#include <HIH61XX.h>
+#include <INA226.h>
+#include <EEPROM.h>
+
 
 class Board
 {
@@ -24,15 +29,32 @@ class Board
 
     void update(void);
 
-		ZSC31050Serial extSerial = ZSC31050Serial();
+ 		ZSC31050Serial extSerial = ZSC31050Serial();
 
-		ZSC31050 pressureSensor = ZSC31050(0x78);
+ 		ZSC31050 pressureSensor = ZSC31050(0x78);
 
-		Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+     Adafruit_FT6206 touchScreen = Adafruit_FT6206();
+ 
+		Display TFT = Display();
+
+  	INA226 voltageSensor = INA226();
+
+    HIH61XX HIH = HIH61XX(0x27, 255);
+
+		float temperature = 0.0;
+
+		float humidity = 0.0;
+
+		float bridgeVoltage = 0.0;
+
+		float voltage = 0.0;
+
+		uint16_t rawPressure = 0;
+
+		float pressureSI = 0.0;
 
   private:
 
-    HardwareSerial & serialHandler;
 
 };
 #endif

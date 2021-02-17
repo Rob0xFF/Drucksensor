@@ -2,32 +2,24 @@
 
 void Board::begin(void)
 {
-  pressureSensor.setBridgeSensorAdaption(GAIN_14);
-  pressureSensor.setBridgeMode(BSP_NEGATIVE);
-	pressureSensor.setOutputConfiguration(ACOS1_MEASURAND, COS1_VOLTAGE, ACOS2_MEASURAND, PMIO1_PWM1);
-	pressureSensor.setPWM(PWMRES_11BIT, PWMD_1, PWMPO1_HIGH);
-	pressureSensor.setApplication(VDCE_DISABLED);
-	pressureSensor.setChipAdjust(VREF_8, BCUR_0, OSCF_4MHZ);
-	pressureSensor.start();
-	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-	display.clearDisplay();
-	display.display();
-	display.setTextSize(1);
-	display.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
-	display.cp437(true);
+	HIH.start();
+  voltageSensor.begin();
+  voltageSensor.configure(INA226_AVERAGES_128, INA226_BUS_CONV_TIME_1100US, INA226_SHUNT_CONV_TIME_1100US, INA226_MODE_SHUNT_BUS_CONT);
+  voltageSensor.calibrate(0.1, 0.1);
+  TFT.begin();
+	touchScreen.begin();
+  TFT.setRotation(1);
+  TFT.fillScreen(0x0000);
 }
 
 void Board::update(void)
 {
-	if(!extSerial.isBusy()) {
-		pressureSensor.readOutput();
-		float pressure = pressureSensor.getPressure();
-		display.clearDisplay();
-		display.setCursor(10,10);
-		display.print(pressure / 1000.0F);
-		display.println(" kPa");
-		display.print(pressure / 133.322F);
-		display.println(" mmHg");
-		display.display();
-	}
+  HIH.update();
+  temperature = HIH.temperature();
+  humidity = HIH.humidity() * 100.0;
+  pressureSensor.readOutput();
+ 	pressureSI = pressureSensor.getPressure();
+ 	rawPressure = pressureSensor.getRawPressure();
+	bridgeVoltage = voltageSensor.readBusVoltage();
+	voltage = voltageSensor.readShuntVoltage() * 1000.0;
 }

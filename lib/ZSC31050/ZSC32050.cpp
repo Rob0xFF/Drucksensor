@@ -154,6 +154,11 @@ void ZSC31050::readOutput(void)
   _P = (uint16_t) ((readout & 0xFFFF00000000LL) >> 32LL);
 }
 
+uint16_t ZSC31050::getRawPressure(void)
+{
+  return _P;
+}
+
 float ZSC31050::getPressure(void)
 {
   return _pressSlope * _P + _pressOffset;
@@ -231,6 +236,9 @@ template <typename cfgType> uint8_t ZSC31050::cfg(uint8_t addr, uint16_t mask, c
 {
   cmd(addr + READ_RAM_OFFS, READ_RAM_DELAY);
   return cmd(addr + WRITE_RAM_OFFS, WRITE_RAM_DELAY, (read16() & ~mask) | val);
+// 	cmd(addr + READ_RAM_OFFS, READ_RAM_DELAY);
+// 	Serial.println(read16(), BIN);
+// 	return retVal;
 }
 
 uint16_t ZSC31050::read16(void)

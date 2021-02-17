@@ -5,10 +5,10 @@ uint8_t ZSC31050Serial::parseSerialCommand(void)
   busy = 1;
   while (Serial.available()) {
     serialCommand[serialCommandIndex] = Serial.read();
-    if (serialCommand[serialCommandIndex] == firstValidChar) {
-      serialCommandIndex = 0;
-      serialCommand[0] = firstValidChar;
-    }
+//     if (serialCommand[serialCommandIndex] == firstValidChar) {
+//       serialCommandIndex = 0;
+//       serialCommand[0] = firstValidChar;
+//     }
     if (serialCommand[serialCommandIndex] == CR || serialCommand[serialCommandIndex] == COLON) {
       serialCommandIndex = 0;
       return 1;

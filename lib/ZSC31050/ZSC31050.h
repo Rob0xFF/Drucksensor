@@ -17,8 +17,8 @@ class ZSC31050
     */
     ZSC31050(uint8_t i2cAddr) : _i2cAddr(i2cAddr)
     {
-      setMode(COMMAND_MODE);
-      setInterface(I2C);
+//       setMode(COMMAND_MODE);
+//       setInterface(I2C);
     };
 
     /*!
@@ -191,6 +191,12 @@ class ZSC31050
     * @brief read ZSC31050 output register and store values to _P, _T1, _T2
     */
     void readOutput(void);
+
+    /*!
+    * @brief get pressure output
+    * @return pressure in ZSC units
+    */
+    uint16_t getRawPressure(void);
 
     /*!
     * @brief get pressure in SI unit (Pascal)
