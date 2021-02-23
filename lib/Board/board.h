@@ -49,9 +49,13 @@ class Board
 
 		float voltage = 0.0;
 
-		uint16_t rawPressure = 0;
+		int16_t rawP;
 
-		float pressureSI = 0.0;
+		int16_t correctedP;
+
+		float correctedP_SI;
+
+		int16_t rawT1;
 
   private:
 

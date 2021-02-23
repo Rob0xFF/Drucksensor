@@ -146,27 +146,37 @@ uint8_t ZSC31050::saveConfig(void)
   return retVal;
 }
 
-void ZSC31050::readOutput(void)
+int16_t ZSC31050::getRawPressure(void)
 {
-  uint64_t readout = read48();
-  _T2 = (uint16_t) (readout & 0xFFFFLL);
-  _T1 = (uint16_t) ((readout & 0xFFFF0000LL) >> 16LL);
-  _P = (uint16_t) ((readout & 0xFFFF00000000LL) >> 32LL);
+  startCalibrationOutput(START_AD_P_AZC);
+	delay(conversionTime);
+	readOutput();
+	memcpy(&rawP, &_P, sizeof(_P));
+	return rawP;
 }
 
-uint16_t ZSC31050::getRawPressure(void)
+uint16_t ZSC31050::getCorrectedPressure(void)
 {
-  return _P;
+	start();
+	delay(conversionTime);
+	readOutput();
+	memcpy(&correctedP, &_P, sizeof(_P));
+  return correctedP;
 }
 
 float ZSC31050::getPressure(void)
 {
-  return _pressSlope * _P + _pressOffset;
+	correctedP_SI = _pressSlope * correctedP + _pressOffset;
+  return correctedP_SI;
 }
 
-float ZSC31050::getTemperature(void)
+uint16_t ZSC31050::getRawTemperature1(void)
 {
-  return _tempSlope * _T1 + _tempOffset;
+  startCalibrationOutput(START_AD_T1_AZC);
+	delay(conversionTime);
+	readOutput();
+	rawT1 = _T1;
+	return rawT1;
 }
 
 uint8_t ZSC31050::forceDACOutput(uint16_t val)
@@ -269,4 +279,12 @@ uint64_t ZSC31050::read48(void)
   retVal <<= 8LL;
   retVal |= Wire.read();
   return retVal;
+}
+
+void ZSC31050::readOutput(void)
+{
+  uint64_t readout = read48();
+  _T2 = (uint16_t) (readout & 0xFFFFLL);
+  _T1 = (uint16_t) ((readout & 0xFFFF0000LL) >> 16LL);
+  _P = (uint16_t) ((readout & 0xFFFF00000000LL) >> 32LL);
 }

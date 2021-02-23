@@ -42,13 +42,46 @@ class Bridge
 
     int16_t _myY;
 
-    char bridgeVoltageStr[6] = "00.00";
+    char bridgeVoltageStr[10] = "00.00";
 
-    char voltageStr[5] = "0.00";
+    char voltageStr[10] = "0.00";
+
+		uint8_t bridgeVoltageTextWidth = 0;
+
+		uint8_t voltageTextWidth = 0;
 
 		float bridgeVoltage = 0.0;
 
 		float voltage = 0.0;
+};
+
+class OutputBox
+{
+	public:
+
+    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, int16_t & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), myVal(val) {};
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+		int16_t & myVal; 
+
+  private:
+
+		int16_t currentVal;
+
+		char valueStr[7] = " ";
+
+		uint8_t textWidth = 0;
+
+    int16_t _myX;
+
+    int16_t _myY;
+
+		const char * _myCaption;
 };
 
 class rButton

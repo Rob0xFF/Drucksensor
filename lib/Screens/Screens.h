@@ -53,9 +53,9 @@ class ScreenHeader
 
     void update(void);
 
-  private:
-
     Board & board;
+
+  private:
 
     char tempStr[5] = "10.0";
     char humStr[5] = "10.0";
@@ -75,11 +75,23 @@ class MainScreen
 
     void update(void);
 
+    Board & board;
+
 		Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
+		
+		OutputBox rawPressureBox = OutputBox(board, xCoord(1), yCoord(2), "P (RAW)", board.rawP);
+
+		OutputBox correctedPressureBox = OutputBox(board, xCoord(1), yCoord(3), "P (CORRECTED)", board.correctedP);
+
+		OutputBox rawTemperature1Box = OutputBox(board, xCoord(1), yCoord(4), "T1 (RAW)", board.rawT1);
+
+		pButton adaptionButton = pButton(board, "Adaption", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+
+		pButton correctionButton = pButton(board, "Correction", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+
+		pButton outputButton = pButton(board, "Output", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
   private:
-
-    Board & board;
 
     char rawPressureStr[5] = "10.0";
 

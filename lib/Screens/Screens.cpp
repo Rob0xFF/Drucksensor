@@ -40,9 +40,18 @@ void ScreenHeader::update(void)
 void MainScreen::show(void)
 {
 	bridge.show();
+	rawPressureBox.show();
+	correctedPressureBox.show();
+	rawTemperature1Box.show();
+	adaptionButton.show();
+	correctionButton.show();
+	outputButton.show();
 }
 
 void MainScreen::update(void)
 {
-	//bridge.update();
+	bridge.update();
+	rawPressureBox.update();
+	correctedPressureBox.update();
+	rawTemperature1Box.update();
 }

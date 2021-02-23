@@ -67,11 +67,11 @@ int main(void)
       myGUI.updateTouch();
       touched = IS_RELEASED;
     }
-    //if (Serial.available()) {
-      //if (board -> extSerial.parseSerialCommand()) {
-      //  board -> extSerial.handleSerialCommand();
-      //}
-    //}
+    if (Serial.available()) {
+      if (myGUI.board.extSerial.parseSerialCommand()) {
+        myGUI.board.extSerial.handleSerialCommand();
+      }
+    }
   }
   return 0;
 }

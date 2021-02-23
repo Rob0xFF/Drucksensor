@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "Wire.h"
+#include "new.h"
 
 #define ACK 0x06
 #define CR 0x0D

@@ -1,5 +1,13 @@
 #include <ZSC31050Serial.h>
 
+void operator delete(void * ptr, size_t size){
+ free(ptr);
+}
+
+void operator delete[](void * ptr, size_t size){
+ free(ptr);
+}   
+
 uint8_t ZSC31050Serial::parseSerialCommand(void)
 {
   busy = 1;
@@ -37,14 +45,14 @@ void ZSC31050Serial::handleSerialCommand(void)
       Serial.write(LF);
     }
     if (serialCommand[1] == 'R' || serialCommand[1] == 'r') {
-      uint8_t result[decchar2int(5, 3)];
-      Wire.requestFrom(hexchar2int(3, 2), decchar2int(5, 3));
+      uint8_t result[16];
+      Wire.requestFrom(hexchar2int(3, 2), (uint8_t) decchar2int(5, 3));
       for (uint16_t i = 0; i < decchar2int(5, 3); i++) {
         result[i] = Wire.read();
       }
       Serial.write(ACK);
       for (uint16_t i = 0; i < decchar2int(5, 3); i++) {
-        char tmp[2];
+        char tmp[3];
         sprintf(tmp, "%02X", result[i]);
         Serial.print(tmp);
       }
@@ -86,18 +94,21 @@ uint8_t ZSC31050Serial::isBusy(void)
 
 uint8_t ZSC31050Serial::hexchar2int(uint8_t start, uint8_t length)
 {
+  //char *buf = new char[length + 1];
   char buf[length + 1];
   memcpy(buf, & serialCommand[start], length);
-  buf[length + 1] = '\0';
+  buf[length] = '\0';
   uint8_t retVal = (uint8_t) strtol(buf, NULL, 16);
   return retVal;
 }
 
 uint16_t ZSC31050Serial::decchar2int(uint8_t start, uint8_t length)
 {
-  char buf[length + 1];
+  //char *buf = new char[length + 1];
+	char buf[length + 1];
   memcpy(buf, & serialCommand[start], length);
-  buf[length + 1] = '\0';
+  buf[length] = '\0';
   uint16_t retVal = (uint16_t) strtol(buf, NULL, 10);
+	//delete & buf;
   return retVal;
 }

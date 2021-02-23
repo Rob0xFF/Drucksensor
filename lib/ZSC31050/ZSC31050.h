@@ -17,8 +17,7 @@ class ZSC31050
     */
     ZSC31050(uint8_t i2cAddr) : _i2cAddr(i2cAddr)
     {
-//       setMode(COMMAND_MODE);
-//       setInterface(I2C);
+//      setInterface(I2C);
     };
 
     /*!
@@ -188,15 +187,16 @@ class ZSC31050
     uint8_t saveConfig(void);
 
     /*!
-    * @brief read ZSC31050 output register and store values to _P, _T1, _T2
+    * @brief get amplified pressure output
+    * @return pressure in ZSC units
     */
-    void readOutput(void);
+    int16_t getRawPressure(void);
 
     /*!
     * @brief get pressure output
     * @return pressure in ZSC units
     */
-    uint16_t getRawPressure(void);
+    uint16_t getCorrectedPressure(void);
 
     /*!
     * @brief get pressure in SI unit (Pascal)
@@ -205,10 +205,10 @@ class ZSC31050
     float getPressure(void);
 
     /*!
-    * @brief get temperature in °C
-    * @return temperature in °C
+    * @brief get amplified T1 output
+    * @return T1 in ZSC units
     */
-    float getTemperature(void);
+    uint16_t getRawTemperature1(void);
 
     /*!
     * @brief set working mode of the ZSC31050
@@ -266,19 +266,25 @@ class ZSC31050
 
     Mode _mode;
 
-    uint16_t _P;
+    int16_t _P;
 
-    uint16_t _T1;
+    int16_t _T1;
 
-    uint16_t _T2;
+    int16_t _T2;
+
+		int16_t rawP;
+
+		int16_t correctedP;
+
+		float correctedP_SI;
+
+		int16_t rawT1;
 
     float _pressSlope = 1.2129015F;
 
     float _pressOffset = -1.552121F;
 
-    float _tempSlope = 1;
-
-    float _tempOffset = 0;
+		uint8_t conversionTime = 23;
 
     uint8_t cmd(uint8_t cmd, uint16_t delay);
     uint8_t cmd(uint8_t cmd, uint16_t delay, uint16_t arg);
@@ -287,6 +293,7 @@ class ZSC31050
 
     uint16_t read16(void);
     uint64_t read48(void);
+    void readOutput(void);
 
 
 };

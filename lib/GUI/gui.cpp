@@ -12,6 +12,17 @@ void GUI::update(void)
 {
   board.update();
 	screenheader.update();
+  switch (currentScreen) {
+    case 0: //MainMenu
+			mainScreen.update();
+      break;
+    case 1: 
+      break;
+    case 2: 
+      break;
+    case 3: 
+      break;
+  }
 }
 
 void GUI::fastUpdate(void)
