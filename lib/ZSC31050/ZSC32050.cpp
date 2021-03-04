@@ -164,12 +164,6 @@ uint16_t ZSC31050::getCorrectedPressure(void)
   return correctedP;
 }
 
-float ZSC31050::getPressure(void)
-{
-	correctedP_SI = _pressSlope * correctedP + _pressOffset;
-  return correctedP_SI;
-}
-
 uint16_t ZSC31050::getRawTemperature1(void)
 {
   startCalibrationOutput(START_AD_T1_AZC);
@@ -218,6 +212,22 @@ uint8_t ZSC31050::setInterface(Interface interface)
 uint8_t ZSC31050::startCalibrationOutput(Calibration output)
 {
   return cmd(output, 50);
+}
+
+uint8_t ZSC31050::setRegister(Register rg, uint16_t content, uint8_t includeEEPROM)
+{
+	uint8_t retVal = 0;
+  retVal += cmd(rg + WRITE_RAM_OFFS, WRITE_RAM_DELAY, content);
+	if(includeEEPROM) {
+		retVal += cmd(rg + WRITE_EEPROM_OFFS, WRITE_EEPROM_DELAY, content);
+	}
+	return retVal;
+}
+
+uint16_t ZSC31050::getRegister(Register rg)
+{
+	cmd(rg + READ_RAM_OFFS, READ_RAM_DELAY);
+  return read16();
 }
 
 // ****** END of user functions ******* //

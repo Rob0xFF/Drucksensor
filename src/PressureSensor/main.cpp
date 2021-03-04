@@ -50,7 +50,6 @@ int main(void)
 {
   init();
   initVariant();
-	Wire.begin();
 	Serial.begin(19200);
   myGUI.boot();
   // interupt on touchscreen event

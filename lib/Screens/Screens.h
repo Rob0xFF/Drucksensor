@@ -15,8 +15,10 @@
 #define TFT_GRAY 0x630C
 #define TFT_BROWN 0x1924
 #define TFT_OLIVE 0x234D
-#define TFT_GREEN 0x9DAA
-#define TFT_RED 0xD9E2
+#define TFT_GREEN 0x07C0
+#define TFT_RED 0xF920
+#define TFT_ORANGE 0xFE47
+#define TFT_BLUE 0x063F
 
 #define TOP_MARGIN 10
 #define GRIDX 44
@@ -79,17 +81,15 @@ class MainScreen
 
 		Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
 		
-		OutputBox rawPressureBox = OutputBox(board, xCoord(1), yCoord(2), "P (RAW)", board.rawP);
+		OutputBox pressureBox = OutputBox(board, xCoord(1), yCoord(2), " P REF (hPa) ", "%1.1f", board.mprPres);
 
-		OutputBox correctedPressureBox = OutputBox(board, xCoord(1), yCoord(3), "P (CORRECTED)", board.correctedP);
+		OutputBox pressureDiffBox = OutputBox(board, xCoord(1), yCoord(3), " P Diff (Pa) ", "%1.0f", board.mprPresDiff);
 
-		OutputBox rawTemperature1Box = OutputBox(board, xCoord(1), yCoord(4), "T1 (RAW)", board.rawT1);
+		pButton adaptionButton = pButton(board, "chipID", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
-		pButton adaptionButton = pButton(board, "Adaption", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+		pButton correctionButton = pButton(board, "ZSC Raw", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
-		pButton correctionButton = pButton(board, "Correction", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
-
-		pButton outputButton = pButton(board, "Output", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+		pButton outputButton = pButton(board, "Info", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
   private:
 

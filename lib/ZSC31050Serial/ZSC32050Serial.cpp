@@ -1,13 +1,5 @@
 #include <ZSC31050Serial.h>
 
-void operator delete(void * ptr, size_t size){
- free(ptr);
-}
-
-void operator delete[](void * ptr, size_t size){
- free(ptr);
-}   
-
 uint8_t ZSC31050Serial::parseSerialCommand(void)
 {
   busy = 1;
@@ -24,12 +16,14 @@ uint8_t ZSC31050Serial::parseSerialCommand(void)
       serialCommandIndex++;
     }
   }
-  busy = 0;
+	busy = 0;
   return 0;
 }
 
 void ZSC31050Serial::handleSerialCommand(void)
 {
+	busy = 1;
+	connected = 1;
   if (serialCommand[0] == 'I' || serialCommand[0] == 'i' ) {
     if (serialCommand[2] == 'T' || serialCommand[2] == 't') {
       delay(200);
@@ -69,9 +63,12 @@ void ZSC31050Serial::handleSerialCommand(void)
     Serial.write(LF);
   }
   if (serialCommand[0] == 'T' || serialCommand[0] == 't') {
-    if (serialCommand[1] != '_' && serialCommand[1] != 'W' && serialCommand[1] != 'w') {
+    if (serialCommand[1] != '_' && serialCommand[1] != 'W' && serialCommand[1] != 'w' && serialCommand[1] != '0') {
       triggerDelay = decchar2int(3, 3);
     }
+		if(serialCommand[1] == '0') {
+			connected = 0;
+		}
     Serial.write(ACK);
     Serial.write(CR);
     Serial.write(LF);
@@ -84,7 +81,7 @@ void ZSC31050Serial::handleSerialCommand(void)
       Serial.write(LF);
     }
   }
-  busy = 0;
+	busy = 0;
 }
 
 uint8_t ZSC31050Serial::isBusy(void)
@@ -92,23 +89,30 @@ uint8_t ZSC31050Serial::isBusy(void)
   return busy;
 }
 
+uint8_t ZSC31050Serial::isConnected(void)
+{
+  return connected;
+}
+
+void ZSC31050Serial::disConnect(void)
+{
+  connected = 0;
+}
+
 uint8_t ZSC31050Serial::hexchar2int(uint8_t start, uint8_t length)
 {
-  //char *buf = new char[length + 1];
-  char buf[length + 1];
-  memcpy(buf, & serialCommand[start], length);
-  buf[length] = '\0';
+  char buf[3];
+  memcpy(buf, & serialCommand[start], 2);
+  buf[2] = '\0';
   uint8_t retVal = (uint8_t) strtol(buf, NULL, 16);
   return retVal;
 }
 
 uint16_t ZSC31050Serial::decchar2int(uint8_t start, uint8_t length)
 {
-  //char *buf = new char[length + 1];
-	char buf[length + 1];
-  memcpy(buf, & serialCommand[start], length);
-  buf[length] = '\0';
+	char buf[4];
+  memcpy(buf, & serialCommand[start], 3);
+  buf[3] = '\0';
   uint16_t retVal = (uint16_t) strtol(buf, NULL, 10);
-	//delete & buf;
   return retVal;
 }

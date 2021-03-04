@@ -76,8 +76,9 @@ void Bridge::update(void)
 
 void OutputBox::show(void) 
 {
-	board.TFT.drawRect(_myX, _myY, 96, 38, TFT_WHITE);
-	board.TFT.setCursor(_myX + 2, _myY + 2);
+	board.TFT.drawRoundRect(_myX, _myY + 4, 96, 38, 8, TFT_WHITE);
+	board.TFT.setCursor(_myX + 12, _myY + 2);
+  board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
 	board.TFT.print(_myCaption);
 }
 
@@ -85,13 +86,13 @@ void OutputBox::update(void)
 {
 	board.TFT.setTextSize(2);
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-	uint8_t newWidth = snprintf(valueStr, 7, "%d", myVal);
+	uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
 	if(textWidth != newWidth) {
-		board.TFT.fillRect(_myX + 12, _myY + 17, 72, 16, TFT_BLACK);
+		board.TFT.fillRect(_myX + 1, _myY + 17, 94, 16, TFT_BLACK);
 		textWidth = newWidth;
 	}
   board.TFT.setCursor(_myX + 48 - 12 * textWidth / 2, _myY + 17);
-	board.TFT.print(myVal);
+	board.TFT.print(valueStr);
 	board.TFT.setTextSize(1);
 }
 

@@ -25,6 +25,10 @@ class ZSC31050Serial
 
     uint8_t isBusy(void);
 
+    uint8_t isConnected(void);
+
+    void disConnect(void);
+
   private:
 
     uint8_t hexchar2int(uint8_t start, uint8_t length);
@@ -38,6 +42,8 @@ class ZSC31050Serial
     uint8_t serialCommandIndex = 0;
 
     uint16_t triggerDelay = 0;
+
+		uint8_t connected = 0;
 
     uint8_t busy = 0;
 

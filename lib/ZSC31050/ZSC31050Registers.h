@@ -52,8 +52,13 @@
 #define ADJREF 0x1C
 #define SIG 0x1D
 
-#define USR_VAL1 0x1E
-#define USR_VAL2 0x1F
+/*!
+* @brief Register
+*/
+enum Register {
+	USR_VAL1 = 0x1E,
+	USR_VAL2 = 0x1F
+};
 
 #define READ_RAM_OFFS 0x10
 #define READ_EEPROM_OFFS 0x30

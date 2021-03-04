@@ -6,7 +6,7 @@ void ScreenHeader::show(void)
   board.TFT.setTextSize(1);
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
   board.TFT.setCursor(2, 1);
-  board.TFT.print(F("ZSC31050 Calibration."));	
+  board.TFT.print(F("ZSC31050 Calibration"));	
   board.TFT.setCursor(252, 1);
   board.TFT.print(F("10.0C 10.0"));
   board.TFT.setCursor(312,1);
@@ -35,14 +35,50 @@ void ScreenHeader::update(void)
     strlcpy(humStr, newHum, 5);
     board.TFT.updateCharArray(288, 1, oldHum, newHum, TFT_WHITE, TFT_GRAY, 1, 1);
   }
+	if(board.isAvailable(USB_CONN)){
+		if(!board.extSerial.isConnected()) {
+			board.TFT.fillRoundRect(200, 0, 30, 9, 4, TFT_BLUE);
+		}
+		else {
+			board.TFT.fillRoundRect(200, 0, 30, 9, 4, TFT_GREEN);
+		}
+		board.TFT.setTextColor(TFT_BLACK);
+		board.TFT.setCursor(206, 1);
+		board.TFT.print(F("USB"));
+	}
+	else {
+		board.TFT.fillRoundRect(200, 0, 30, 9, 4, TFT_RED);
+		board.TFT.setTextColor(TFT_BLACK);
+		board.TFT.setCursor(206, 1);
+		board.TFT.print(F("USB"));
+	}
+	if(board.sensorStatus == INT) {
+		board.TFT.fillRoundRect(200 - 10 * 6, 0, 9 * 6, 9, 4, TFT_GREEN);
+		board.TFT.setTextColor(TFT_BLACK);
+		board.TFT.setCursor(206 - 10 * 6, 1);
+		board.TFT.print(F("INT SEN"));
+	}
+	else if (board.sensorStatus == EXT){
+		board.TFT.fillRoundRect(200 - 10 * 6, 0, 9 * 6, 9, 4, TFT_GREEN);
+		board.TFT.setTextColor(TFT_BLACK);
+		board.TFT.setCursor(206 - 10 * 6, 1);
+		board.TFT.print(F("EXT SEN"));
+	}
+	else {
+		board.TFT.fillRoundRect(200 - 10 * 6, 0, 9 * 6, 9, 4, TFT_RED);
+		board.TFT.setTextColor(TFT_BLACK);
+		board.TFT.setCursor(206 - 10 * 6, 1);
+		board.TFT.print(F("UNKNOWN"));
+	}
 }
 
 void MainScreen::show(void)
 {
 	bridge.show();
-	rawPressureBox.show();
-	correctedPressureBox.show();
-	rawTemperature1Box.show();
+	pressureBox.show();
+	pressureDiffBox.show();
+	//correctedPressureBox.show();
+	//rawTemperature1Box.show();
 	adaptionButton.show();
 	correctionButton.show();
 	outputButton.show();
@@ -51,7 +87,8 @@ void MainScreen::show(void)
 void MainScreen::update(void)
 {
 	bridge.update();
-	rawPressureBox.update();
-	correctedPressureBox.update();
-	rawTemperature1Box.update();
+	pressureBox.update();
+	pressureDiffBox.update();
+	//correctedPressureBox.update();
+	//rawTemperature1Box.update();
 }

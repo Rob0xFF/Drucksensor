@@ -15,10 +15,12 @@ class ZSC31050
     * @brief ZSC31050 class constructor
     * @param I2C address of the ZSC31050
     */
-    ZSC31050(uint8_t i2cAddr) : _i2cAddr(i2cAddr)
-    {
-//      setInterface(I2C);
-    };
+    ZSC31050(uint8_t i2cAddr) : _i2cAddr(i2cAddr) {};
+
+    /*!
+    * @brief ZSC31050 class destructor
+    */
+		~ZSC31050() {};
 
     /*!
     * @brief start ZSC31050 measurement cycle
@@ -199,12 +201,6 @@ class ZSC31050
     uint16_t getCorrectedPressure(void);
 
     /*!
-    * @brief get pressure in SI unit (Pascal)
-    * @return pressure in Pascal
-    */
-    float getPressure(void);
-
-    /*!
     * @brief get amplified T1 output
     * @return T1 in ZSC units
     */
@@ -259,6 +255,10 @@ class ZSC31050
     * @return 4 - other error
     */
     uint8_t startCalibrationOutput(Calibration output);
+
+		uint8_t setRegister(Register rg, uint16_t content, uint8_t includeEEPROM);
+
+		uint16_t getRegister(Register rg);
 
   private:
 

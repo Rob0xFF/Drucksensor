@@ -59,15 +59,13 @@ class OutputBox
 {
 	public:
 
-    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, int16_t & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), myVal(val) {};
+    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, float & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val) {};
 
     void show(void);
 
     void update(void);
 
     Board & board;
-
-		int16_t & myVal; 
 
   private:
 
@@ -81,7 +79,12 @@ class OutputBox
 
     int16_t _myY;
 
+		const char * _myFormat;
+
 		const char * _myCaption;
+
+		float & myVal; 
+
 };
 
 class rButton
