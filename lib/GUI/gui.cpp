@@ -3,24 +3,24 @@
 void GUI::boot(void)
 {
   board.begin();
-	screenheader.show();
-	currentScreen = 0; // MainMenu
+  screenheader.show();
+  currentScreen = 0; // MainMenu
   mainScreen.show();
 }
 
 void GUI::update(void)
 {
   board.update();
-	screenheader.update();
+  screenheader.update();
   switch (currentScreen) {
     case 0: //MainMenu
-			mainScreen.update();
+      mainScreen.update();
       break;
-    case 1: 
+    case 1:
       break;
-    case 2: 
+    case 2:
       break;
-    case 3: 
+    case 3:
       break;
   }
 }

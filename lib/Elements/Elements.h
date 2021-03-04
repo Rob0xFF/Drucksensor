@@ -26,7 +26,7 @@
 
 class Bridge
 {
-	public:
+  public:
 
     Bridge(Board & myBoard, int16_t x, int16_t y): board(myBoard), _myX(x), _myY(y) {};
 
@@ -46,18 +46,18 @@ class Bridge
 
     char voltageStr[10] = "0.00";
 
-		uint8_t bridgeVoltageTextWidth = 0;
+    uint8_t bridgeVoltageTextWidth = 0;
 
-		uint8_t voltageTextWidth = 0;
+    uint8_t voltageTextWidth = 0;
 
-		float bridgeVoltage = 0.0;
+    float bridgeVoltage = 0.0;
 
-		float voltage = 0.0;
+    float voltage = 0.0;
 };
 
 class OutputBox
 {
-	public:
+  public:
 
     OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, float & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val) {};
 
@@ -69,21 +69,21 @@ class OutputBox
 
   private:
 
-		int16_t currentVal;
+    int16_t currentVal;
 
-		char valueStr[7] = " ";
+    char valueStr[7] = " ";
 
-		uint8_t textWidth = 0;
+    uint8_t textWidth = 0;
 
     int16_t _myX;
 
     int16_t _myY;
 
-		const char * _myFormat;
+    const char * _myFormat;
 
-		const char * _myCaption;
+    const char * _myCaption;
 
-		float & myVal; 
+    float & myVal;
 
 };
 

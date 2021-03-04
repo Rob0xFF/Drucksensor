@@ -29,20 +29,24 @@
 #define HOR 1
 #define VERT 2
 
-static uint16_t xCoord(uint8_t x){
-	return x * GRIDX_INTERSPACE + (x - 1) * GRIDX;
+static uint16_t xCoord(uint8_t x)
+{
+  return x * GRIDX_INTERSPACE + (x - 1) * GRIDX;
 }
 
-static uint16_t xWidth(uint8_t w){
-	return (w - 1) * GRIDX_INTERSPACE + w * GRIDX;
+static uint16_t xWidth(uint8_t w)
+{
+  return (w - 1) * GRIDX_INTERSPACE + w * GRIDX;
 }
 
-static uint16_t yCoord(uint8_t y){
-	return TOP_MARGIN + y * GRIDY_INTERSPACE + (y - 1) * GRIDY;
+static uint16_t yCoord(uint8_t y)
+{
+  return TOP_MARGIN + y * GRIDY_INTERSPACE + (y - 1) * GRIDY;
 }
 
-static uint16_t yHeight(uint8_t h){
-	return (h - 1) * GRIDY_INTERSPACE + h * GRIDY;
+static uint16_t yHeight(uint8_t h)
+{
+  return (h - 1) * GRIDY_INTERSPACE + h * GRIDY;
 }
 
 class ScreenHeader
@@ -79,17 +83,17 @@ class MainScreen
 
     Board & board;
 
-		Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
-		
-		OutputBox pressureBox = OutputBox(board, xCoord(1), yCoord(2), " P REF (hPa) ", "%1.1f", board.mprPres);
+    Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
 
-		OutputBox pressureDiffBox = OutputBox(board, xCoord(1), yCoord(3), " P Diff (Pa) ", "%1.0f", board.mprPresDiff);
+    OutputBox pressureBox = OutputBox(board, xCoord(1), yCoord(2), " P REF (hPa) ", "%1.1f", board.mprPres);
 
-		pButton adaptionButton = pButton(board, "chipID", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    OutputBox pressureDiffBox = OutputBox(board, xCoord(1), yCoord(3), " P Diff (Pa) ", "%1.0f", board.mprPresDiff);
 
-		pButton correctionButton = pButton(board, "ZSC Raw", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    pButton adaptionButton = pButton(board, "chipID", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
-		pButton outputButton = pButton(board, "Info", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    pButton correctionButton = pButton(board, "ZSC Raw", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+
+    pButton outputButton = pButton(board, "Info", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
   private:
 
@@ -97,9 +101,9 @@ class MainScreen
 
     char pressureSIStr[5] = "10.0";
 
-		uint16_t rawPressure = 0;
+    uint16_t rawPressure = 0;
 
-		float pressureSI = 0.0;
+    float pressureSI = 0.0;
 
 };
 

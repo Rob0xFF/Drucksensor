@@ -149,28 +149,28 @@ uint8_t ZSC31050::saveConfig(void)
 int16_t ZSC31050::getRawPressure(void)
 {
   startCalibrationOutput(START_AD_P_AZC);
-	delay(conversionTime);
-	readOutput();
-	memcpy(&rawP, &_P, sizeof(_P));
-	return rawP;
+  delay(conversionTime);
+  readOutput();
+  memcpy(&rawP, &_P, sizeof(_P));
+  return rawP;
 }
 
 uint16_t ZSC31050::getCorrectedPressure(void)
 {
-	start();
-	delay(conversionTime);
-	readOutput();
-	memcpy(&correctedP, &_P, sizeof(_P));
+  start();
+  delay(conversionTime);
+  readOutput();
+  memcpy(&correctedP, &_P, sizeof(_P));
   return correctedP;
 }
 
 uint16_t ZSC31050::getRawTemperature1(void)
 {
   startCalibrationOutput(START_AD_T1_AZC);
-	delay(conversionTime);
-	readOutput();
-	rawT1 = _T1;
-	return rawT1;
+  delay(conversionTime);
+  readOutput();
+  rawT1 = _T1;
+  return rawT1;
 }
 
 uint8_t ZSC31050::forceDACOutput(uint16_t val)
@@ -216,17 +216,17 @@ uint8_t ZSC31050::startCalibrationOutput(Calibration output)
 
 uint8_t ZSC31050::setRegister(Register rg, uint16_t content, uint8_t includeEEPROM)
 {
-	uint8_t retVal = 0;
+  uint8_t retVal = 0;
   retVal += cmd(rg + WRITE_RAM_OFFS, WRITE_RAM_DELAY, content);
-	if(includeEEPROM) {
-		retVal += cmd(rg + WRITE_EEPROM_OFFS, WRITE_EEPROM_DELAY, content);
-	}
-	return retVal;
+  if (includeEEPROM) {
+    retVal += cmd(rg + WRITE_EEPROM_OFFS, WRITE_EEPROM_DELAY, content);
+  }
+  return retVal;
 }
 
 uint16_t ZSC31050::getRegister(Register rg)
 {
-	cmd(rg + READ_RAM_OFFS, READ_RAM_DELAY);
+  cmd(rg + READ_RAM_OFFS, READ_RAM_DELAY);
   return read16();
 }
 

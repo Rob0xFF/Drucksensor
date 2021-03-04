@@ -56,11 +56,11 @@ class Board
     {
     };
 
-		void begin(void);
+    void begin(void);
 
     void update(void);
 
-		void checkEXT(void);
+    void checkEXT(void);
 
     /*!
      * @brief manage availability of hardware
@@ -82,63 +82,63 @@ class Board
       }
     };
 
- 		ZSC31050Serial extSerial = ZSC31050Serial();
+    ZSC31050Serial extSerial = ZSC31050Serial();
 
     Adafruit_FT6206 touchScreen = Adafruit_FT6206();
 
-		Display TFT = Display();
+    Display TFT = Display();
 
-		float temperature = 0.0;
+    float temperature = 0.0;
 
-		float humidity = 0.0;
+    float humidity = 0.0;
 
-		float bridgeVoltage = 0.0;
+    float bridgeVoltage = 0.0;
 
-		float voltage = 0.0;
+    float voltage = 0.0;
 
-		int16_t rawP;
+    int16_t rawP;
 
-		int16_t correctedP;
+    int16_t correctedP;
 
-		float correctedP_SI;
+    float correctedP_SI;
 
-		int16_t rawT1;
+    int16_t rawT1;
 
-		float mprPres = 0.0;
+    float mprPres = 0.0;
 
-		float mprPresRef = 0.0;
+    float mprPresRef = 0.0;
 
-		float mprPresDiff = 0.0;
+    float mprPresDiff = 0.0;
 
-		uint16_t chipIDINT = 0;
+    uint16_t chipIDINT = 0;
 
-		uint16_t chipIDEXT = 0;
+    uint16_t chipIDEXT = 0;
 
     volatile uint8_t sensorStatus = UNKNOWN;
 
   private:
 
-		TCA9548A multiplexer = TCA9548A(I2C_TCA);
+    TCA9548A multiplexer = TCA9548A(I2C_TCA);
 
-		uint8_t memBufferZscINT[sizeof(ZSC31050)];
- 		ZSC31050 * zscINT;
+    uint8_t memBufferZscINT[sizeof(ZSC31050)];
+    ZSC31050 * zscINT;
 
-		uint8_t memBufferZscEXT[sizeof(ZSC31050)];
- 		ZSC31050 * zscEXT;
+    uint8_t memBufferZscEXT[sizeof(ZSC31050)];
+    ZSC31050 * zscEXT;
 
-  	INA226 voltageSensorINT = INA226();
+    INA226 voltageSensorINT = INA226();
 
-		uint8_t memBufferVoltageSensorEXT[sizeof(INA226)];
-  	INA226 * voltageSensorEXT;
+    uint8_t memBufferVoltageSensorEXT[sizeof(INA226)];
+    INA226 * voltageSensorEXT;
 
-  	HIH61XX HIHINT = HIH61XX(I2C_HIH6130, 255);
+    HIH61XX HIHINT = HIH61XX(I2C_HIH6130, 255);
 
-		uint8_t memBufferHIHEXT[sizeof(HIH61XX)];
-  	HIH61XX * HIHEXT;
+    uint8_t memBufferHIHEXT[sizeof(HIH61XX)];
+    HIH61XX * HIHEXT;
 
     Adafruit_MPRLS mpr = Adafruit_MPRLS(-1, -1);
 
-		volatile uint16_t _isAvailable = 0x0;
+    volatile uint16_t _isAvailable = 0x0;
 
 };
 #endif

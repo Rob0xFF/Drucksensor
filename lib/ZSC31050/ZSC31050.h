@@ -20,7 +20,7 @@ class ZSC31050
     /*!
     * @brief ZSC31050 class destructor
     */
-		~ZSC31050() {};
+    ~ZSC31050() {};
 
     /*!
     * @brief start ZSC31050 measurement cycle
@@ -256,9 +256,9 @@ class ZSC31050
     */
     uint8_t startCalibrationOutput(Calibration output);
 
-		uint8_t setRegister(Register rg, uint16_t content, uint8_t includeEEPROM);
+    uint8_t setRegister(Register rg, uint16_t content, uint8_t includeEEPROM);
 
-		uint16_t getRegister(Register rg);
+    uint16_t getRegister(Register rg);
 
   private:
 
@@ -272,19 +272,19 @@ class ZSC31050
 
     int16_t _T2;
 
-		int16_t rawP;
+    int16_t rawP;
 
-		int16_t correctedP;
+    int16_t correctedP;
 
-		float correctedP_SI;
+    float correctedP_SI;
 
-		int16_t rawT1;
+    int16_t rawT1;
 
     float _pressSlope = 1.2129015F;
 
     float _pressOffset = -1.552121F;
 
-		uint8_t conversionTime = 23;
+    uint8_t conversionTime = 23;
 
     uint8_t cmd(uint8_t cmd, uint16_t delay);
     uint8_t cmd(uint8_t cmd, uint16_t delay, uint16_t arg);

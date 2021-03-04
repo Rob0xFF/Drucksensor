@@ -619,11 +619,11 @@ enum Mode {
 */
 enum Interface {
   OWI = 0x50,
-	SPI1 = 0x51,
-	SPI2 = 0x55,
-	SPI3 = 0x59,
-	SPI4 = 0x5D,
-	I2C = 0x52
+  SPI1 = 0x51,
+  SPI2 = 0x55,
+  SPI3 = 0x59,
+  SPI4 = 0x5D,
+  I2C = 0x52
 };
 
 /*!

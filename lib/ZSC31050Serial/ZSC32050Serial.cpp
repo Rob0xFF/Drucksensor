@@ -16,14 +16,14 @@ uint8_t ZSC31050Serial::parseSerialCommand(void)
       serialCommandIndex++;
     }
   }
-	busy = 0;
+  busy = 0;
   return 0;
 }
 
 void ZSC31050Serial::handleSerialCommand(void)
 {
-	busy = 1;
-	connected = 1;
+  busy = 1;
+  connected = 1;
   if (serialCommand[0] == 'I' || serialCommand[0] == 'i' ) {
     if (serialCommand[2] == 'T' || serialCommand[2] == 't') {
       delay(200);
@@ -66,9 +66,9 @@ void ZSC31050Serial::handleSerialCommand(void)
     if (serialCommand[1] != '_' && serialCommand[1] != 'W' && serialCommand[1] != 'w' && serialCommand[1] != '0') {
       triggerDelay = decchar2int(3, 3);
     }
-		if(serialCommand[1] == '0') {
-			connected = 0;
-		}
+    if (serialCommand[1] == '0') {
+      connected = 0;
+    }
     Serial.write(ACK);
     Serial.write(CR);
     Serial.write(LF);
@@ -81,7 +81,7 @@ void ZSC31050Serial::handleSerialCommand(void)
       Serial.write(LF);
     }
   }
-	busy = 0;
+  busy = 0;
 }
 
 uint8_t ZSC31050Serial::isBusy(void)
@@ -110,7 +110,7 @@ uint8_t ZSC31050Serial::hexchar2int(uint8_t start, uint8_t length)
 
 uint16_t ZSC31050Serial::decchar2int(uint8_t start, uint8_t length)
 {
-	char buf[4];
+  char buf[4];
   memcpy(buf, & serialCommand[start], 3);
   buf[3] = '\0';
   uint16_t retVal = (uint16_t) strtol(buf, NULL, 10);

@@ -56,8 +56,8 @@
 * @brief Register
 */
 enum Register {
-	USR_VAL1 = 0x1E,
-	USR_VAL2 = 0x1F
+  USR_VAL1 = 0x1E,
+  USR_VAL2 = 0x1F
 };
 
 #define READ_RAM_OFFS 0x10

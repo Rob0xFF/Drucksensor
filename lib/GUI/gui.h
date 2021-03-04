@@ -45,7 +45,7 @@ class GUI
     ScreenHeader screenheader = ScreenHeader(board);
 
     /*!
-      * @brief 
+      * @brief
       */
     MainScreen mainScreen = MainScreen(board);
 

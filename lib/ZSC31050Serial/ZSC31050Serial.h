@@ -43,7 +43,7 @@ class ZSC31050Serial
 
     uint16_t triggerDelay = 0;
 
-		uint8_t connected = 0;
+    uint8_t connected = 0;
 
     uint8_t busy = 0;
 

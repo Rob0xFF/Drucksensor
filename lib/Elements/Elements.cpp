@@ -2,98 +2,90 @@
 
 void Bridge::show(void)
 {
-	board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 56, _myY + 27, TFT_WHITE);
-	board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 92, _myY + 27, TFT_WHITE);
-	board.TFT.drawLine(_myX + 39, _myY + 44, _myX + 21, _myY + 62, TFT_WHITE);
-	board.TFT.drawLine(_myX + 109, _myY + 44, _myX + 127, _myY + 62, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 21, _myY + 62, _myX + 39, _myY + 80, TFT_WHITE);
-	board.TFT.drawLine(_myX + 127, _myY + 62, _myX + 109, _myY + 80, TFT_WHITE);
-	board.TFT.drawLine(_myX + 56, _myY + 97, _myX + 74, _myY + 115, TFT_WHITE);
-	board.TFT.drawLine(_myX + 92, _myY + 97, _myX + 74, _myY + 115, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 53, _myY + 24, _myX + 59, _myY + 30, TFT_WHITE);
-	board.TFT.drawLine(_myX + 53, _myY + 24, _myX + 36, _myY + 41, TFT_WHITE);
-	board.TFT.drawLine(_myX + 36, _myY + 41, _myX + 42, _myY + 47, TFT_WHITE);
-	board.TFT.drawLine(_myX + 42, _myY + 47, _myX + 59, _myY + 30, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 95, _myY + 24, _myX + 112, _myY + 41, TFT_WHITE);
-	board.TFT.drawLine(_myX + 112, _myY + 41, _myX + 106, _myY + 47, TFT_WHITE);
-	board.TFT.drawLine(_myX + 106, _myY + 47, _myX + 89, _myY + 30, TFT_WHITE);
-	board.TFT.drawLine(_myX + 89, _myY + 30, _myX + 95, _myY + 24, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 42, _myY + 77, _myX + 59, _myY + 94, TFT_WHITE);
-	board.TFT.drawLine(_myX + 59, _myY + 94, _myX + 53, _myY + 100, TFT_WHITE);
-	board.TFT.drawLine(_myX + 53, _myY + 100, _myX + 36, _myY + 83, TFT_WHITE);
-	board.TFT.drawLine(_myX + 36, _myY + 83, _myX + 42, _myY + 77, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 106, _myY + 77, _myX + 112, _myY + 83, TFT_WHITE);
-	board.TFT.drawLine(_myX + 112, _myY + 83, _myX + 95, _myY + 100, TFT_WHITE);
-	board.TFT.drawLine(_myX + 95, _myY + 100, _myX + 89, _myY + 94, TFT_WHITE);
-	board.TFT.drawLine(_myX + 89, _myY + 94, _myX + 106, _myY + 77, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 178, _myY + 9, TFT_WHITE);
-	board.TFT.drawLine(_myX + 178, _myY + 9, _myX +178, _myY + 43, TFT_WHITE);
-	board.TFT.drawLine(_myX + 177, _myY + 81, _myX + 177, _myY + 115, TFT_WHITE);
-	board.TFT.drawLine(_myX + 177, _myY + 115, _myX + 74, _myY + 115, TFT_WHITE);
-
-	board.TFT.drawLine(_myX + 21, _myY + 62, _myX + 44, _myY + 62, TFT_WHITE);
-	board.TFT.drawLine(_myX + 104, _myY + 62, _myX + 127, _myY + 62, TFT_WHITE);
-
-	board.TFT.fillCircle(_myX + 74, _myY + 9, 2, TFT_WHITE);
-	board.TFT.fillCircle(_myX + 21, _myY + 62, 2, TFT_WHITE);
-	board.TFT.fillCircle(_myX + 74, _myY + 115, 2, TFT_WHITE);
-	board.TFT.fillCircle(_myX + 127, _myY + 62, 2, TFT_WHITE);
+  board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 56, _myY + 27, TFT_WHITE);
+  board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 92, _myY + 27, TFT_WHITE);
+  board.TFT.drawLine(_myX + 39, _myY + 44, _myX + 21, _myY + 62, TFT_WHITE);
+  board.TFT.drawLine(_myX + 109, _myY + 44, _myX + 127, _myY + 62, TFT_WHITE);
+  board.TFT.drawLine(_myX + 21, _myY + 62, _myX + 39, _myY + 80, TFT_WHITE);
+  board.TFT.drawLine(_myX + 127, _myY + 62, _myX + 109, _myY + 80, TFT_WHITE);
+  board.TFT.drawLine(_myX + 56, _myY + 97, _myX + 74, _myY + 115, TFT_WHITE);
+  board.TFT.drawLine(_myX + 92, _myY + 97, _myX + 74, _myY + 115, TFT_WHITE);
+  board.TFT.drawLine(_myX + 53, _myY + 24, _myX + 59, _myY + 30, TFT_WHITE);
+  board.TFT.drawLine(_myX + 53, _myY + 24, _myX + 36, _myY + 41, TFT_WHITE);
+  board.TFT.drawLine(_myX + 36, _myY + 41, _myX + 42, _myY + 47, TFT_WHITE);
+  board.TFT.drawLine(_myX + 42, _myY + 47, _myX + 59, _myY + 30, TFT_WHITE);
+  board.TFT.drawLine(_myX + 95, _myY + 24, _myX + 112, _myY + 41, TFT_WHITE);
+  board.TFT.drawLine(_myX + 112, _myY + 41, _myX + 106, _myY + 47, TFT_WHITE);
+  board.TFT.drawLine(_myX + 106, _myY + 47, _myX + 89, _myY + 30, TFT_WHITE);
+  board.TFT.drawLine(_myX + 89, _myY + 30, _myX + 95, _myY + 24, TFT_WHITE);
+  board.TFT.drawLine(_myX + 42, _myY + 77, _myX + 59, _myY + 94, TFT_WHITE);
+  board.TFT.drawLine(_myX + 59, _myY + 94, _myX + 53, _myY + 100, TFT_WHITE);
+  board.TFT.drawLine(_myX + 53, _myY + 100, _myX + 36, _myY + 83, TFT_WHITE);
+  board.TFT.drawLine(_myX + 36, _myY + 83, _myX + 42, _myY + 77, TFT_WHITE);
+  board.TFT.drawLine(_myX + 106, _myY + 77, _myX + 112, _myY + 83, TFT_WHITE);
+  board.TFT.drawLine(_myX + 112, _myY + 83, _myX + 95, _myY + 100, TFT_WHITE);
+  board.TFT.drawLine(_myX + 95, _myY + 100, _myX + 89, _myY + 94, TFT_WHITE);
+  board.TFT.drawLine(_myX + 89, _myY + 94, _myX + 106, _myY + 77, TFT_WHITE);
+  board.TFT.drawLine(_myX + 74, _myY + 9, _myX + 178, _myY + 9, TFT_WHITE);
+  board.TFT.drawLine(_myX + 178, _myY + 9, _myX + 178, _myY + 43, TFT_WHITE);
+  board.TFT.drawLine(_myX + 177, _myY + 81, _myX + 177, _myY + 115, TFT_WHITE);
+  board.TFT.drawLine(_myX + 177, _myY + 115, _myX + 74, _myY + 115, TFT_WHITE);
+  board.TFT.drawLine(_myX + 21, _myY + 62, _myX + 44, _myY + 62, TFT_WHITE);
+  board.TFT.drawLine(_myX + 104, _myY + 62, _myX + 127, _myY + 62, TFT_WHITE);
+  board.TFT.fillCircle(_myX + 74, _myY + 9, 2, TFT_WHITE);
+  board.TFT.fillCircle(_myX + 21, _myY + 62, 2, TFT_WHITE);
+  board.TFT.fillCircle(_myX + 74, _myY + 115, 2, TFT_WHITE);
+  board.TFT.fillCircle(_myX + 127, _myY + 62, 2, TFT_WHITE);
 }
 
 void Bridge::update(void)
 {
-	if(voltage != board.voltage) {
-		voltage = board.voltage;
-  	board.TFT.setTextSize(1);
-  	board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-		uint8_t newWidth = snprintf(voltageStr, 10, "%2.1f%s", voltage, "mV");
-		if(voltageTextWidth != newWidth) {
-			board.TFT.fillRect(_myX + 53, _myY + 58, 56, 8, TFT_BLACK);
-			voltageTextWidth = newWidth;
-		}
-  	board.TFT.setCursor(_myX + 74 - 6 * voltageTextWidth / 2, _myY + 58);
-  	board.TFT.print(voltageStr);
-	}
-	if(bridgeVoltage != board.bridgeVoltage) {
-		bridgeVoltage = board.bridgeVoltage;
-  	board.TFT.setTextSize(1);
-  	board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-		uint8_t newWidth = snprintf(bridgeVoltageStr, 10, "%1.2f%s", bridgeVoltage, "V");
-		if(bridgeVoltageTextWidth != newWidth) {
-			board.TFT.fillRect(_myX + 160, _myY + 58, 36, 8, TFT_BLACK);
-			bridgeVoltageTextWidth = newWidth;
-		}
-  	board.TFT.setCursor(_myX + 178 - 6 * bridgeVoltageTextWidth / 2, _myY + 58);
-  	board.TFT.print(bridgeVoltageStr);
-	}
+  if (voltage != board.voltage) {
+    voltage = board.voltage;
+    board.TFT.setTextSize(1);
+    board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+    uint8_t newWidth = snprintf(voltageStr, 10, "%2.1f%s", voltage, "mV");
+    if (voltageTextWidth != newWidth) {
+      board.TFT.fillRect(_myX + 53, _myY + 58, 56, 8, TFT_BLACK);
+      voltageTextWidth = newWidth;
+    }
+    board.TFT.setCursor(_myX + 74 - 6 * voltageTextWidth / 2, _myY + 58);
+    board.TFT.print(voltageStr);
+  }
+  if (bridgeVoltage != board.bridgeVoltage) {
+    bridgeVoltage = board.bridgeVoltage;
+    board.TFT.setTextSize(1);
+    board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+    uint8_t newWidth = snprintf(bridgeVoltageStr, 10, "%1.2f%s", bridgeVoltage, "V");
+    if (bridgeVoltageTextWidth != newWidth) {
+      board.TFT.fillRect(_myX + 160, _myY + 58, 36, 8, TFT_BLACK);
+      bridgeVoltageTextWidth = newWidth;
+    }
+    board.TFT.setCursor(_myX + 178 - 6 * bridgeVoltageTextWidth / 2, _myY + 58);
+    board.TFT.print(bridgeVoltageStr);
+  }
 }
 
-void OutputBox::show(void) 
+void OutputBox::show(void)
 {
-	board.TFT.drawRoundRect(_myX, _myY + 4, 96, 38, 8, TFT_WHITE);
-	board.TFT.setCursor(_myX + 12, _myY + 2);
+  board.TFT.drawRoundRect(_myX, _myY + 4, 96, 38, 8, TFT_WHITE);
+  board.TFT.setCursor(_myX + 12, _myY + 2);
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-	board.TFT.print(_myCaption);
+  board.TFT.print(_myCaption);
 }
 
-void OutputBox::update(void) 
+void OutputBox::update(void)
 {
-	board.TFT.setTextSize(2);
+  board.TFT.setTextSize(2);
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-	uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
-	if(textWidth != newWidth) {
-		board.TFT.fillRect(_myX + 1, _myY + 17, 94, 16, TFT_BLACK);
-		textWidth = newWidth;
-	}
+  uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
+  if (textWidth != newWidth) {
+    board.TFT.fillRect(_myX + 1, _myY + 17, 94, 16, TFT_BLACK);
+    textWidth = newWidth;
+  }
   board.TFT.setCursor(_myX + 48 - 12 * textWidth / 2, _myY + 17);
-	board.TFT.print(valueStr);
-	board.TFT.setTextSize(1);
+  board.TFT.print(valueStr);
+  board.TFT.setTextSize(1);
 }
 
 void rButton::show(void)
