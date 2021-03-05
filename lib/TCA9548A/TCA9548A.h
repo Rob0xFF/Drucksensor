@@ -37,6 +37,11 @@ class TCA9548A
     void enableChannel(uint8_t channel);
 
     /*!
+      * @brief Disables all I2C channels
+      */
+    void disable(void);
+
+    /*!
       * @brief Disables each I2C channel independently
       * @param [1:8] to disable channel 1-8 independently
       */

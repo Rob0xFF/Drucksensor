@@ -31,6 +31,11 @@ void TCA9548A::enableChannel(uint8_t channel)
   writeRegister8(_channelsEnabled);
 }
 
+void TCA9548A::disable(void)
+{
+  writeRegister8(0);
+}
+
 void TCA9548A::disableChannel(uint8_t channel)
 {
   if (channel > 7) {

@@ -42,6 +42,7 @@ const uint8_t USB_CONN = 10;
 const uint8_t SOFT_CONN = 11;
 
 const uint8_t UNKNOWN = 3;
+const uint8_t DISABLED = 2;
 const uint8_t EXT = 1;
 const uint8_t INT = 0;
 
@@ -88,31 +89,61 @@ class Board
 
     Display TFT = Display();
 
-    float temperature = 0.0;
+    float temperatureINT = 0.0;
 
-    float humidity = 0.0;
+    float humidityINT = 0.0;
 
-    float bridgeVoltage = 0.0;
+    float temperatureEXT = 0.0;
 
-    float voltage = 0.0;
+    float humidityEXT = 0.0;
 
-    int16_t rawP;
+    float senTemperature = 0.0;
 
-    int16_t correctedP;
+    float senHumidity = 0.0;
 
-    float correctedP_SI;
+    float bridgeVoltageINT = 0.0;
 
-    int16_t rawT1;
+    float voltageINT = 0.0;
 
-    float mprPres = 0.0;
+    float bridgeVoltageEXT = 0.0;
 
-    float mprPresRef = 0.0;
+    float voltageEXT = 0.0;
 
-    float mprPresDiff = 0.0;
+    float senBridgeVoltage = 0.0;
+
+    float senVoltage = 0.0;
 
     uint16_t chipIDINT = 0;
 
     uint16_t chipIDEXT = 0;
+
+		uint16_t senChipID = 0;
+
+		float slopeINT = 0;
+
+		float offsetINT = 0;
+
+		float slopeEXT = 0;
+
+		float offsetEXT = 0;
+
+		float senSlope = 0;
+
+		float senOffset = 0;
+
+    int16_t rawP;
+
+    int16_t P;
+
+    float P1_SI;
+
+    int16_t T1;
+
+    int16_t T2;
+
+    float mprPres = 0.0;
+
+    float mprPresRef = 0.0;
 
     volatile uint8_t sensorStatus = UNKNOWN;
 

@@ -40,8 +40,8 @@ void Bridge::show(void)
 
 void Bridge::update(void)
 {
-  if (voltage != board.voltage) {
-    voltage = board.voltage;
+  if (voltage != board.senVoltage) {
+    voltage = board.senVoltage;
     board.TFT.setTextSize(1);
     board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
     uint8_t newWidth = snprintf(voltageStr, 10, "%2.1f%s", voltage, "mV");
@@ -52,8 +52,8 @@ void Bridge::update(void)
     board.TFT.setCursor(_myX + 74 - 6 * voltageTextWidth / 2, _myY + 58);
     board.TFT.print(voltageStr);
   }
-  if (bridgeVoltage != board.bridgeVoltage) {
-    bridgeVoltage = board.bridgeVoltage;
+  if (bridgeVoltage != board.senBridgeVoltage) {
+    bridgeVoltage = board.senBridgeVoltage;
     board.TFT.setTextSize(1);
     board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
     uint8_t newWidth = snprintf(bridgeVoltageStr, 10, "%1.2f%s", bridgeVoltage, "V");
@@ -66,26 +66,78 @@ void Bridge::update(void)
   }
 }
 
-void OutputBox::show(void)
+template <class valType> void OutputBox<valType>::show(void)
 {
-  board.TFT.drawRoundRect(_myX, _myY + 4, 96, 38, 8, TFT_WHITE);
-  board.TFT.setCursor(_myX + 12, _myY + 2);
-  board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-  board.TFT.print(_myCaption);
+   board.TFT.drawRoundRect(_myX, _myY + 4, 96, 34, 8, TFT_WHITE);
+   board.TFT.setCursor(_myX + 48 - 6 * strlen(_myCaption) / 2, _myY + 2);
+   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+   board.TFT.print(_myCaption);
 }
 
-void OutputBox::update(void)
+template <class valType> void OutputBox<valType>::update(void)
 {
-  board.TFT.setTextSize(2);
+   board.TFT.setTextSize(2);
+   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+   uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
+   if (textWidth != newWidth) {
+     board.TFT.fillRect(_myX + 1, _myY + 17, 94, 16, TFT_BLACK);
+     textWidth = newWidth;
+   }
+   board.TFT.setCursor(_myX + 48 - 12 * textWidth / 2, _myY + 17);
+   board.TFT.print(valueStr);
+   board.TFT.setTextSize(1);
+}
+
+// “undefined reference to” templated class function
+template class OutputBox<int16_t>;
+template class OutputBox<float>;
+
+void RoundOutputBox::show(void)
+{
+	board.TFT.drawRoundRect(_myX, _myY, 44, 38, 19, TFT_WHITE);
+  board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+  board.TFT.setCursor(_myX + 22 - 3 * strlen(_myCaption), _myY + 5);
+  board.TFT.print(_myCaption);
+  board.TFT.setCursor(_myX + 22 - 3 * strlen(_myUnit), _myY + 24);
+  board.TFT.print(_myUnit);
+}
+
+void RoundOutputBox::update(void)
+{
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
   uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
   if (textWidth != newWidth) {
-    board.TFT.fillRect(_myX + 1, _myY + 17, 94, 16, TFT_BLACK);
+    board.TFT.fillRect(_myX + 7, _myY + 15, 30, 8, TFT_BLACK);
     textWidth = newWidth;
   }
-  board.TFT.setCursor(_myX + 48 - 12 * textWidth / 2, _myY + 17);
+  board.TFT.setCursor(_myX + 22 - 6 * textWidth / 2, _myY + 15);
   board.TFT.print(valueStr);
-  board.TFT.setTextSize(1);
+}
+
+void IDOutputBox::show(void)
+{
+	board.TFT.drawRect(_myX + 8, _myY, 28, 38, TFT_WHITE);
+	for(uint8_t i = 0; i < 8; i++) {
+		board.TFT.fillRect(_myX, _myY + 4 + i * 4, 8, 2, TFT_WHITE);
+		board.TFT.fillRect(_myX + 36, _myY + 4 + i * 4, 8, 2, TFT_WHITE);
+	}
+  board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+  board.TFT.setCursor(_myX + 22 - 3 * strlen(_myCaption), _myY + 5);
+  board.TFT.print(_myCaption);
+  board.TFT.setCursor(_myX + 22 - 3 * strlen(_myUnit), _myY + 15);
+  board.TFT.print(_myUnit);
+}
+
+void IDOutputBox::update(void)
+{
+   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+   uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
+   if (textWidth != newWidth) {
+     board.TFT.fillRect(_myX + 13, _myY + 26, 18, 8, TFT_BLACK);
+     textWidth = newWidth;
+   }
+   board.TFT.setCursor(_myX + 22 - 6 * textWidth / 2, _myY + 26);
+   board.TFT.print(valueStr);
 }
 
 void rButton::show(void)

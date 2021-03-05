@@ -198,7 +198,19 @@ class ZSC31050
     * @brief get pressure output
     * @return pressure in ZSC units
     */
-    uint16_t getCorrectedPressure(void);
+    int16_t getCorrectedPressure(void);
+
+    /*!
+    * @brief get pressure output
+    * @return pressure in ZSC units
+    */
+    int16_t getCorrectedT1(void);
+
+    /*!
+    * @brief get pressure output
+    * @return pressure in ZSC units
+    */
+    int16_t getCorrectedT2(void);
 
     /*!
     * @brief get amplified T1 output
@@ -276,13 +288,7 @@ class ZSC31050
 
     int16_t correctedP;
 
-    float correctedP_SI;
-
     int16_t rawT1;
-
-    float _pressSlope = 1.2129015F;
-
-    float _pressOffset = -1.552121F;
 
     uint8_t conversionTime = 23;
 

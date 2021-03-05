@@ -17,19 +17,19 @@ void ScreenHeader::update(void)
 {
   board.TFT.setTextSize(1);
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
-  if (temperature != board.temperature) {
+  if (temperature != board.temperatureINT) {
     char oldTemp[5];
     strlcpy(oldTemp, tempStr, 5);
-    temperature = board.temperature;
+    temperature = board.temperatureINT;
     char newTemp[5];
     dtostrf(temperature, 4, 1, newTemp);
     strlcpy(tempStr, newTemp, 5);
     board.TFT.updateCharArray(252, 1, oldTemp, newTemp, TFT_WHITE, TFT_GRAY, 1, 1);
   }
-  if (humidity != board.humidity) {
+  if (humidity != board.humidityINT) {
     char oldHum[5];
     strlcpy(oldHum, humStr, 5);
-    humidity = board.humidity;
+    humidity = board.humidityINT;
     char newHum[5];
     dtostrf(humidity, 4, 1, newHum);
     strlcpy(humStr, newHum, 5);
@@ -63,18 +63,21 @@ void ScreenHeader::update(void)
   } else {
     board.TFT.fillRoundRect(200 - 10 * 6, 0, 9 * 6, 9, 4, TFT_RED);
     board.TFT.setTextColor(TFT_BLACK);
-    board.TFT.setCursor(206 - 10 * 6, 1);
-    board.TFT.print(F("UNKNOWN"));
+    board.TFT.setCursor(209 - 10 * 6, 1);
+    board.TFT.print(F("NO SEN"));
   }
 }
 
 void MainScreen::show(void)
 {
   bridge.show();
-  pressureBox.show();
-  pressureDiffBox.show();
-  //correctedPressureBox.show();
-  //rawTemperature1Box.show();
+	senOutBox.show();
+	senT1Box.show();
+	senT2Box.show();
+	idBox.show();
+	tempBox.show();
+	humBox.show();
+	presBox.show();
   adaptionButton.show();
   correctionButton.show();
   outputButton.show();
@@ -83,8 +86,11 @@ void MainScreen::show(void)
 void MainScreen::update(void)
 {
   bridge.update();
-  pressureBox.update();
-  pressureDiffBox.update();
-  //correctedPressureBox.update();
-  //rawTemperature1Box.update();
+	senOutBox.update();
+	senT1Box.update();
+	senT2Box.update();
+	idBox.update();
+	tempBox.update();
+	presBox.update();
+	humBox.update();
 }

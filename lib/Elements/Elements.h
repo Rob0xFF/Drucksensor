@@ -55,11 +55,11 @@ class Bridge
     float voltage = 0.0;
 };
 
-class OutputBox
+template <class valType> class OutputBox
 {
   public:
 
-    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, float & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val) {};
+    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, valType & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val) {};
 
     void show(void);
 
@@ -83,7 +83,75 @@ class OutputBox
 
     const char * _myCaption;
 
+    valType & myVal;
+
+};
+
+class RoundOutputBox
+{
+  public:
+
+    RoundOutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, float & val, const char * unit): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val), _myUnit(unit) {};
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+  private:
+
+    int16_t currentVal;
+
+    char valueStr[7] = " ";
+
+    uint8_t textWidth = 0;
+
+    int16_t _myX;
+
+    int16_t _myY;
+
+    const char * _myCaption;
+
+    const char * _myFormat;
+
     float & myVal;
+
+    const char * _myUnit;
+
+};
+
+class IDOutputBox
+{
+  public:
+
+    IDOutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, uint16_t & val, const char * unit): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val), _myUnit(unit) {};
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+  private:
+
+    int16_t currentVal;
+
+    char valueStr[7] = " ";
+
+    uint8_t textWidth = 0;
+
+    int16_t _myX;
+
+    int16_t _myY;
+
+    const char * _myCaption;
+
+    const char * _myFormat;
+
+    uint16_t & myVal;
+
+    const char * _myUnit;
 
 };
 

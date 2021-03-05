@@ -148,15 +148,13 @@ uint8_t ZSC31050::saveConfig(void)
 
 int16_t ZSC31050::getRawPressure(void)
 {
-  startCalibrationOutput(START_AD_P_AZC);
-  delay(conversionTime);
   readOutput();
   memcpy(&rawP, &_P, sizeof(_P));
   return rawP;
 }
 
-uint16_t ZSC31050::getCorrectedPressure(void)
-{
+int16_t ZSC31050::getCorrectedPressure(void)
+{  
   start();
   delay(conversionTime);
   readOutput();
@@ -164,10 +162,24 @@ uint16_t ZSC31050::getCorrectedPressure(void)
   return correctedP;
 }
 
+int16_t ZSC31050::getCorrectedT1(void)
+{
+  start();
+  delay(conversionTime);
+  readOutput();
+  return _T1;
+}
+
+int16_t ZSC31050::getCorrectedT2(void)
+{
+  start();
+  delay(conversionTime);
+  readOutput();
+  return _T2;
+}
+
 uint16_t ZSC31050::getRawTemperature1(void)
 {
-  startCalibrationOutput(START_AD_T1_AZC);
-  delay(conversionTime);
   readOutput();
   rawT1 = _T1;
   return rawT1;
@@ -294,7 +306,7 @@ uint64_t ZSC31050::read48(void)
 void ZSC31050::readOutput(void)
 {
   uint64_t readout = read48();
-  _T2 = (uint16_t) (readout & 0xFFFFLL);
-  _T1 = (uint16_t) ((readout & 0xFFFF0000LL) >> 16LL);
-  _P = (uint16_t) ((readout & 0xFFFF00000000LL) >> 32LL);
+  _T2 = (int16_t) (readout & 0xFFFFLL);
+  _T1 = (int16_t) ((readout & 0xFFFF0000LL) >> 16LL);
+  _P = (int16_t) ((readout & 0xFFFF00000000LL) >> 32LL);
 }
