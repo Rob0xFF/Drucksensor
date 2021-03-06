@@ -114,6 +114,7 @@ boolean Adafruit_MPRLS::begin(uint8_t i2c_addr, TwoWire *twoWire) {
   // Serial.print("Status: ");
   // Serial.println(stat);
   return ((readStatus() & MPRLS_STATUS_MASK) == MPRLS_STATUS_POWERED);
+	//return readStatus();
 }
 
 /**************************************************************************/

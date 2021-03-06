@@ -85,6 +85,8 @@ class MainScreen
 
     Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
 
+		OutputBox <float> senOutSIBox = OutputBox<float>(board, xCoord(1), yCoord(1), " P (Pa) ", "%1.1f", board.P_SI);
+
 		OutputBox <int16_t> senOutBox = OutputBox<int16_t>(board, xCoord(1), yCoord(2), " P ", "%1d", board.P);
 
 		OutputBox <int16_t> senT1Box = OutputBox<int16_t>(board, xCoord(1), yCoord(3), " T1 ", "%1d", board.T1);

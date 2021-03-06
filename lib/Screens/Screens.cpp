@@ -71,6 +71,7 @@ void ScreenHeader::update(void)
 void MainScreen::show(void)
 {
   bridge.show();
+	senOutSIBox.show();
 	senOutBox.show();
 	senT1Box.show();
 	senT2Box.show();
@@ -86,6 +87,7 @@ void MainScreen::show(void)
 void MainScreen::update(void)
 {
   bridge.update();
+	senOutSIBox.update();
 	senOutBox.update();
 	senT1Box.update();
 	senT2Box.update();

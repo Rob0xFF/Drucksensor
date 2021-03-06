@@ -74,7 +74,13 @@ void Board::begin(void)
   Wire.beginTransmission(I2C_MPRLS);
   if (!Wire.endTransmission()) {
     available(MPRLS);
-    mpr.begin();
+		mpr.begin();
+//     if(mpr.begin()) {
+// 			TFT.setTextColor(0xF000);
+//     	TFT.println(F("FAIL"));
+//     	TFT.println(F("> > Check on-board connections!"));
+//     	return;
+// 		}
     TFT.setTextColor(0x0FF0);
     TFT.println(F("DONE"));
   } else {
@@ -103,41 +109,31 @@ void Board::begin(void)
   TFT.println();
   TFT.setTextColor(0xFFFF, 0x0000);
   TFT.println();
-  TFT.println(F("Here is, what the cow says:"));
-  TFT.println();
   _delay_ms(1000);
-  // That's what the cow says.
-  TFT.println(F("   ----------------------------------"));
-  TFT.println(F(" < Great dude. Starting in 8 seconds. >"));
-  TFT.println(F("   ----------------------------------"));
-  TFT.println(F("          \\   ^__^ "));
-  TFT.println(F("           \\  (oo)\\_______"));
-  TFT.println(F("              (__)\\       )\\/\\"));
-  TFT.println(F("                  ||----w |"));
-  TFT.print(F("                  ||     ||"));
-  TFT.setCursor(TFT.getCursorX(), TFT.getCursorY() - 8 * 6);
-  _delay_ms(1000);
-  TFT.print("7");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("6");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("5");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("4");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("3");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("2");
-  TFT.setCursor(TFT.getCursorX() - 6, TFT.getCursorY());
-  _delay_ms(1000);
-  TFT.print("1");
-  // TODO: check external RS232
-  _delay_ms(1000);
+	uint16_t _myX = TFT.width() / 2 - 55;
+	uint16_t _myY = TFT.getCursorY() + 10;
+  TFT.drawLine(_myX + 53, _myY + 0, _myX + 0, _myY + 53, 0xFFFF);
+  TFT.drawLine(_myX + 53, _myY + 1, _myX + 1, _myY + 53, 0xFFFF);
+  TFT.drawLine(_myX + 54, _myY + 0, _myX + 107, _myY + 53, 0xFFFF);
+  TFT.drawLine(_myX + 54, _myY + 1, _myX + 107, _myY + 54, 0xFFFF);
+  TFT.drawLine(_myX + 1, _myY + 54, _myX + 54, _myY + 107, 0xFFFF);
+  TFT.drawLine(_myX + 2, _myY + 54, _myX + 54, _myY + 106, 0xFFFF);
+  TFT.drawLine(_myX + 55, _myY + 106, _myX + 106, _myY + 55, 0xFFFF);
+  TFT.drawLine(_myX + 55, _myY + 105, _myX + 106, _myY + 54, 0xFFFF);
+  TFT.drawLine(_myX + 54, _myY + 105, _myX + 105, _myY + 54, 0xFFFF);
+  TFT.drawLine(_myX + 54, _myY + 104, _myX + 105, _myY + 53, 0xFFFF);
+  TFT.drawLine(_myX + 53, _myY + 104, _myX + 104, _myY + 53, 0xFFFF);
+  TFT.drawLine(_myX + 53, _myY + 103, _myX + 104, _myY + 52, 0xFFFF);
+  TFT.drawLine(_myX + 36, _myY + 19, _myX + 71, _myY + 19, 0xFFFF);
+  TFT.drawLine(_myX + 33, _myY + 84, _myX + 71, _myY + 84, 0xFFFF);
+  TFT.drawLine(_myX + 32, _myY + 83, _myX + 72, _myY + 83, 0xFFFF);
+  TFT.drawLine(_myX + 31, _myY + 82, _myX + 73, _myY + 82, 0xFFFF);
+  TFT.drawLine(_myX + 32, _myY + 81, _myX + 74, _myY + 81, 0xFFFF);
+  TFT.drawLine(_myX + 32, _myY + 80, _myX + 75, _myY + 80, 0xFFFF);
+  TFT.drawLine(_myX + 35, _myY + 79, _myX + 73, _myY + 21, 0xFFFF);
+  TFT.drawLine(_myX + 34, _myY + 79, _myX + 72, _myY + 21, 0xFFFF);
+  TFT.drawLine(_myX + 33, _myY + 79, _myX + 72, _myY + 20, 0xFFFF);
+  _delay_ms(3000);
   TFT.fillScreen(0x0000);
 }
 
@@ -164,6 +160,8 @@ void Board::update(void)
 		temperatureINT = HIHINT.temperature();
     bridgeVoltageINT = voltageSensorINT.readBusVoltage();
     voltageINT = voltageSensorINT.readShuntVoltage() * 1000.0;
+    mprPres = mpr.readPressure();
+		Serial.println(mprPres);
 		if(sensorStatus == EXT) {
   		multiplexer.disable();
 			multiplexer.enableChannel(1);
@@ -177,23 +175,28 @@ void Board::update(void)
 			senBridgeVoltage = bridgeVoltageEXT;
 			senVoltage = voltageEXT;
 			senChipID = chipIDEXT;
+			senSlope = slopeEXT;
+			senOffset = offsetEXT;
       if (!extSerial.isConnected() && zscEXT != nullptr) {
         P = zscEXT -> getCorrectedPressure();
         T1 = zscEXT -> getCorrectedT1();
         T2 = zscEXT -> getCorrectedT2();
+				P_SI = senSlope * (float) P + senOffset;
       }
 		}
-    mprPres = mpr.readPressure();
     if (sensorStatus == INT) {
 			senTemperature = temperatureINT;
 			senHumidity = humidityINT;
 			senBridgeVoltage = bridgeVoltageINT;
 			senVoltage = voltageINT;
 			senChipID = chipIDINT;
+			senSlope = slopeINT;
+			senOffset = offsetINT;
       if (!extSerial.isConnected() && zscINT != nullptr) {
         P = zscINT -> getCorrectedPressure();
         T1 = zscINT -> getCorrectedT1();
         T2 = zscINT -> getCorrectedT2();
+				P_SI = senSlope * (float) P + senOffset;
       }
     }
   }
@@ -275,7 +278,11 @@ void Board::checkEXT(void)
     case EXT:
       multiplexer.enableChannel(1);
       break;
+    case UNKNOWN:
+      multiplexer.enableChannel(0);
+      break;
     default:
+			multiplexer.disable();
       break;
   }
 }

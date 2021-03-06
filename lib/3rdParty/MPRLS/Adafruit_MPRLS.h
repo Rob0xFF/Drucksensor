@@ -48,7 +48,7 @@ public:
                  float OUTPUT_min = 10, float OUTPUT_max = 90,
                  float K = PSI_to_HPA);
 
-  bool begin(uint8_t i2c_addr = MPRLS_DEFAULT_ADDR, TwoWire *twoWire = &Wire);
+  boolean begin(uint8_t i2c_addr = MPRLS_DEFAULT_ADDR, TwoWire *twoWire = &Wire);
 
   uint8_t readStatus(void);
   float readPressure(void);

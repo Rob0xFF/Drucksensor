@@ -135,15 +135,13 @@ class Board
 
     int16_t P;
 
-    float P1_SI;
+    float P_SI;
 
     int16_t T1;
 
     int16_t T2;
 
     float mprPres = 0.0;
-
-    float mprPresRef = 0.0;
 
     volatile uint8_t sensorStatus = UNKNOWN;
 
