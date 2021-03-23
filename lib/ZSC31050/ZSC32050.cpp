@@ -154,7 +154,7 @@ int16_t ZSC31050::getRawPressure(void)
 }
 
 int16_t ZSC31050::getCorrectedPressure(void)
-{  
+{
   start();
   delay(conversionTime);
   readOutput();

@@ -5,19 +5,13 @@
 #include "Wire.h"
 #include "new.h"
 
-#define ACK 0x06
-#define CR 0x0D
-#define LF 0x0A
-#define COLON 0x3B
-#define AT 0xA9
+#include <EEPROM.h>
 
 class ZSC31050Serial
 {
   public:
 
-    ZSC31050Serial()
-    {
-    };
+    ZSC31050Serial() {};
 
     uint8_t parseSerialCommand(void);
 
@@ -28,6 +22,8 @@ class ZSC31050Serial
     uint8_t isConnected(void);
 
     void disConnect(void);
+
+    uint16_t senChipID = 0;
 
   private:
 
@@ -46,6 +42,12 @@ class ZSC31050Serial
     uint8_t connected = 0;
 
     uint8_t busy = 0;
+
+    const char CR = 0x0D;
+    const char LF = 0x0A;
+    const char COLON = 0x3B;
+    const char AT = 0xA9;
+    const char ACK = 0x06;
 
 };
 #endif

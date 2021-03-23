@@ -71,15 +71,15 @@ void ScreenHeader::update(void)
 void MainScreen::show(void)
 {
   bridge.show();
-	senOutSIBox.show();
-	senOutBox.show();
-	senT1Box.show();
-	senT2Box.show();
-	idBox.show();
-	tempBox.show();
-	humBox.show();
-	presBox.show();
-  adaptionButton.show();
+  senOutSIBox.show();
+  senOutBox.show();
+  senT1Box.show();
+  senT2Box.show();
+  idBox.show();
+  tempBox.show();
+  humBox.show();
+  presBox.show();
+  presSetPointButton.show();
   correctionButton.show();
   outputButton.show();
 }
@@ -87,12 +87,12 @@ void MainScreen::show(void)
 void MainScreen::update(void)
 {
   bridge.update();
-	senOutSIBox.update();
-	senOutBox.update();
-	senT1Box.update();
-	senT2Box.update();
-	idBox.update();
-	tempBox.update();
-	presBox.update();
-	humBox.update();
+  senOutSIBox.update();
+  senOutBox.update();
+  senT1Box.update();
+  senT2Box.update();
+  idBox.update();
+  tempBox.update();
+  presBox.update();
+  humBox.update();
 }

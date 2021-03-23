@@ -2,12 +2,12 @@
 
 void Board::begin(void)
 {
-  Serial.write(ACK);
+  Serial.write(0x06);
   Serial.print("V2.05 ");
-  Serial.write(AT);
+  Serial.write(0xA9);
   Serial.print(" ZMD AG 2004 - CB");
-  Serial.write(CR);
-  Serial.write(LF);
+  Serial.write(0x0D);
+  Serial.write(0x0A);
   pinMode(USB_PIN, INPUT_PULLUP);
   Wire.begin();
   TFT.begin();
@@ -74,7 +74,7 @@ void Board::begin(void)
   Wire.beginTransmission(I2C_MPRLS);
   if (!Wire.endTransmission()) {
     available(MPRLS);
-		mpr.begin();
+    mpr.begin();
 //     if(mpr.begin()) {
 // 			TFT.setTextColor(0xF000);
 //     	TFT.println(F("FAIL"));
@@ -104,14 +104,30 @@ void Board::begin(void)
     TFT.println(F("> > Check on-board connections!"));
     return;
   }
-	//uint16_t zero = 0;
-	//EEPROM.put(0, zero);
+  TFT.setTextColor(0xFFFF);
+  TFT.print(F("> MCP4725 DAC"));
+  TFT.setCursor(TFT.width() - 4 * 6, TFT.getCursorY());
+  Wire.beginTransmission(I2C_MCP4725);
+  if (!Wire.endTransmission()) {
+    available(MCP4725);
+    dac.begin(I2C_MCP4725);
+    dac.setVoltage(0, false);
+    TFT.setTextColor(0x0FF0);
+    TFT.println(F("DONE"));
+  } else {
+    TFT.setTextColor(0xF000);
+    TFT.println(F("FAIL"));
+    TFT.println(F("> > Check on-board connections!"));
+    return;
+  }
+  //uint16_t zero = 0;
+  //EEPROM.put(0, zero);
   TFT.println();
   TFT.setTextColor(0xFFFF, 0x0000);
   TFT.println();
   _delay_ms(1000);
-	uint16_t _myX = TFT.width() / 2 - 55;
-	uint16_t _myY = TFT.getCursorY() + 10;
+  uint16_t _myX = TFT.width() / 2 - 55;
+  uint16_t _myY = TFT.getCursorY() + 10;
   TFT.drawLine(_myX + 53, _myY + 0, _myX + 0, _myY + 53, 0xFFFF);
   TFT.drawLine(_myX + 53, _myY + 1, _myX + 1, _myY + 53, 0xFFFF);
   TFT.drawLine(_myX + 54, _myY + 0, _myX + 107, _myY + 53, 0xFFFF);
@@ -139,6 +155,7 @@ void Board::begin(void)
 
 void Board::update(void)
 {
+  envChamber.sendRequest();
   if (digitalRead(USB_PIN) == LOW) {
     available(USB_CONN);
   } else {
@@ -151,52 +168,53 @@ void Board::update(void)
     if (!extSerial.isConnected()) {
       checkEXT();
     }
-		if(sensorStatus == EXT) {
-  		multiplexer.disable();
-			multiplexer.enableChannel(0);
-		}
+    if (sensorStatus == EXT) {
+      multiplexer.disable();
+      multiplexer.enableChannel(0);
+    }
     HIHINT.update();
     humidityINT = HIHINT.humidity() * 100.0;
-		temperatureINT = HIHINT.temperature();
+    temperatureINT = HIHINT.temperature();
     bridgeVoltageINT = voltageSensorINT.readBusVoltage();
     voltageINT = voltageSensorINT.readShuntVoltage() * 1000.0;
     mprPres = mpr.readPressure();
-		Serial.println(mprPres);
-		if(sensorStatus == EXT) {
-  		multiplexer.disable();
-			multiplexer.enableChannel(1);
-			HIHEXT -> update();
-    	humidityEXT = HIHEXT -> humidity() * 100.0;
-		  temperatureEXT = HIHEXT -> temperature();
+    if (sensorStatus == EXT) {
+      multiplexer.disable();
+      multiplexer.enableChannel(1);
+      HIHEXT -> update();
+      humidityEXT = HIHEXT -> humidity() * 100.0;
+      temperatureEXT = HIHEXT -> temperature();
       bridgeVoltageEXT = voltageSensorEXT -> readBusVoltage();
-    	voltageEXT = voltageSensorEXT -> readShuntVoltage() * 1000.0;
-			senTemperature = temperatureEXT;
-			senHumidity = humidityEXT;
-			senBridgeVoltage = bridgeVoltageEXT;
-			senVoltage = voltageEXT;
-			senChipID = chipIDEXT;
-			senSlope = slopeEXT;
-			senOffset = offsetEXT;
+      voltageEXT = voltageSensorEXT -> readShuntVoltage() * 1000.0;
+      senTemperature = temperatureEXT;
+      senHumidity = humidityEXT;
+      senBridgeVoltage = bridgeVoltageEXT;
+      senVoltage = voltageEXT;
+      senChipID = chipIDEXT;
+      senSlope = slopeEXT;
+      senOffset = offsetEXT;
+      extSerial.senChipID = chipIDEXT;
       if (!extSerial.isConnected() && zscEXT != nullptr) {
         P = zscEXT -> getCorrectedPressure();
         T1 = zscEXT -> getCorrectedT1();
         T2 = zscEXT -> getCorrectedT2();
-				P_SI = senSlope * (float) P + senOffset;
+        P_SI = (senSlope * (float) P + senOffset) / 100;
       }
-		}
+    }
     if (sensorStatus == INT) {
-			senTemperature = temperatureINT;
-			senHumidity = humidityINT;
-			senBridgeVoltage = bridgeVoltageINT;
-			senVoltage = voltageINT;
-			senChipID = chipIDINT;
-			senSlope = slopeINT;
-			senOffset = offsetINT;
+      senTemperature = temperatureINT;
+      senHumidity = humidityINT;
+      senBridgeVoltage = bridgeVoltageINT;
+      senVoltage = voltageINT;
+      senChipID = chipIDINT;
+      senSlope = slopeINT;
+      senOffset = offsetINT;
+      extSerial.senChipID = chipIDINT;
       if (!extSerial.isConnected() && zscINT != nullptr) {
         P = zscINT -> getCorrectedPressure();
         T1 = zscINT -> getCorrectedT1();
         T2 = zscINT -> getCorrectedT2();
-				P_SI = senSlope * (float) P + senOffset;
+        P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }
   }
@@ -213,18 +231,18 @@ void Board::checkEXT(void)
       zscINT = new (memBufferZscINT) ZSC31050(I2C_ZSC31050);
       zscINT -> setMode(COMMAND_MODE);
       chipIDINT = zscINT -> getRegister(USR_VAL1);
-			const float ZERO = 0.0F;
+      const float ZERO = 0.0F;
       if (chipIDINT == 0) { // new chip
         uint16_t latestID;
-				EEPROM.get(0, latestID);
+        EEPROM.get(0, latestID);
         chipIDINT = (latestID + 1) % 511;
         zscINT -> setRegister(USR_VAL1, chipIDINT, TO_EEPROM);
-				EEPROM.put(0, chipIDINT);
-		  	EEPROM.put(chipIDINT * 8, ZERO);
-				EEPROM.put(chipIDINT * 8 + 4, ZERO);
+        EEPROM.put(0, chipIDINT);
+        EEPROM.put(chipIDINT * 8, ZERO);
+        EEPROM.put(chipIDINT * 8 + 4, ZERO);
       }
-		  EEPROM.get(chipIDINT * 8, slopeINT);
-			EEPROM.get(chipIDINT * 8 + 4, offsetINT);
+      EEPROM.get(chipIDINT * 8, slopeINT);
+      EEPROM.get(chipIDINT * 8 + 4, offsetINT);
       sensorStatus = INT;
     }
   } else {
@@ -243,24 +261,24 @@ void Board::checkEXT(void)
       zscEXT = new (memBufferZscEXT) ZSC31050(I2C_ZSC31050);
       zscEXT -> setMode(COMMAND_MODE);
       chipIDEXT = zscEXT -> getRegister(USR_VAL1);
-			const float ZERO = 0.0F;
+      const float ZERO = 0.0F;
       if (chipIDEXT == 0) { // new chip
         uint16_t latestID;
-				EEPROM.get(0, latestID);
+        EEPROM.get(0, latestID);
         chipIDEXT = (latestID + 1) % 511;
         zscEXT -> setRegister(USR_VAL1, chipIDEXT, TO_EEPROM);
-				EEPROM.put(0, chipIDEXT);
-		  	EEPROM.put(chipIDEXT * 8, ZERO);
-				EEPROM.put(chipIDEXT * 8 + 4, ZERO);
+        EEPROM.put(0, chipIDEXT);
+        EEPROM.put(chipIDEXT * 8, ZERO);
+        EEPROM.put(chipIDEXT * 8 + 4, ZERO);
       }
-		  EEPROM.get(chipIDEXT * 8, slopeEXT);
-			EEPROM.get(chipIDEXT * 8 + 4, offsetEXT);
-			voltageSensorEXT = new (memBufferVoltageSensorEXT) INA226();
-			voltageSensorEXT -> begin();
-    	voltageSensorEXT -> configure(INA226_AVERAGES_128, INA226_BUS_CONV_TIME_1100US, INA226_SHUNT_CONV_TIME_1100US, INA226_MODE_SHUNT_BUS_CONT);
-    	voltageSensorEXT -> calibrate(0.1, 0.1);
-			HIHEXT = new (memBufferHIHEXT) HIH61XX(I2C_HIH6130, 255);
-			HIHEXT -> start();
+      EEPROM.get(chipIDEXT * 8, slopeEXT);
+      EEPROM.get(chipIDEXT * 8 + 4, offsetEXT);
+      voltageSensorEXT = new (memBufferVoltageSensorEXT) INA226();
+      voltageSensorEXT -> begin();
+      voltageSensorEXT -> configure(INA226_AVERAGES_128, INA226_BUS_CONV_TIME_1100US, INA226_SHUNT_CONV_TIME_1100US, INA226_MODE_SHUNT_BUS_CONT);
+      voltageSensorEXT -> calibrate(0.1, 0.1);
+      HIHEXT = new (memBufferHIHEXT) HIH61XX(I2C_HIH6130, 255);
+      HIHEXT -> start();
       sensorStatus = EXT;
     }
   } else {
@@ -282,7 +300,7 @@ void Board::checkEXT(void)
       multiplexer.enableChannel(0);
       break;
     default:
-			multiplexer.disable();
+      multiplexer.disable();
       break;
   }
 }

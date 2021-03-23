@@ -79,9 +79,9 @@ template <class valType> class OutputBox
 
     int16_t _myY;
 
-    const char * _myFormat;
-
     const char * _myCaption;
+
+    const char * _myFormat;
 
     valType & myVal;
 

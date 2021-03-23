@@ -17,6 +17,8 @@
 #include <INA226.h>
 #include <EEPROM.h>
 #include <Adafruit_MPRLS.h>
+#include <Adafruit_MCP4725.h>
+#include <envChamber.h>
 
 const uint8_t I2C_TCA = 0x70;
 const uint8_t I2C_INA226 = 0x40;
@@ -85,6 +87,8 @@ class Board
 
     ZSC31050Serial extSerial = ZSC31050Serial();
 
+    EnvChamber envChamber = EnvChamber(Serial3, '6');
+
     Adafruit_FT6206 touchScreen = Adafruit_FT6206();
 
     Display TFT = Display();
@@ -117,19 +121,19 @@ class Board
 
     uint16_t chipIDEXT = 0;
 
-		uint16_t senChipID = 0;
+    uint16_t senChipID = 0;
 
-		float slopeINT = 0;
+    float slopeINT = 0;
 
-		float offsetINT = 0;
+    float offsetINT = 0;
 
-		float slopeEXT = 0;
+    float slopeEXT = 0;
 
-		float offsetEXT = 0;
+    float offsetEXT = 0;
 
-		float senSlope = 0;
+    float senSlope = 0;
 
-		float senOffset = 0;
+    float senOffset = 0;
 
     int16_t rawP;
 
@@ -144,6 +148,10 @@ class Board
     float mprPres = 0.0;
 
     volatile uint8_t sensorStatus = UNKNOWN;
+
+    Adafruit_MCP4725 dac;
+
+    volatile int16_t presSetPoint = 0;
 
   private:
 

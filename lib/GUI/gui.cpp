@@ -34,4 +34,11 @@ void GUI::updateTouch()
   TS_Point p = board.touchScreen.getPoint();
   TouchY = board.TFT.height() - p.x;
   TouchX = p.y;
+  if (currentScreen == 0) {
+    if (mainScreen.presSetPointButton.touched(TouchX, TouchY)) {
+      mainScreen.presSetPointButton.touchHandle(mainScreen.presSetPointButton.touched(TouchX, TouchY));
+      board.dac.setVoltage((int)(mainScreen.presSetPointButton.setPoint), false);
+      return;
+    }
+  }
 }

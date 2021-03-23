@@ -81,6 +81,28 @@ void ZSC31050Serial::handleSerialCommand(void)
       Serial.write(LF);
     }
   }
+  if (serialCommand[0] == 'S' || serialCommand[0] == 's') {
+    char buf[7];
+    memcpy(buf, & serialCommand[1], 6);
+    buf[7] = '\0';
+    float slope = atof(buf);
+    EEPROM.put(senChipID * 8, slope);
+    Serial.write(ACK);
+    Serial.print(slope, 4);
+    Serial.write(CR);
+    Serial.write(LF);
+  }
+  if (serialCommand[0] == 'O' || serialCommand[0] == 'o') {
+    char buf[7];
+    memcpy(buf, & serialCommand[1], 6);
+    buf[7] = '\0';
+    float offs = atof(buf);
+    EEPROM.put(senChipID * 8 + 4, offs);
+    Serial.write(ACK);
+    Serial.print(offs, 4);
+    Serial.write(CR);
+    Serial.write(LF);
+  }
   busy = 0;
 }
 

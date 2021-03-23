@@ -29,17 +29,17 @@ ARDUINO_LIB_PATH = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.0.
 USER_LIB_PATH    :=  $(PROJECT_DIR)/lib
 
 # Build user libs
-ARDUINO_LIBS = Board Display TCA9548A ZSC31050 ZSC31050Serial GUI Screens Elements
+ARDUINO_LIBS = Board Display TCA9548A ZSC31050 ZSC31050Serial EnvChamber GUI Screens Elements
 
 # Build 3rd party libs
-ARDUINO_LIBS += 3rdParty/FT6206 3rdParty/ILI9341TFT 3rdParty/TimerOne 3rdParty/HIH6130 3rdParty/INA226 3rdParty/MPRLS
+ARDUINO_LIBS += 3rdParty/FT6206 3rdParty/ILI9341TFT 3rdParty/TimerOne 3rdParty/HIH6130 3rdParty/INA226 3rdParty/MPRLS 3rdParty/MCP4725 3rdParty/BusIO
 
 # Build Libs included in Core
 ARDUINO_LIBS += Wire SPI EEPROM
 
 OPTIMIZATION_LEVEL = s
 
-MONITOR_PORT      = /dev/cu.usbserial*
+MONITOR_PORT      = /dev/cu.usbserial-A*
 
 #MONITOR_PORT      = /dev/cu.usbmodem*
 

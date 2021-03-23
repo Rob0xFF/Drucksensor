@@ -71,6 +71,11 @@ int main(void)
         myGUI.board.extSerial.handleSerialCommand();
       }
     }
+    if (Serial3.available()) {
+      if (myGUI.board.envChamber.readSerial()) {
+        myGUI.board.envChamber.handleSerial();
+      }
+    }
   }
   return 0;
 }

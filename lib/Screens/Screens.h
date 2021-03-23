@@ -85,23 +85,23 @@ class MainScreen
 
     Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
 
-		OutputBox <float> senOutSIBox = OutputBox<float>(board, xCoord(1), yCoord(1), " P (Pa) ", "%1.1f", board.P_SI);
+    OutputBox <float> senOutSIBox = OutputBox<float>(board, xCoord(1), yCoord(1), " P (hPa) ", "%1.1f", board.P_SI);
 
-		OutputBox <int16_t> senOutBox = OutputBox<int16_t>(board, xCoord(1), yCoord(2), " P ", "%1d", board.P);
+    OutputBox <int16_t> senOutBox = OutputBox<int16_t>(board, xCoord(1), yCoord(2), " P ", "%1d", board.P);
 
-		OutputBox <int16_t> senT1Box = OutputBox<int16_t>(board, xCoord(1), yCoord(3), " T1 ", "%1d", board.T1);
+    OutputBox <int16_t> senT1Box = OutputBox<int16_t>(board, xCoord(1), yCoord(3), " T1 ", "%1d", board.T1);
 
-		OutputBox <int16_t> senT2Box = OutputBox<int16_t>(board, xCoord(1), yCoord(4), " T2 ", "%1d", board.T2);
+    OutputBox <int16_t> senT2Box = OutputBox<int16_t>(board, xCoord(1), yCoord(4), " T2 ", "%1d", board.T2);
 
-		IDOutputBox idBox = IDOutputBox(board, xCoord(3), yCoord(1), "ZSC", "%03d", board.senChipID, "ID");
+    IDOutputBox idBox = IDOutputBox(board, xCoord(3), yCoord(1), "ZSC", "%03d", board.senChipID, "ID");
 
-		RoundOutputBox tempBox = RoundOutputBox(board, xCoord(4), yCoord(1), "T", "%1.1f", board.senTemperature, "\247C");
+    RoundOutputBox tempBox = RoundOutputBox(board, xCoord(4), yCoord(1), "T", "%1.1f", board.senTemperature, "\247C");
 
-		RoundOutputBox humBox = RoundOutputBox(board, xCoord(5), yCoord(1), "HUM", "%1.1f", board.senHumidity, "\%");
+    RoundOutputBox humBox = RoundOutputBox(board, xCoord(5), yCoord(1), "HUM", "%1.1f", board.senHumidity, "\%");
 
-		RoundOutputBox presBox = RoundOutputBox(board, xCoord(6), yCoord(1), "P", "%1.0f", board.mprPres, "hPa");
+    RoundOutputBox presBox = RoundOutputBox(board, xCoord(6), yCoord(1), "P", "%1.1f", board.mprPres, "hPa");
 
-    pButton adaptionButton = pButton(board, "chipID", xCoord(1), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    rButton presSetPointButton = rButton(board, 0.0, 4095.0, 50, "", "%1.0f%s", xCoord(1), yCoord(5), xWidth(2), yHeight(1), HOR);
 
     pButton correctionButton = pButton(board, "ZSC Raw", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 

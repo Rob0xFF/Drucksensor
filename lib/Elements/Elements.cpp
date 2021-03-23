@@ -114,7 +114,7 @@ void RoundOutputBox::update(void)
   board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
   uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
   if (textWidth != newWidth) {
-    board.TFT.fillRect(_myX + 7, _myY + 15, 30, 8, TFT_BLACK);
+    board.TFT.fillRect(_myX + 5, _myY + 15, 34, 8, TFT_BLACK);
     textWidth = newWidth;
   }
   board.TFT.setCursor(_myX + 22 - 6 * textWidth / 2, _myY + 15);
