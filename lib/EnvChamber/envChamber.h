@@ -9,7 +9,7 @@ class EnvChamber
 {
   public:
 
-    EnvChamber(HardwareSerial s, char id) : serialHandler(s), deviceID(id) {serialHandler.begin(9600);};
+    EnvChamber(HardwareSerial & s, char id) : serialHandler(s), deviceID(id) {serialHandler.begin(9600);};
 
     uint8_t readSerial(void);
 
@@ -23,11 +23,12 @@ class EnvChamber
 
     void newSetpoint(float t, float h);
 
+    HardwareSerial & serialHandler;
+
   private:
 
     void checkSum(char * str, char * checksum);
 
-    HardwareSerial & serialHandler;
     char deviceID;
     char checksum[3];
     char serialCommand[128];
