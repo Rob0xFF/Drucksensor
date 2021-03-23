@@ -98,16 +98,15 @@ void EnvChamber::nak(void)
 
 void EnvChamber::sendRequest(void)
 {
-//   char requestStr[4];
-//   requestStr[0] = STX;
-//   requestStr[1] = deviceID;
-//   requestStr[2] = '?';
-//   requestStr[3] = NUL;
-//   checkSum(requestStr, checksum);
-//   serialHandler.print(requestStr);
-//   serialHandler.print(checksum);
-//   serialHandler.write(ETX);
-	serialHandler.print("test");
+  char requestStr[4];
+  requestStr[0] = STX;
+  requestStr[1] = deviceID;
+  requestStr[2] = '?';
+  requestStr[3] = NUL;
+  checkSum(requestStr, checksum);
+  serialHandler.print(requestStr);
+  serialHandler.print(checksum);
+  serialHandler.write(ETX);
 }
 
 void EnvChamber::newSetpoint(float t, float h)
