@@ -155,7 +155,6 @@ void Board::begin(void)
 
 void Board::update(void)
 {
-  envChamber.sendRequest();
   if (digitalRead(USB_PIN) == LOW) {
     available(USB_CONN);
   } else {
@@ -178,6 +177,7 @@ void Board::update(void)
     bridgeVoltageINT = voltageSensorINT.readBusVoltage();
     voltageINT = voltageSensorINT.readShuntVoltage() * 1000.0;
     mprPres = mpr.readPressure();
+		mprPresRelative = mprPres - mprPresZero;
     if (sensorStatus == EXT) {
       multiplexer.disable();
       multiplexer.enableChannel(1);
@@ -195,9 +195,9 @@ void Board::update(void)
       senOffset = offsetEXT;
       extSerial.senChipID = chipIDEXT;
       if (!extSerial.isConnected() && zscEXT != nullptr) {
-        P = zscEXT -> getCorrectedPressure();
-        T1 = zscEXT -> getCorrectedT1();
-        T2 = zscEXT -> getCorrectedT2();
+        //P = zscEXT -> getCorrectedPressure();
+        //T1 = zscEXT -> getCorrectedT1();
+        //T2 = zscEXT -> getCorrectedT2();
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }
@@ -211,9 +211,9 @@ void Board::update(void)
       senOffset = offsetINT;
       extSerial.senChipID = chipIDINT;
       if (!extSerial.isConnected() && zscINT != nullptr) {
-        P = zscINT -> getCorrectedPressure();
-        T1 = zscINT -> getCorrectedT1();
-        T2 = zscINT -> getCorrectedT2();
+        //P = zscINT -> getCorrectedPressure();
+        //T1 = zscINT -> getCorrectedT1();
+        //T2 = zscINT -> getCorrectedT2();
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }

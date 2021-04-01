@@ -80,8 +80,8 @@ void MainScreen::show(void)
   humBox.show();
   presBox.show();
   presSetPointButton.show();
-  correctionButton.show();
-  outputButton.show();
+  calButton.show();
+  infoButton.show();
 }
 
 void MainScreen::update(void)
@@ -95,4 +95,74 @@ void MainScreen::update(void)
   tempBox.update();
   presBox.update();
   humBox.update();
+}
+
+void CalScreen::show(void)
+{
+	setMinText.show();
+	setMaxText.show();
+	setMaxButton.show();
+	setMinButton.show();
+	setPercentText.show();
+	setPercentButton.show();
+	presBox.show();
+	zeroButton.show();
+  exitButton.show();
+	setTempText.show();
+	setTempButton.setPoint = (float) round(board.senTemperature);
+	setTempButton.show();
+	tempBox.show();
+	board.dac.setVoltage(0, false);
+}
+
+void CalScreen::update(void)
+{
+	goal = setMinButton.setPoint + (setMaxButton.setPoint - setMinButton.setPoint) * setPercentButton.setPoint / 100.0;
+	if(zeroing) {
+		corr = 0.0;
+		board.dac.setVoltage(0, false);
+		zeroing -= 1;
+		board.mprPresZero = board.mprPres;
+	}
+	else {
+		dacGoal = (int) round((4095.0 * (goal / 485.909) + corr));
+		if(dacGoal < 0) {
+			dacGoal = 0;
+		}
+		if(dacGoal > 4095) {
+			dacGoal = 4095;
+		}
+		board.dac.setVoltage(dacGoal, false);
+		if(adjusting) {
+			adjusting -= 1;
+		}
+		else {
+			corr += (goal - board.mprPresRelative) * 0.7 * 8.42;
+			adjusting = 2;
+		}
+	}
+	if(abs(goal - board.mprPresRelative) > 0.2) {
+		presBox.setColor(TFT_RED);
+	}
+	else {
+		presBox.setColor(TFT_GREEN);
+	}
+	if (zeroing) {
+		zeroButton.setColor(TFT_RED2);
+	}
+	else	{
+		zeroButton.setColor(TFT_GREEN2);
+	}
+	if(newTemp) {
+		board.envChamber.newSetpoint(setTempButton.setPoint, 45.0);
+		newTemp = 0;
+	}
+	if(abs(setTempButton.setPoint - board.senTemperature) > 0.5) {	
+		tempBox.setColor(TFT_RED);
+	}
+	else {
+		tempBox.setColor(TFT_GREEN);
+	}
+	presBox.update();
+	tempBox.update();
 }

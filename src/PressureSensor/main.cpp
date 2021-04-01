@@ -50,7 +50,6 @@ int main(void)
 {
   init();
   initVariant();
-  Serial.begin(19200);
   myGUI.boot();
   // interupt on touchscreen event
   pinMode(FT6206_IRQ_PIN, INPUT);

@@ -74,12 +74,17 @@ template <class valType> void OutputBox<valType>::show(void)
   board.TFT.print(_myCaption);
 }
 
+template <class valType> void OutputBox<valType>::setColor(uint16_t color)
+{
+	_myColor = color;
+}
+
 template <class valType> void OutputBox<valType>::update(void)
 {
   board.TFT.setTextSize(2);
-  board.TFT.setTextColor(TFT_WHITE, TFT_BLACK);
+  board.TFT.setTextColor(_myColor, TFT_BLACK);
   uint8_t newWidth = snprintf(valueStr, 7, _myFormat, myVal);
-  if (board.sensorStatus == UNKNOWN || board.extSerial.isConnected()) {
+  if ((board.sensorStatus == UNKNOWN || board.extSerial.isConnected()) && _haltOnUSB) {
     newWidth = 3;
   }
   if (textWidth != newWidth) {
@@ -87,7 +92,7 @@ template <class valType> void OutputBox<valType>::update(void)
     textWidth = newWidth;
   }
   board.TFT.setCursor(_myX + 48 - 12 * textWidth / 2, _myY + 17);
-  if (board.sensorStatus == UNKNOWN || board.extSerial.isConnected()) {
+  if ((board.sensorStatus == UNKNOWN || board.extSerial.isConnected()) && _haltOnUSB) {
     board.TFT.print(F("---"));
   } else {
     board.TFT.print(valueStr);
@@ -230,6 +235,14 @@ void pButton::show(void)
 void pButton::hide(void)
 {
   board.TFT.fillRoundRect(_myX, _myY, _myWidth, _myHeight, 4, TFT_BLACK);
+}
+
+void pButton::setColor(uint16_t color)
+{
+	if(_myColor != color) {
+		_myColor = color;
+		show();
+	}
 }
 
 uint8_t pButton::touched(int16_t x, int16_t y)

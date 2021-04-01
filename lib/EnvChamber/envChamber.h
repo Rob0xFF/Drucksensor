@@ -2,7 +2,6 @@
 #define envChamber_h
 
 #include "Arduino.h"
-#include "Wire.h"
 #include "new.h"
 
 class EnvChamber

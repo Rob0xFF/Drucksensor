@@ -11,7 +11,7 @@ class ZSC31050Serial
 {
   public:
 
-    ZSC31050Serial() {};
+    ZSC31050Serial(HardwareSerial & s): serialHandler(s) {serialHandler.begin(19200);};
 
     uint8_t parseSerialCommand(void);
 
@@ -25,11 +25,13 @@ class ZSC31050Serial
 
     uint16_t senChipID = 0;
 
+    HardwareSerial & serialHandler;
+
   private:
 
-    uint8_t hexchar2int(uint8_t start, uint8_t length);
+    uint8_t hexchar2int(uint8_t start);
 
-    uint16_t decchar2int(uint8_t start, uint8_t length);
+    uint16_t decchar2int(uint8_t start);
 
     char serialCommand[128];
 

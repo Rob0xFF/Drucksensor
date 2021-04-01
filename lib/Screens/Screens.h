@@ -16,7 +16,9 @@
 #define TFT_BROWN 0x1924
 #define TFT_OLIVE 0x234D
 #define TFT_GREEN 0x07C0
+#define TFT_GREEN2 0x9DAA
 #define TFT_RED 0xF920
+#define TFT_RED2 0xD9E2
 #define TFT_ORANGE 0xFE47
 #define TFT_BLUE 0x063F
 
@@ -77,6 +79,8 @@ class MainScreen
 
     MainScreen(Board & myBoard): board(myBoard) {};
 
+		~MainScreen() {board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);};
+
     void show(void);
 
     void update(void);
@@ -85,37 +89,83 @@ class MainScreen
 
     Bridge bridge = Bridge(board, xCoord(3), yCoord(2));
 
-    OutputBox <float> senOutSIBox = OutputBox<float>(board, xCoord(1), yCoord(1), " P (hPa) ", "%1.1f", board.P_SI);
+    OutputBox <float> senOutSIBox = OutputBox<float>(board, xCoord(1), yCoord(1), " P (hPa) ", "%1.1f", board.P_SI, TFT_WHITE, 1);
 
-    OutputBox <int16_t> senOutBox = OutputBox<int16_t>(board, xCoord(1), yCoord(2), " P ", "%1d", board.P);
+    OutputBox <int16_t> senOutBox = OutputBox<int16_t>(board, xCoord(1), yCoord(2), " P ", "%1d", board.P, TFT_WHITE, 1);
 
-    OutputBox <int16_t> senT1Box = OutputBox<int16_t>(board, xCoord(1), yCoord(3), " T1 ", "%1d", board.T1);
+    OutputBox <int16_t> senT1Box = OutputBox<int16_t>(board, xCoord(1), yCoord(3), " T1 ", "%1d", board.T1, TFT_WHITE, 1);
 
-    OutputBox <int16_t> senT2Box = OutputBox<int16_t>(board, xCoord(1), yCoord(4), " T2 ", "%1d", board.T2);
+    OutputBox <int16_t> senT2Box = OutputBox<int16_t>(board, xCoord(1), yCoord(4), " T2 ", "%1d", board.T2, TFT_WHITE, 1);
 
     IDOutputBox idBox = IDOutputBox(board, xCoord(3), yCoord(1), "ZSC", "%03d", board.senChipID, "ID");
 
     RoundOutputBox tempBox = RoundOutputBox(board, xCoord(4), yCoord(1), "T", "%1.1f", board.senTemperature, "\247C");
 
-    RoundOutputBox humBox = RoundOutputBox(board, xCoord(5), yCoord(1), "HUM", "%1.1f", board.senHumidity, "\%");
+    RoundOutputBox humBox = RoundOutputBox(board, xCoord(5), yCoord(1), "HUM", "%1.1f", board.senHumidity, "%");
 
     RoundOutputBox presBox = RoundOutputBox(board, xCoord(6), yCoord(1), "P", "%1.1f", board.mprPres, "hPa");
 
-    rButton presSetPointButton = rButton(board, 0.0, 4095.0, 50, "", "%1.0f%s", xCoord(1), yCoord(5), xWidth(2), yHeight(1), HOR);
+    rButton presSetPointButton = rButton(board, 0.0, 100.0, 5, "%", "%1.0f%s", xCoord(1), yCoord(5), xWidth(2), yHeight(1), HOR);
 
-    pButton correctionButton = pButton(board, "ZSC Raw", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    pButton calButton = pButton(board, "Calibration", xCoord(3), yCoord(5), xWidth(2), yHeight(1), TFT_GREEN2);
 
-    pButton outputButton = pButton(board, "Info", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
+    pButton infoButton = pButton(board, "Info", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
   private:
 
-    char rawPressureStr[5] = "10.0";
+};
 
-    char pressureSIStr[5] = "10.0";
+class CalScreen
+{
+  public:
 
-    uint16_t rawPressure = 0;
+    CalScreen(Board & myBoard): board(myBoard) {};
 
-    float pressureSI = 0.0;
+    ~CalScreen() {board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);}
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+		TextBox setMaxText = TextBox(board, "Cal. Pres. Max.", xCoord(1), yCoord(1), xWidth(2), yHeight(1));
+
+		TextBox setPercentText = TextBox(board, "Cal. Pres. %", xCoord(1), yCoord(2), xWidth(2), yHeight(1));
+
+		TextBox setMinText = TextBox(board, "Cal. Pres. Min.", xCoord(1), yCoord(3), xWidth(2), yHeight(1));
+
+		rButton setMaxButton = rButton(board, 5.0, 480.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(1), xWidth(2), yHeight(1), HOR);
+
+		rButton setMinButton = rButton(board, 0.0, 470.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(3), xWidth(2), yHeight(1), HOR);
+
+		rButton setPercentButton = rButton(board, 0.0, 100.0, 5, "%", "%1.0f%s", xCoord(3), yCoord(2), xWidth(2), yHeight(1), HOR);
+
+    OutputBox <float> presBox = OutputBox<float>(board, xCoord(5), yCoord(2), " dP (hPa) ", "%1.1f", board.mprPresRelative, TFT_RED, 0);
+
+    pButton zeroButton = pButton(board, "AUTOZERO", xCoord(5), yCoord(3), xWidth(2), yHeight(1), TFT_RED2);
+
+		TextBox setTempText = TextBox(board, "Temp.", xCoord(1), yCoord(4), xWidth(2), yHeight(1));
+
+		rButton setTempButton = rButton(board, 0.0, 40, 1.0, "C", "%1.0f%s", xCoord(3), yCoord(4), xWidth(2), yHeight(1), HOR);
+
+    OutputBox <float> tempBox = OutputBox<float>(board, xCoord(5), yCoord(4), " T (C) ", "%1.1f", board.senTemperature, TFT_RED, 0);
+
+    pButton exitButton = pButton(board, "EXIT", xCoord(2), yCoord(5), xWidth(4), yHeight(1), TFT_RED2);
+
+		uint8_t zeroing = 3;
+
+		uint8_t adjusting = 5;
+
+		float goal = 0.0;
+
+		int dacGoal = 0;
+
+		float corr = 0.0;
+
+		uint8_t newTemp = 1;
+
+  private:
 
 };
 

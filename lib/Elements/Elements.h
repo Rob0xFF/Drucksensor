@@ -59,11 +59,13 @@ template <class valType> class OutputBox
 {
   public:
 
-    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, valType & val): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val) {};
+    OutputBox(Board & myBoard, int16_t x, int16_t y, const char * caption, const char * format, valType & val, uint16_t color, uint8_t halt): board(myBoard), _myX(x), _myY(y), _myCaption(caption), _myFormat(format), myVal(val), _myColor(color), _haltOnUSB(halt) {};
 
     void show(void);
 
     void update(void);
+
+		void setColor(uint16_t color);
 
     Board & board;
 
@@ -84,6 +86,10 @@ template <class valType> class OutputBox
     const char * _myFormat;
 
     valType & myVal;
+
+		uint16_t _myColor;
+
+		uint8_t _haltOnUSB;
 
 };
 
@@ -197,13 +203,15 @@ class pButton
 {
   public:
 
-    pButton(Board & myboard, const char * caption, const int16_t x, const int16_t y, const int16_t width, const int16_t height, const uint16_t color) : board(myboard), _caption(caption), _myX(x), _myY(y), _myWidth(width), _myHeight(height), _myColor(color) {};
+    pButton(Board & myboard, const char * caption, const int16_t x, const int16_t y, const int16_t width, const int16_t height, uint16_t color) : board(myboard), _caption(caption), _myX(x), _myY(y), _myWidth(width), _myHeight(height), _myColor(color) {};
 
     void show(void);
 
     void hide(void);
 
     uint8_t touched(int16_t x, int16_t y);
+
+		void setColor(uint16_t color);
 
     Board & board;
 
@@ -214,7 +222,7 @@ class pButton
     const int16_t _myY;
     const int16_t _myWidth;
     const int16_t _myHeight;
-    const uint16_t _myColor;
+    uint16_t _myColor;
 
 };
 

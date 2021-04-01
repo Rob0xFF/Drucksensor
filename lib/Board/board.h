@@ -85,7 +85,7 @@ class Board
       }
     };
 
-    ZSC31050Serial extSerial = ZSC31050Serial();
+    ZSC31050Serial extSerial = ZSC31050Serial(Serial);
 
     EnvChamber envChamber = EnvChamber(Serial3, '6');
 
@@ -147,11 +147,16 @@ class Board
 
     float mprPres = 0.0;
 
+    float mprPresZero = 0.0;
+
+    float mprPresRelative = 0.0;
+
     volatile uint8_t sensorStatus = UNKNOWN;
 
     Adafruit_MCP4725 dac;
 
-    volatile int16_t presSetPoint = 0;
+    Adafruit_MPRLS mpr = Adafruit_MPRLS(-1, -1);
+
 
   private:
 
@@ -172,8 +177,6 @@ class Board
 
     uint8_t memBufferHIHEXT[sizeof(HIH61XX)];
     HIH61XX * HIHEXT;
-
-    Adafruit_MPRLS mpr = Adafruit_MPRLS(-1, -1);
 
     volatile uint16_t _isAvailable = 0x0;
 

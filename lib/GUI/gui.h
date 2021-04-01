@@ -44,10 +44,11 @@ class GUI
       */
     ScreenHeader screenheader = ScreenHeader(board);
 
-    /*!
-      * @brief
-      */
-    MainScreen mainScreen = MainScreen(board);
+    uint8_t memBufferMainScreen[sizeof(MainScreen)];
+    MainScreen * mainScreen;
+
+    uint8_t memBufferCalScreen[sizeof(CalScreen)];
+    CalScreen * calScreen;
 
 
   private:
