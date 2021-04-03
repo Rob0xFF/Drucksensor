@@ -20,7 +20,8 @@ class Board
       _tempSensor.begin();
 			updateTemperature();
   		Input = _temperature;
-  		Setpoint = 27.0;
+  		Setpoint = 30.0;
+			_myPID.SetOutputLimits(-250.0, 250.0);
 			_myPID.SetMode(AUTOMATIC);
     };
 
@@ -44,8 +45,11 @@ class Board
 
 		double Setpoint, Input, Output;
 
-		double Kp=2, Ki=5, Kd=1;
+		double Kp=400.0, Ki=0.1, Kd=1000.0;
 		PID _myPID = PID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+
+		uint16_t elapsed = 0;
+		uint8_t counter = 0;
 
 };
 #endif
