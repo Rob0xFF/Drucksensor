@@ -15,7 +15,7 @@ void Board::update(void)
 	}
 	elapsed++;
 	counter--;
-	if(counter == 0) {
+	//if(counter == 0) {
 		Serial.print(elapsed);
 		Serial.print("; ");
 		Serial.print(_temperature);
@@ -25,5 +25,5 @@ void Board::update(void)
 		Serial.print(_myPID.GetDirection());
 		Serial.println();
 		counter = 10;
-	}
+	//}
 }

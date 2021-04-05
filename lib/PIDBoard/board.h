@@ -20,7 +20,7 @@ class Board
       _tempSensor.begin();
 			updateTemperature();
   		Input = _temperature;
-  		Setpoint = 30.0;
+  		Setpoint = 45.0;
 			_myPID.SetOutputLimits(-250.0, 250.0);
 			_myPID.SetMode(AUTOMATIC);
     };
@@ -43,9 +43,9 @@ class Board
 		PWMDevice IN1 = PWMDevice(5);
 		PWMDevice IN2 = PWMDevice(6);
 
-		double Setpoint, Input, Output;
+		double Setpoint, Input, Output = 0;
 
-		double Kp=400.0, Ki=0.1, Kd=1000.0;
+		double Kp=28, Ki=0.02, Kd=0.0;
 		PID _myPID = PID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 		uint16_t elapsed = 0;
