@@ -79,7 +79,10 @@ class MainScreen
 
     MainScreen(Board & myBoard): board(myBoard) {};
 
-		~MainScreen() {board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);};
+    ~MainScreen()
+    {
+      board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);
+    };
 
     void show(void);
 
@@ -121,7 +124,10 @@ class CalScreen
 
     CalScreen(Board & myBoard): board(myBoard) {};
 
-    ~CalScreen() {board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);}
+    ~CalScreen()
+    {
+      board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);
+    }
 
     void show(void);
 
@@ -129,41 +135,97 @@ class CalScreen
 
     Board & board;
 
-		TextBox setMaxText = TextBox(board, "Cal. Pres. Max.", xCoord(1), yCoord(1), xWidth(2), yHeight(1));
+    TextBox setMaxText = TextBox(board, "Cal. Pres. Max.", xCoord(1), yCoord(1), xWidth(2), yHeight(1));
 
-		TextBox setPercentText = TextBox(board, "Cal. Pres. %", xCoord(1), yCoord(2), xWidth(2), yHeight(1));
+    TextBox setPercentText = TextBox(board, "Cal. Pres. %", xCoord(1), yCoord(2), xWidth(2), yHeight(1));
 
-		TextBox setMinText = TextBox(board, "Cal. Pres. Min.", xCoord(1), yCoord(3), xWidth(2), yHeight(1));
+    TextBox setMinText = TextBox(board, "Cal. Pres. Min.", xCoord(1), yCoord(3), xWidth(2), yHeight(1));
 
-		rButton setMaxButton = rButton(board, 5.0, 480.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(1), xWidth(2), yHeight(1), HOR);
+    rButton setMaxButton = rButton(board, 5.0, 480.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(1), xWidth(2), yHeight(1), HOR);
 
-		rButton setMinButton = rButton(board, 0.0, 470.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(3), xWidth(2), yHeight(1), HOR);
+    rButton setMinButton = rButton(board, 0.0, 470.0, 10, "hPa", "%1.0f%s", xCoord(3), yCoord(3), xWidth(2), yHeight(1), HOR);
 
-		rButton setPercentButton = rButton(board, 0.0, 100.0, 5, "%", "%1.0f%s", xCoord(3), yCoord(2), xWidth(2), yHeight(1), HOR);
+    rButton setPercentButton = rButton(board, 0.0, 100.0, 5, "%", "%1.0f%s", xCoord(3), yCoord(2), xWidth(2), yHeight(1), HOR);
 
     OutputBox <float> presBox = OutputBox<float>(board, xCoord(5), yCoord(2), " dP (hPa) ", "%1.1f", board.mprPresRelative, TFT_RED, 0);
 
     pButton zeroButton = pButton(board, "AUTOZERO", xCoord(5), yCoord(3), xWidth(2), yHeight(1), TFT_RED2);
 
-		TextBox setTempText = TextBox(board, "Temp.", xCoord(1), yCoord(4), xWidth(2), yHeight(1));
+    TextBox setTempText = TextBox(board, "Temp.", xCoord(1), yCoord(4), xWidth(2), yHeight(1));
 
-		rButton setTempButton = rButton(board, 0.0, 40, 1.0, "C", "%1.0f%s", xCoord(3), yCoord(4), xWidth(2), yHeight(1), HOR);
+    rButton setTempButton = rButton(board, 0.0, 40, 1.0, "C", "%1.0f%s", xCoord(3), yCoord(4), xWidth(2), yHeight(1), HOR);
 
     OutputBox <float> tempBox = OutputBox<float>(board, xCoord(5), yCoord(4), " T (C) ", "%1.1f", board.senTemperature, TFT_RED, 0);
 
-    pButton exitButton = pButton(board, "EXIT", xCoord(2), yCoord(5), xWidth(4), yHeight(1), TFT_RED2);
+    pButton exitButton = pButton(board, "EXIT", xCoord(1), yCoord(5), xWidth(4), yHeight(1), TFT_RED2);
 
-		uint8_t zeroing = 3;
+    pButton envButton = pButton(board, "ENV. CHAMBER", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_OLIVE);
 
-		uint8_t adjusting = 5;
+    uint8_t zeroing = 3;
 
-		float goal = 0.0;
+    uint8_t adjusting = 5;
 
-		int dacGoal = 0;
+    float goal = 0.0;
 
-		float corr = 0.0;
+    int dacGoal = 0;
 
-		uint8_t newTemp = 1;
+    float corr = 0.0;
+
+    uint8_t newTemp = 1;
+
+  private:
+
+};
+
+class EnvScreen
+{
+  public:
+
+    EnvScreen(Board & myBoard): board(myBoard) {};
+
+    ~EnvScreen()
+    {
+      board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);
+    }
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+    OutputBox <float> TempSetPointBox = OutputBox<float>(board, xCoord(3), yCoord(2), " T SP (C) ", "%1.1f", board.envChamber.TS, TFT_WHITE, 0);
+
+    OutputBox <float> HumSetPointBox = OutputBox<float>(board, xCoord(3), yCoord(3), " Hum SP (%) ", "%1.0f", board.envChamber.HS, TFT_WHITE, 0);
+
+    OutputBox <float> TBox = OutputBox<float>(board, xCoord(5), yCoord(2), " T (C) ", "%1.1f", board.envChamber.T, TFT_WHITE, 0);
+
+    OutputBox <float> HumBox = OutputBox<float>(board, xCoord(5), yCoord(3), " Hum (%) ", "%1.0f", board.envChamber.H, TFT_WHITE, 0);
+
+    pButton exitButton = pButton(board, "EXIT", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_RED2);
+
+  private:
+
+};
+
+class InfoScreen
+{
+  public:
+
+    InfoScreen(Board & myBoard): board(myBoard) {};
+
+    ~InfoScreen()
+    {
+      board.TFT.fillRect(xCoord(1), yCoord(1), xWidth(6), yHeight(5), TFT_BLACK);
+    }
+
+    void show(void);
+
+    void update(void);
+
+    Board & board;
+
+    pButton exitButton = pButton(board, "EXIT", xCoord(5), yCoord(5), xWidth(2), yHeight(1), TFT_RED2);
 
   private:
 

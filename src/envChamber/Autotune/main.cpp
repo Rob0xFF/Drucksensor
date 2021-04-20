@@ -6,8 +6,8 @@
 #include <digitalDevice.h>
 
 byte ATuneModeRemember=2;
-double input=25, output=250, setpoint=40;
-double kp=2,ki=0.5,kd=2;
+double input=40, output=0, setpoint=40;
+double kp=38.5,ki=0.062,kd=0;
 
 double kpmodel=1.5, taup=100, theta[50];
 double outputStart=5;
@@ -74,7 +74,7 @@ void SerialSend()
     Serial.println("tuning mode");
   } else {
     Serial.print("kp: ");Serial.print(myPID.GetKp());Serial.print(" ");
-    Serial.print("ki: ");Serial.print(myPID.GetKi());Serial.print(" ");
+    Serial.print("ki: ");Serial.print(myPID.GetKi(), 4);Serial.print(" ");
     Serial.print("kd: ");Serial.print(myPID.GetKd());Serial.println();
   }
 }

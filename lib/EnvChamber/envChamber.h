@@ -8,7 +8,7 @@ class EnvChamber
 {
   public:
 
-    EnvChamber(HardwareSerial & s, char id) : serialHandler(s), deviceID(id) {serialHandler.begin(9600);};
+    EnvChamber(HardwareSerial & s, char id) : serialHandler(s), deviceID(id) {};
 
     uint8_t readSerial(void);
 
@@ -24,6 +24,14 @@ class EnvChamber
 
     HardwareSerial & serialHandler;
 
+    float T = 0.0;
+    float H = 0.0;
+    float T1 = 0.0;
+    float TS = 0.0;
+    float HS = 0.0;
+    char errCode[3] = "--";
+    uint16_t digitalCh = 0;
+
   private:
 
     void checkSum(char * str, char * checksum);
@@ -33,14 +41,6 @@ class EnvChamber
     char serialCommand[128];
     uint8_t serialCommandIndex = 0;
     uint8_t lastCommand = 0;
-
-    float T = 0.0;
-    float H = 0.0;
-    float T1 = 0.0;
-    float TS = 0.0;
-    float HS = 0.0;
-    char errCode[3] = "--";
-    uint16_t digitalCh = 0;
 
     const char STX = 0x02;
     const char ETX = 0x03;

@@ -16,21 +16,21 @@ class Board
 
     Board()
     {
-			Serial.begin(9600);
+      Serial.begin(9600);
       _tempSensor.begin();
-			updateTemperature();
-  		Input = _temperature;
-  		Setpoint = 45.0;
-			_myPID.SetOutputLimits(-250.0, 250.0);
-			_myPID.SetMode(AUTOMATIC);
+      updateTemperature();
+      Input = _temperature;
+      Setpoint = 45.0;
+      _myPID.SetOutputLimits(-250.0, 250.0);
+      _myPID.SetMode(AUTOMATIC);
     };
 
     void update();
 
   private:
 
-     OneWire _oneWire = OneWire(7);
-     DallasTemperature _tempSensor = DallasTemperature(&_oneWire);
+    OneWire _oneWire = OneWire(7);
+    DallasTemperature _tempSensor = DallasTemperature(&_oneWire);
 
     inline void updateTemperature()
     {
@@ -40,16 +40,16 @@ class Board
 
     float _temperature = DEVICE_DISCONNECTED_C;
 
-		PWMDevice IN1 = PWMDevice(5);
-		PWMDevice IN2 = PWMDevice(6);
+    PWMDevice IN1 = PWMDevice(5);
+    PWMDevice IN2 = PWMDevice(6);
 
-		double Setpoint, Input, Output = 0;
+    double Setpoint, Input, Output = 0;
 
-		double Kp=28, Ki=0.02, Kd=0.0;
-		PID _myPID = PID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+    double Kp = 28, Ki = 0.02, Kd = 0.0;
+    PID _myPID = PID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
-		uint16_t elapsed = 0;
-		uint8_t counter = 0;
+    uint16_t elapsed = 0;
+    uint8_t counter = 0;
 
 };
 #endif

@@ -85,6 +85,8 @@ class Board
       }
     };
 
+    void saveScreenshot(void);
+
     ZSC31050Serial extSerial = ZSC31050Serial(Serial);
 
     EnvChamber envChamber = EnvChamber(Serial3, '6');

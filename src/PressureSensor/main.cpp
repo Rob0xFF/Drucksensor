@@ -50,6 +50,8 @@ int main(void)
 {
   init();
   initVariant();
+  Serial.begin(19200);
+  Serial3.begin(9600);
   myGUI.boot();
   // interupt on touchscreen event
   pinMode(FT6206_IRQ_PIN, INPUT);
@@ -65,9 +67,16 @@ int main(void)
       myGUI.updateTouch();
       touched = IS_RELEASED;
     }
+//     if (Serial.available()) {
+//       if (myGUI.board.extSerial.parseSerialCommand()) {
+//         myGUI.board.extSerial.handleSerialCommand();
+//       }
+//     }
+    // stream screenshot via Serial
     if (Serial.available()) {
-      if (myGUI.board.extSerial.parseSerialCommand()) {
-        myGUI.board.extSerial.handleSerialCommand();
+      char readout = Serial.read();
+      if (readout == 'S') {
+        myGUI.board.saveScreenshot();
       }
     }
     if (Serial3.available()) {

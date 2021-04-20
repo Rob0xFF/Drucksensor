@@ -177,7 +177,7 @@ void Board::update(void)
     bridgeVoltageINT = voltageSensorINT.readBusVoltage();
     voltageINT = voltageSensorINT.readShuntVoltage() * 1000.0;
     mprPres = mpr.readPressure();
-		mprPresRelative = mprPres - mprPresZero;
+    mprPresRelative = mprPres - mprPresZero;
     if (sensorStatus == EXT) {
       multiplexer.disable();
       multiplexer.enableChannel(1);
@@ -195,9 +195,9 @@ void Board::update(void)
       senOffset = offsetEXT;
       extSerial.senChipID = chipIDEXT;
       if (!extSerial.isConnected() && zscEXT != nullptr) {
-        //P = zscEXT -> getCorrectedPressure();
-        //T1 = zscEXT -> getCorrectedT1();
-        //T2 = zscEXT -> getCorrectedT2();
+        P = zscEXT -> getCorrectedPressure();
+        T1 = zscEXT -> getCorrectedT1();
+        T2 = zscEXT -> getCorrectedT2();
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }
@@ -211,9 +211,9 @@ void Board::update(void)
       senOffset = offsetINT;
       extSerial.senChipID = chipIDINT;
       if (!extSerial.isConnected() && zscINT != nullptr) {
-        //P = zscINT -> getCorrectedPressure();
-        //T1 = zscINT -> getCorrectedT1();
-        //T2 = zscINT -> getCorrectedT2();
+        P = zscINT -> getCorrectedPressure();
+        T1 = zscINT -> getCorrectedT1();
+        T2 = zscINT -> getCorrectedT2();
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }
@@ -304,4 +304,46 @@ void Board::checkEXT(void)
       break;
   }
 }
+
+// Based on https://forum.arduino.cc/index.php?topic=406416.0
+void Board::saveScreenshot(void)
+{
+  byte VH, VL;
+  int i, j = 0;
+  const int w = 320;
+  const int h = 240;
+  unsigned char bmFlHdr[14] = {
+    'B', 'M', 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0
+  };
+  unsigned char bmInHdr[40] = {
+    40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 16, 0
+  };
+  unsigned long fileSize = 2ul * 240 * 320 + 54;
+  bmFlHdr[ 2] = (unsigned char)(fileSize      );
+  bmFlHdr[ 3] = (unsigned char)(fileSize >>  8);
+  bmFlHdr[ 4] = (unsigned char)(fileSize >> 16);
+  bmFlHdr[ 5] = (unsigned char)(fileSize >> 24);
+  bmInHdr[ 4] = (unsigned char)(       w      );
+  bmInHdr[ 5] = (unsigned char)(       w >>  8);
+  bmInHdr[ 6] = (unsigned char)(       w >> 16);
+  bmInHdr[ 7] = (unsigned char)(       w >> 24);
+  bmInHdr[ 8] = (unsigned char)(       h      );
+  bmInHdr[ 9] = (unsigned char)(       h >>  8);
+  bmInHdr[10] = (unsigned char)(       h >> 16);
+  bmInHdr[11] = (unsigned char)(       h >> 24);
+  Serial.write(bmFlHdr, sizeof(bmFlHdr));
+  Serial.write(bmInHdr, sizeof(bmInHdr));
+  for (i = h; i > 0; i--) {
+    for (j = 0; j < w; j++) {
+      uint16_t rgb = TFT.readPixel(j, i);
+      VH = (rgb & 0xFF00) >> 8;
+      VL = rgb & 0x00FF;
+      VL = (VH << 7) | ((VL & 0xC0) >> 1) | (VL & 0x1f);
+      VH = VH >> 1;
+      Serial.write(VL);
+      Serial.write(VH);
+    }
+  }
+}
+
 

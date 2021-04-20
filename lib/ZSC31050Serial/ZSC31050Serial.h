@@ -11,7 +11,7 @@ class ZSC31050Serial
 {
   public:
 
-    ZSC31050Serial(HardwareSerial & s): serialHandler(s) {serialHandler.begin(19200);};
+    ZSC31050Serial(HardwareSerial & s): serialHandler(s) {};
 
     uint8_t parseSerialCommand(void);
 

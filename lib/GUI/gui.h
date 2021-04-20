@@ -50,6 +50,12 @@ class GUI
     uint8_t memBufferCalScreen[sizeof(CalScreen)];
     CalScreen * calScreen;
 
+    uint8_t memBufferEnvScreen[sizeof(EnvScreen)];
+    EnvScreen * envScreen;
+
+    uint8_t memBufferInfoScreen[sizeof(InfoScreen)];
+    InfoScreen * infoScreen;
+
 
   private:
 

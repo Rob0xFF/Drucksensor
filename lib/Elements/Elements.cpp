@@ -76,7 +76,7 @@ template <class valType> void OutputBox<valType>::show(void)
 
 template <class valType> void OutputBox<valType>::setColor(uint16_t color)
 {
-	_myColor = color;
+  _myColor = color;
 }
 
 template <class valType> void OutputBox<valType>::update(void)
@@ -239,10 +239,10 @@ void pButton::hide(void)
 
 void pButton::setColor(uint16_t color)
 {
-	if(_myColor != color) {
-		_myColor = color;
-		show();
-	}
+  if (_myColor != color) {
+    _myColor = color;
+    show();
+  }
 }
 
 uint8_t pButton::touched(int16_t x, int16_t y)

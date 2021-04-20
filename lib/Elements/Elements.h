@@ -65,7 +65,7 @@ template <class valType> class OutputBox
 
     void update(void);
 
-		void setColor(uint16_t color);
+    void setColor(uint16_t color);
 
     Board & board;
 
@@ -87,9 +87,9 @@ template <class valType> class OutputBox
 
     valType & myVal;
 
-		uint16_t _myColor;
+    uint16_t _myColor;
 
-		uint8_t _haltOnUSB;
+    uint8_t _haltOnUSB;
 
 };
 
@@ -211,7 +211,7 @@ class pButton
 
     uint8_t touched(int16_t x, int16_t y);
 
-		void setColor(uint16_t color);
+    void setColor(uint16_t color);
 
     Board & board;
 

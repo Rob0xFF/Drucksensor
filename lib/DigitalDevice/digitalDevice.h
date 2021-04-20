@@ -16,11 +16,11 @@ class DigitalDevice
 
     void off(void);
 
-		uint8_t getStatus(void);
+    uint8_t getStatus(void);
 
   private:
 
-		uint8_t _state = 0;
+    uint8_t _state = 0;
 
     const uint8_t _controlPin;
 
