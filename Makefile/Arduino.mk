@@ -542,7 +542,7 @@ ifndef AVR_TOOLS_DIR
                 ifeq ($(shell expr $(ARDUINO_VERSION) '>' 157), 1)
                     AVRDUDE_CONF = $(AVR_TOOLS_DIR)/etc/avrdude.conf
                 else
-                    AVRDUDE_CONF = $(AVR_TOOLS_DIR)/../avrdude.conf
+                    AVRDUDE_CONF = $(AVR_TOOLS_DIR)/etc/avrdude.conf
                 endif
             endif
 
@@ -581,7 +581,7 @@ else
         ifeq ($(shell expr $(ARDUINO_VERSION) '>' 157), 1)
             AVRDUDE_CONF = $(AVR_TOOLS_DIR)/etc/avrdude.conf
         else
-            AVRDUDE_CONF = $(AVR_TOOLS_DIR)/../avrdude.conf
+            AVRDUDE_CONF = $(AVR_TOOLS_DIR)/etc/avrdude.conf
         endif
     endif
 

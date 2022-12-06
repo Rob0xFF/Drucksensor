@@ -67,18 +67,18 @@ int main(void)
       myGUI.updateTouch();
       touched = IS_RELEASED;
     }
-//     if (Serial.available()) {
-//       if (myGUI.board.extSerial.parseSerialCommand()) {
-//         myGUI.board.extSerial.handleSerialCommand();
-//       }
-//     }
-    // stream screenshot via Serial
     if (Serial.available()) {
-      char readout = Serial.read();
-      if (readout == 'S') {
-        myGUI.board.saveScreenshot();
+      if (myGUI.board.extSerial.parseSerialCommand()) {
+        myGUI.board.extSerial.handleSerialCommand();
       }
     }
+//     // stream screenshot via Serial
+//     if (Serial.available()) {
+//       char readout = Serial.read();
+//       if (readout == 'S') {
+//         myGUI.board.saveScreenshot();
+//       }
+//     }
     if (Serial3.available()) {
       if (myGUI.board.envChamber.readSerial()) {
         myGUI.board.envChamber.handleSerial();

@@ -30,6 +30,13 @@ void ZSC31050Serial::handleSerialCommand(void)
     }
     Wire.beginTransmission(hexchar2int(3));
     if (serialCommand[1] == 'W' || serialCommand[1] == 'w') {
+      if (hexchar2int(8) == 0xCC) {  // catch clear EEPROM cmd -> do nothing
+        Wire.endTransmission();
+        serialHandler.write(ACK);
+        serialHandler.write(CR);
+        serialHandler.write(LF);
+        return;
+      }
       for (uint16_t i = 0; i < decchar2int(5); i++) {
         Wire.write(hexchar2int(8 + 2 * i));
       }
