@@ -18,6 +18,8 @@ class ZSC31050Serial
     void handleSerialCommand(void);
 
     uint8_t isBusy(void);
+    
+    uint8_t isNewCalibration = 0;
 
     uint8_t isConnected(void);
 

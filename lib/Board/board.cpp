@@ -198,6 +198,11 @@ void Board::update(void)
         P = zscEXT -> getCorrectedPressure();
         T1 = zscEXT -> getCorrectedT1();
         T2 = zscEXT -> getCorrectedT2();
+        if (extSerial.isNewCalibration) {
+          EEPROM.get(chipIDEXT * 8, slopeEXT);
+          EEPROM.get(chipIDEXT * 8 + 4, offsetEXT);
+          extSerial.isNewCalibration = 0;
+        }
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }
@@ -214,6 +219,11 @@ void Board::update(void)
         P = zscINT -> getCorrectedPressure();
         T1 = zscINT -> getCorrectedT1();
         T2 = zscINT -> getCorrectedT2();
+        if (extSerial.isNewCalibration) {
+          EEPROM.get(chipIDINT * 8, slopeINT);
+          EEPROM.get(chipIDINT * 8 + 4, offsetINT);
+          extSerial.isNewCalibration = 0;
+        }
         P_SI = (senSlope * (float) P + senOffset) / 100;
       }
     }

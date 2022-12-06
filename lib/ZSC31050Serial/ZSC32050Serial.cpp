@@ -94,6 +94,7 @@ void ZSC31050Serial::handleSerialCommand(void)
     buf[7] = '\0';
     float slope = atof(buf);
     EEPROM.put(senChipID * 8, slope);
+    isNewCalibration = 1;
     serialHandler.write(ACK);
     serialHandler.print(slope, 4);
     serialHandler.write(CR);
@@ -105,6 +106,7 @@ void ZSC31050Serial::handleSerialCommand(void)
     buf[7] = '\0';
     float offs = atof(buf);
     EEPROM.put(senChipID * 8 + 4, offs);
+    isNewCalibration = 1;
     serialHandler.write(ACK);
     serialHandler.print(offs, 4);
     serialHandler.write(CR);
