@@ -89,9 +89,9 @@ void ZSC31050Serial::handleSerialCommand(void)
     }
   }
   if (serialCommand[0] == 'S' || serialCommand[0] == 's') {
-    char buf[7];
-    memcpy(buf, & serialCommand[1], 6);
-    buf[7] = '\0';
+    char buf[9];
+    memcpy(buf, & serialCommand[1], 8);
+    buf[9] = '\0';
     float slope = atof(buf);
     EEPROM.put(senChipID * 8, slope);
     isNewCalibration = 1;
@@ -101,9 +101,9 @@ void ZSC31050Serial::handleSerialCommand(void)
     serialHandler.write(LF);
   }
   if (serialCommand[0] == 'O' || serialCommand[0] == 'o') {
-    char buf[7];
-    memcpy(buf, & serialCommand[1], 6);
-    buf[7] = '\0';
+    char buf[9];
+    memcpy(buf, & serialCommand[1], 8);
+    buf[9] = '\0';
     float offs = atof(buf);
     EEPROM.put(senChipID * 8 + 4, offs);
     isNewCalibration = 1;

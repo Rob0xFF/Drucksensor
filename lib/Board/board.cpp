@@ -203,7 +203,7 @@ void Board::update(void)
           EEPROM.get(chipIDEXT * 8 + 4, offsetEXT);
           extSerial.isNewCalibration = 0;
         }
-        P_SI = (senSlope * (float) P + senOffset) / 100;
+        P_SI = (senSlope * (float) P + senOffset);
       }
     }
     if (sensorStatus == INT) {
@@ -224,7 +224,7 @@ void Board::update(void)
           EEPROM.get(chipIDINT * 8 + 4, offsetINT);
           extSerial.isNewCalibration = 0;
         }
-        P_SI = (senSlope * (float) P + senOffset) / 100;
+        P_SI = (senSlope * (float) P + senOffset);
       }
     }
   }
