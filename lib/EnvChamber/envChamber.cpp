@@ -126,6 +126,8 @@ void EnvChamber::newSetpoint(float t, float h)
   for (uint8_t i = 0; i < sizeof(hStr) - 1; i++) {
     requestStr[9 + i] = hStr[i];
   }
+//   requestStr[11] = '-';
+//   requestStr[12] = '-';
   requestStr[11] = 'R';
   requestStr[12] = '1';
   requestStr[13] = '1';
