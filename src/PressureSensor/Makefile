@@ -16,15 +16,15 @@ F_CPU = 16000000L
 
 HEX_MAXIMUM_SIZE = 261120
 
-ALTERNATE_VAR_PATH  = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.2
+ALTERNATE_VAR_PATH  = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.3
 
-ALTERNATE_CORE_PATH = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.2
+ALTERNATE_CORE_PATH = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.3
 
 AVRDUDE_ARD_BAUDRATE = 115200
 
 AVRDUDE_ARD_PROGRAMMER = arduino
 
-ARDUINO_LIB_PATH = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.2/libraries
+ARDUINO_LIB_PATH = $(HOME)/Library/Arduino15/packages/MegaCore/hardware/avr/2.2.3/libraries
 
 USER_LIB_PATH    :=  $(PROJECT_DIR)/lib
 
